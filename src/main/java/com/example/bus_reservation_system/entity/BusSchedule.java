@@ -1,12 +1,9 @@
 package com.example.bus_reservation_system.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -16,19 +13,21 @@ public class BusSchedule {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "bus")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bus")
     private Bus bus;
             //(ManyToOne relationship)
 
-    @Column(name = "route")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "route")
     private Route route;
             //(ManyToOne relationship)
 
     @Column(name = "departure_time")
-    private DateTimeFormatter departureTime;
+    private LocalDateTime departureTime;
 
     @Column(name = "arrival_time")
-    private DateTimeFormatter arrivalTime;
+    private LocalDateTime arrivalTime;
 
     @Column(name = "availableSeats")
     private Integer availableSeats;
