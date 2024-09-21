@@ -26,8 +26,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private String role;
+//    @Enumerated(EnumType.STRING)
+//    @Column(nullable = false)
+//    private Role role;
 
 }

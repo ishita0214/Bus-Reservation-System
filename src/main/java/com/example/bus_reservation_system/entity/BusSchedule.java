@@ -13,12 +13,12 @@ public class BusSchedule {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bus")
     private Bus bus;
             //(ManyToOne relationship)
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "route")
     private Route route;
             //(ManyToOne relationship)
