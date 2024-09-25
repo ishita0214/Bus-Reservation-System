@@ -15,21 +15,21 @@ public class BusScheduleService {
 
     @Autowired
     public BusScheduleService(BusScheduleRepo busScheduleRepo) {
-        this.busScheduleRepo=busScheduleRepo;
+        this.busScheduleRepo = busScheduleRepo;
     }
 
     public List<BusSchedule> findAll() {
         return busScheduleRepo.findAll();
     }
-        public BusSchedule findById(long theId) {
+
+    public BusSchedule findById(long theId) {
         Optional<BusSchedule> result = busScheduleRepo.findById(theId);
 
         BusSchedule busSchedule = null;
 
         if (result.isPresent()) {
             busSchedule = result.get();
-        }
-        else {
+        } else {
 
             throw new RuntimeException("Did not find busSchedule with id: " + theId);
         }

@@ -1,4 +1,64 @@
 package com.example.bus_reservation_system.controller;
 
+import com.example.bus_reservation_system.entity.Payment;
+import com.example.bus_reservation_system.repository.PaymentRepo;
+import com.example.bus_reservation_system.services.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/payment")
 public class PaymentController {
+
+    @Autowired
+    private PaymentRepo paymentRepo;
+
+    private PaymentService paymentService;
+
+    @Autowired
+    public PaymentController(PaymentService paymentService){
+        this.paymentService = paymentService;
+    }
+
+    @GetMapping("/list")
+    public List<Payment> findAll()
+    {
+        return paymentService.findAll();
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Payment> getPaymentbyId(@PathVariable("id") long id){
+        Payment payment= paymentService.findById(id);
+        return new ResponseEntity<>(payment, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Payment> addPayment(@RequestBody Payment payment){
+        Payment newPayment = paymentService.save(payment);
+        return new ResponseEntity<>(newPayment, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Payment> updatePayment(@PathVariable long id, @RequestBody Payment payment){
+
+        payment.setReservation(payment.getReservation());
+        payment.setPaymentMethod(payment.getPaymentMethod());
+        payment.setPaymentStatus(payment.getPaymentStatus());
+        payment.setTransactionId(payment.getTransactionId());
+        payment.setPaymentDate(payment.getPaymentDate());
+        payment.setAmountPaid(payment.getAmountPaid());
+
+        Payment updatedPayment = paymentRepo.save(payment);
+        return ResponseEntity.ok(updatedPayment);
+    }
+
+    public ResponseEntity<Payment> deletePaymentById(@PathVariable long id){
+        paymentService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
+
