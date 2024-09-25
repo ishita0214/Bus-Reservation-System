@@ -27,4 +27,5 @@ public class Bus {
 
     @Column(nullable = false)
     private String operator;
+
 }

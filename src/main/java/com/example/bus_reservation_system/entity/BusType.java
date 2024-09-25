@@ -6,3 +6,4 @@ public enum BusType {
     SLEEPER,
     SEATER
 }
+
