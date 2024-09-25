@@ -1,5 +1,4 @@
 package com.example.bus_reservation_system.entity;
-
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -12,6 +11,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(nullable = false)
     private String name;
     @Column(unique = true, nullable = false)

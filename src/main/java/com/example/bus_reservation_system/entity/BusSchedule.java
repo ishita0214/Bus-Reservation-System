@@ -1,12 +1,9 @@
 package com.example.bus_reservation_system.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -16,19 +13,77 @@ public class BusSchedule {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "bus")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Bus getBus() {
+        return bus;
+    }
+
+    public void setBus(Bus bus) {
+        this.bus = bus;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public Integer getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(Integer availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    public Double getPricePerSeat() {
+        return pricePerSeat;
+    }
+
+    public void setPricePerSeat(Double pricePerSeat) {
+        this.pricePerSeat = pricePerSeat;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bus")
     private Bus bus;
             //(ManyToOne relationship)
 
-    @Column(name = "route")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "route")
     private Route route;
             //(ManyToOne relationship)
 
     @Column(name = "departure_time")
-    private DateTimeFormatter departureTime;
+    private LocalDateTime departureTime;
 
     @Column(name = "arrival_time")
-    private DateTimeFormatter arrivalTime;
+    private LocalDateTime arrivalTime;
 
     @Column(name = "availableSeats")
     private Integer availableSeats;
