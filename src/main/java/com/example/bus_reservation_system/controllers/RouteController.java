@@ -2,7 +2,6 @@ package com.example.bus_reservation_system.controllers;
 
 import com.example.bus_reservation_system.entity.Route;
 import com.example.bus_reservation_system.repositories.RouteDao;
-import com.example.bus_reservation_system.repositories.RouteDao;
 import com.example.bus_reservation_system.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/route")
 public class RouteController {
+
 
     @Autowired
     private RouteDao routeDao;
@@ -43,13 +44,7 @@ public class RouteController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Route> updateRoute(@PathVariable long id, @RequestBody Route route){
-        route.setSource(route.getSource());
-        route.setDestination(route.getDestination());
-        route.setDistance(route.getDistance());
-        route.setEstimatedTime(route.getEstimatedTime());
-
-        Route updatedRoute = routeDao.save(route);
-        return ResponseEntity.ok(updatedRoute);
+        return routeService.updateRoute(id, route);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -58,7 +53,23 @@ public class RouteController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
 }
+
+//
+//@PutMapping("/update/{id}")
+//public ResponseEntity<Route> updateRoute(@PathVariable long id, @RequestBody Route route){
+//    route.setSource(route.getSource());
+//    route.setDestination(route.getDestination());
+//    route.setDistance(route.getDistance());
+//    route.setEstimatedTime(route.getEstimatedTime());
+//
+//    Route updatedRoute = routeDao.save(route);
+//    return ResponseEntity.ok(updatedRoute);
+//}
+
+
+
 // {
 //         "id": 1002,
 //         "source": "Jaipur",

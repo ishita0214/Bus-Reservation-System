@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/busSchedule")
@@ -17,7 +18,7 @@ public class BusScheduleController {
     @Autowired
     private BusScheduleDao busScheduleDao;
 
-    private BusScheduleService busScheduleService;
+    private final BusScheduleService busScheduleService;
 
     @Autowired
     public BusScheduleController (BusScheduleService busScheduleService){
@@ -41,18 +42,8 @@ public class BusScheduleController {
         return new ResponseEntity<>(newBusSchedule, HttpStatus.CREATED);
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<BusSchedule> updateBusSchedule(@PathVariable long id, @RequestBody BusSchedule busSchedule){
-
-        busSchedule.setBus(busSchedule.getBus());
-        busSchedule.setRoute(busSchedule.getRoute());
-        busSchedule.setDepartureTime(busSchedule.getDepartureTime());
-        busSchedule.setArrivalTime(busSchedule.getArrivalTime());
-        busSchedule.setAvailableSeats(busSchedule.getAvailableSeats());
-        busSchedule.setPricePerSeat(busSchedule.getPricePerSeat());
-
-
-        BusSchedule updatedSchedule = busScheduleDao.save(busSchedule);
-        return ResponseEntity.ok(updatedSchedule);
+    public Optional<BusSchedule> updateBusSchedule(@PathVariable long id, @RequestBody BusSchedule busSchedule){
+        return busScheduleService.updateBusSchedule(id,busSchedule);
     }
 
 

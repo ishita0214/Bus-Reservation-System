@@ -1,5 +1,6 @@
 package com.example.bus_reservation_system.controllers;
 
+
 import com.example.bus_reservation_system.entity.Payment;
 import com.example.bus_reservation_system.repositories.PaymentDao;
 import com.example.bus_reservation_system.services.PaymentService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/payment")
@@ -42,20 +44,13 @@ public class PaymentController {
         return new ResponseEntity<>(newPayment, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/update/{id}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable long id, @RequestBody Payment payment){
-
-        payment.setReservation(payment.getReservation());
-        payment.setPaymentMethod(payment.getPaymentMethod());
-        payment.setPaymentStatus(payment.getPaymentStatus());
-        payment.setTransactionId(payment.getTransactionId());
-        payment.setPaymentDate(payment.getPaymentDate());
-        payment.setAmountPaid(payment.getAmountPaid());
-
-        Payment updatedPayment = paymentDao.save(payment);
-        return ResponseEntity.ok(updatedPayment);
+    public Optional<Payment> updatePayment(@PathVariable long id, @RequestBody Payment payment){
+        return paymentService.updatePayment(id,payment);
     }
 
+    @DeleteMapping("/deletePayment/{id}")
     public ResponseEntity<Payment> deletePaymentById(@PathVariable long id){
         paymentService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
