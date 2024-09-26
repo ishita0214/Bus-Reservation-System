@@ -1,4 +1,4 @@
-//package com.example.bus_reservation_system.repository;
+package com.example.bus_reservation_system.repositories;//package com.example.bus_reservation_system.repository;
 //
 //import com.example.bus_reservation_system.entity.Reservation;
 //import org.springframework.data.jpa.repository.JpaRepository;

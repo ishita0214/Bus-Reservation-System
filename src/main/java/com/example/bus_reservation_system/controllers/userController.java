@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bus_reservation_system.Services.UserService;
+import com.example.bus_reservation_system.services.UserService;
 import com.example.bus_reservation_system.entity.User;
 
 @RestController

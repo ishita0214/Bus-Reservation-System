@@ -1,7 +1,7 @@
-package com.example.bus_reservation_system.controller;
+package com.example.bus_reservation_system.controllers;
 
 import com.example.bus_reservation_system.entity.Payment;
-import com.example.bus_reservation_system.repository.PaymentRepo;
+import com.example.bus_reservation_system.repositories.PaymentDao;
 import com.example.bus_reservation_system.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.List;
 public class PaymentController {
 
     @Autowired
-    private PaymentRepo paymentRepo;
+    private PaymentDao paymentDao;
 
     private PaymentService paymentService;
 
@@ -52,7 +52,7 @@ public class PaymentController {
         payment.setPaymentDate(payment.getPaymentDate());
         payment.setAmountPaid(payment.getAmountPaid());
 
-        Payment updatedPayment = paymentRepo.save(payment);
+        Payment updatedPayment = paymentDao.save(payment);
         return ResponseEntity.ok(updatedPayment);
     }
 

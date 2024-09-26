@@ -1,11 +1,11 @@
-package com.example.bus_reservation_system.controller;
+package com.example.bus_reservation_system.controllers;
 
 import com.example.bus_reservation_system.entity.Route;
-import com.example.bus_reservation_system.repository.RouteRepo;
+import com.example.bus_reservation_system.repositories.RouteDao;
+import com.example.bus_reservation_system.repositories.RouteDao;
 import com.example.bus_reservation_system.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class RouteController {
 
     @Autowired
-    private RouteRepo routeRepo;
+    private RouteDao routeDao;
 
     private RouteService routeService;
 
@@ -48,7 +48,7 @@ public class RouteController {
         route.setDistance(route.getDistance());
         route.setEstimatedTime(route.getEstimatedTime());
 
-        Route updatedRoute = routeRepo.save(route);
+        Route updatedRoute = routeDao.save(route);
         return ResponseEntity.ok(updatedRoute);
     }
 

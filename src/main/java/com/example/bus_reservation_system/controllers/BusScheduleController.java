@@ -1,7 +1,7 @@
-package com.example.bus_reservation_system.controller;
+package com.example.bus_reservation_system.controllers;
 
 import com.example.bus_reservation_system.entity.BusSchedule;
-import com.example.bus_reservation_system.repository.BusScheduleRepo;
+import com.example.bus_reservation_system.repositories.BusScheduleDao;
 import com.example.bus_reservation_system.services.BusScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.List;
 public class BusScheduleController {
 
     @Autowired
-    private BusScheduleRepo busScheduleRepo;
+    private BusScheduleDao busScheduleDao;
 
     private BusScheduleService busScheduleService;
 
@@ -51,7 +51,7 @@ public class BusScheduleController {
         busSchedule.setPricePerSeat(busSchedule.getPricePerSeat());
 
 
-        BusSchedule updatedSchedule = busScheduleRepo.save(busSchedule);
+        BusSchedule updatedSchedule = busScheduleDao.save(busSchedule);
         return ResponseEntity.ok(updatedSchedule);
     }
 

@@ -1,7 +1,7 @@
 package com.example.bus_reservation_system.services;
 
 import com.example.bus_reservation_system.entity.Route;
-import com.example.bus_reservation_system.repository.RouteRepo;
+import com.example.bus_reservation_system.repositories.RouteDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,19 +12,19 @@ import java.util.Optional;
 public class RouteService {
 
 
-    private final RouteRepo routeRepo;
+    private final RouteDao routeDao;
 
     @Autowired
-    public RouteService(RouteRepo routeRepo) {
-        this.routeRepo = routeRepo;
+    public RouteService(RouteDao routeRepo) {
+        this.routeDao = routeRepo;
     }
 
     public List<Route> findAll() {
-        return routeRepo.findAll();
+        return routeDao.findAll();
     }
 
     public Route findById(long theId) {
-        Optional<Route> result = routeRepo.findById(theId);
+        Optional<Route> result = routeDao.findById(theId);
 
         Route route = null;
 
@@ -39,12 +39,12 @@ public class RouteService {
     }
 
     public Route save(Route route) {
-        return routeRepo.save(route);
+        return routeDao.save(route);
     }
 
 
     public void deleteById(long theId) {
-        routeRepo.deleteById(theId);
+        routeDao.deleteById(theId);
     }
 
 

@@ -1,17 +1,18 @@
 package com.example.bus_reservation_system.controllers;
 import java.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bus_reservation_system.Services.BusService;
+import com.example.bus_reservation_system.entity.BusSchedule;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.example.bus_reservation_system.services.BusService;
 import com.example.bus_reservation_system.entity.Bus;
 
 
+@Slf4j
 @RestController
 public class busController {
     @Autowired
@@ -28,10 +29,11 @@ public class busController {
     }
 
     @PostMapping("/savebus")
-    public Bus savebus(Bus bus){
-        return busService.createBus(bus);
-
+    public ResponseEntity<Bus> savebus(@RequestBody Bus bus){
+        Bus newBus = busService.createBus(bus);
+        return new ResponseEntity<>(newBus, HttpStatus.CREATED);
     }
+
 
     @DeleteMapping("/deletebus/{id}")
     public void deletebus(@PathVariable("id") long id){

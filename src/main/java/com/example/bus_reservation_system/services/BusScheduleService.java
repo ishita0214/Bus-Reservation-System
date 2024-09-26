@@ -1,7 +1,7 @@
 package com.example.bus_reservation_system.services;
 
 import com.example.bus_reservation_system.entity.BusSchedule;
-import com.example.bus_reservation_system.repository.BusScheduleRepo;
+import com.example.bus_reservation_system.repositories.BusScheduleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +11,19 @@ import java.util.Optional;
 @Service
 public class BusScheduleService {
 
-    private final BusScheduleRepo busScheduleRepo;
+    private final BusScheduleDao busScheduleDao;
 
     @Autowired
-    public BusScheduleService(BusScheduleRepo busScheduleRepo) {
-        this.busScheduleRepo = busScheduleRepo;
+    public BusScheduleService(BusScheduleDao busScheduleRepo) {
+        this.busScheduleDao = busScheduleRepo;
     }
 
     public List<BusSchedule> findAll() {
-        return busScheduleRepo.findAll();
+        return busScheduleDao.findAll();
     }
 
     public BusSchedule findById(long theId) {
-        Optional<BusSchedule> result = busScheduleRepo.findById(theId);
+        Optional<BusSchedule> result = busScheduleDao.findById(theId);
 
         BusSchedule busSchedule = null;
 
@@ -38,12 +38,12 @@ public class BusScheduleService {
     }
 
     public BusSchedule save(BusSchedule busSchedule) {
-        return busScheduleRepo.save(busSchedule);
+        return busScheduleDao.save(busSchedule);
     }
 
 
     public void deleteById(long theId) {
-        busScheduleRepo.deleteById(theId);
+        busScheduleDao.deleteById(theId);
     }
 
 
