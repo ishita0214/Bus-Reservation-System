@@ -42,7 +42,7 @@ public class BusScheduleController {
         return new ResponseEntity<>(newBusSchedule, HttpStatus.CREATED);
     }
     @PutMapping("/update/{id}")
-    public Optional<BusSchedule> updateBusSchedule(@PathVariable long id, @RequestBody BusSchedule busSchedule){
+    public ResponseEntity<BusSchedule> updateBusSchedule(@PathVariable long id, @RequestBody BusSchedule busSchedule){
         return busScheduleService.updateBusSchedule(id,busSchedule);
     }
 

@@ -1,6 +1,7 @@
 package com.example.bus_reservation_system.controllers;
 
 
+import com.example.bus_reservation_system.entity.BusSchedule;
 import com.example.bus_reservation_system.entity.Payment;
 import com.example.bus_reservation_system.repositories.PaymentDao;
 import com.example.bus_reservation_system.services.PaymentService;
@@ -46,7 +47,7 @@ public class PaymentController {
 
 
     @PutMapping("/update/{id}")
-    public Optional<Payment> updatePayment(@PathVariable long id, @RequestBody Payment payment){
+    public ResponseEntity<Payment> updateBusSchedule(@PathVariable long id, @RequestBody Payment payment){
         return paymentService.updatePayment(id,payment);
     }
 

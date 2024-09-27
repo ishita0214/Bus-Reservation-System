@@ -1,9 +1,12 @@
 package com.example.bus_reservation_system.services;
 
+import com.example.bus_reservation_system.entity.BusSchedule;
 import com.example.bus_reservation_system.entity.Payment;
 import com.example.bus_reservation_system.repositories.PaymentDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -45,18 +48,18 @@ public class PaymentService {
         paymentDao.deleteById(theId);
     }
 
-    public Optional<Payment> updatePayment(long id, @RequestBody Payment payment) {
-        Optional<Payment> oldPayment = paymentDao.findById(id);
-        return oldPayment.map((data) -> {
-            data.setReservation(data.getReservation());
-            data.setPaymentMethod(data.getPaymentMethod());
-            data.setPaymentStatus(data.getPaymentStatus());
-            data.setTransactionId(data.getTransactionId());
-            data.setPaymentDate(data.getPaymentDate());
-            data.setAmountPaid(data.getAmountPaid());
+    public ResponseEntity<Payment> updatePayment(@PathVariable long id, @RequestBody Payment payment){
+        payment.setReservation(payment.getReservation());
+        payment.setPaymentMethod(payment.getPaymentMethod());
+        payment.setPaymentStatus(payment.getPaymentStatus());
+        payment.setTransactionId(payment.getTransactionId());
+        payment.setPaymentDate(payment.getPaymentDate());
+        payment.setAmountPaid(payment.getAmountPaid());
 
-            return paymentDao.save(data);
-        });
-
+        Payment updatePayment = paymentDao.save(payment);
+        return ResponseEntity.ok(updatePayment);
     }
+
+
+
 }
