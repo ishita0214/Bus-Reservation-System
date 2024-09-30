@@ -1,7 +1,6 @@
 package com.example.bus_reservation_system.controllers;
 import java.util.*;
 
-import com.example.bus_reservation_system.entity.Bus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,36 +10,36 @@ import com.example.bus_reservation_system.services.UserService;
 import com.example.bus_reservation_system.entity.User;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/find/{id}")
     public  Optional<User> getUser(@PathVariable("id") long id){
         return userService.getUser(id);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/list")
     public List<User> getAllUser(){
         return userService.getAllUser();
     }
 
-    @PostMapping("/saveUser")
+    @PostMapping("/add")
     public ResponseEntity<User> saveUser(@RequestBody User user){
         User newUser = userService.saveUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
 
-    @DeleteMapping("/deleteUser/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable("id") long id){
         userService.delete(id);
-    } 
-    
-    @PutMapping("/updateUser/{id}")
-    public Optional<Object> updateUser(@PathVariable("id") long id,User user){
-        return userService.updatUser(id,user);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateBusSchedule(@PathVariable long id, @RequestBody User user){
+        return userService.updateUser(id,user);
     }
 
 }

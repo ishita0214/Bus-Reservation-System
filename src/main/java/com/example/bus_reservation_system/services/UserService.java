@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.bus_reservation_system.entity.User;
@@ -17,13 +19,10 @@ public class UserService {
 
     public User saveUser(@RequestBody User user) {
         return userDao.save(user);
-
     }
 
     public Optional<User> getUser(Long id){
         return userDao.findById(id);
-
-
     }
 
     public List<User> getAllUser(){
@@ -34,19 +33,17 @@ public class UserService {
         userDao.deleteById(id);
     }
 
-    public Optional<Object> updatUser(long id,@RequestBody User user){
-        Optional<User> oldUser=userDao.findById(id);
-        return oldUser.map((data)->{
-            data.setName(user.getName());
-            data.setEmail(user.getEmail());
-            data.setPassword(user.getPassword());
-            data.setPhone(user.getPhone());
-            data.setRole(user.getRole());
-            return userDao.save(data);
+    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody User user){
+        user.setName(user.getName());
+        user.setEmail(user.getEmail());
+        user.setPassword(user.getPassword());
+        user.setPhone(user.getPhone());
+        user.setRole(user.getRole());
 
-
-        });
+        User updateUser = userDao.save(user);
+        return ResponseEntity.ok(updateUser);
     }
+
 
 }
 

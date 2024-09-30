@@ -1,7 +1,5 @@
 package com.example.bus_reservation_system.controllers;
 
-
-import com.example.bus_reservation_system.entity.BusSchedule;
 import com.example.bus_reservation_system.entity.Payment;
 import com.example.bus_reservation_system.repositories.PaymentDao;
 import com.example.bus_reservation_system.services.PaymentService;
@@ -9,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/payment")
@@ -51,7 +47,7 @@ public class PaymentController {
         return paymentService.updatePayment(id,payment);
     }
 
-    @DeleteMapping("/deletePayment/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Payment> deletePaymentById(@PathVariable long id){
         paymentService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

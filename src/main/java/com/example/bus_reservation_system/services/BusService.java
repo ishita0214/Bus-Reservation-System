@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.bus_reservation_system.entity.Bus;
@@ -33,18 +35,15 @@ public class BusService {
         busDao.deleteById(id);
     }
 
-    public Optional<Bus> updateBus(long id,@RequestBody Bus bus){
-        Optional<Bus> oldBus=busDao.findById(id);
-        return oldBus.map((data)->{
-            data.setBusNumber(bus.getBusNumber());
-            data.setBusType(bus.getBusType());
-            data.setCapacity(bus.getCapacity());
-            data.setOperator(bus.getOperator());
-            data.setStatus(bus.getStatus());
-            return busDao.save(data);
+    public ResponseEntity<Bus> updateBus(@PathVariable long id, @RequestBody Bus bus){
+        bus.setBusNumber(bus.getBusNumber());
+        bus.setBusType(bus.getBusType());
+        bus.setCapacity(bus.getCapacity());
+        bus.setOperator(bus.getOperator());
+        bus.setStatus(bus.getStatus());
 
-        });
-
+        Bus updateBus = busDao.save(bus);
+        return ResponseEntity.ok(updateBus);
     }
 
 }
