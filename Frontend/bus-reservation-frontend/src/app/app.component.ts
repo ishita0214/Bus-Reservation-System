@@ -6,6 +6,9 @@ import { HomePageComponent } from "./home-page/home-page.component";
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HomePageComponent],
+  providers: [
+    
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
