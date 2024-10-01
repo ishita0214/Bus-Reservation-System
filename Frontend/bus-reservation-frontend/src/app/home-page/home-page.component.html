@@ -1,1 +1,43 @@
-<h1>Bus Reservation system</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Reservation System</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div>
+      <header class="my-4">
+        <h3 class="text-center">Bus Reservation System</h3>
+      </header>
+
+      <section>
+        <div class="container mt-5 ">
+          <form class="search-form">
+            <input type="text" class="form-control" placeholder="From" />
+
+            <input type="text" class="form-control" placeholder="To" />
+
+            <p-calendar class="form-date"
+            [(ngModel)]="date1" 
+            name="calendarDate"
+            [showIcon]="true" 
+            inputId="buttondisplay" 
+            [showOnFocus]="false" /> <br><br><br>
+
+            
+            <div >
+              <button type="submit" class="btn btn-success text-black ">
+                SEARCH BUSES
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
