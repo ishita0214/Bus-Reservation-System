@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping("/api/route")
 public class RouteController {
@@ -25,8 +26,10 @@ public class RouteController {
         this.routeService=routeService;
     }
 
+
     @GetMapping("/list")
     public List<Route> findAll(){
+        System.out.println("Route");
         return routeService.findAll();
     }
 
