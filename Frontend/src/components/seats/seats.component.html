@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+        <div class="bus-name">{{ busName }}</div>
+        <div class="route-info">
+            <div class="route">
+                <span>{{ source }}</span> ➔ <span>{{ destination }}</span>
+            </div>
+            <div class="times">
+                <div>Departure: {{ departureTime }}</div>
+                <div>Arrival: {{ arrivalTime }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+       
+    
+        <h1>Seats Available</h1>
+        <div class="seat-map">
+            <div class="row">
+                <div class="seat" *ngFor="let seat of seats.slice(0, 12)" 
+                     [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}" 
+                     (click)="toggleSeat(seat)">
+                    {{ seat.number }}
+                </div>
+                <div class="aisle"></div>
+                <div class="seat" *ngFor="let seat of seats.slice(12, 24)" 
+                     [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}" 
+                     (click)="toggleSeat(seat)">
+                    {{ seat.number }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="seat" *ngFor="let seat of seats.slice(24, 35)" 
+                     [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}" 
+                     (click)="toggleSeat(seat)">
+                    {{ seat.number }}
+                </div>
+            </div>
+        </div>
+    
+        <div class="seat-info">
+            <div class="legend">
+                <div class="seat available"></div><span>Available Seat</span>
+                <div class="seat booked"></div><span>Booked Seat</span>
+                <div class="seat selected"></div><span>Selected Seat</span>
+            </div>
+          
+        </div>
+    </div>
+    <div class="total-fare-container">
+        <div class="total-fare">
+            Total Fare: {{ totalFare }} USD
+        </div>
+    </div>
+    
+</body>
+</html>

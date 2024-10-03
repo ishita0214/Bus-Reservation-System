@@ -1,0 +1,129 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f4f8; /* Light background for contrast */
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50; /* Darker color for headings */
+    margin-bottom: 20px;
+    font-size: 2.5em; /* Larger font size */
+}
+
+.content {
+    display: flex;
+    gap: 20px; /* Adds space between sidebar and main content */
+}
+
+aside.sidebar {
+    width: 25%;
+    padding: 15px;
+    background-color: #3498db; /* Blue background for sidebar */
+    border-radius: 10px; /* Rounded corners */
+    color: white; /* White text for contrast */
+}
+
+main.bus-list {
+    width: 75%;
+    padding: 15px;
+}
+
+.bus-card {
+    background-color: #ffffff; /* White background for bus cards */
+    border: 1px solid #ddd;
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effects */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.bus-name {
+    font-weight: bold; /* Make bus name bold */
+    color: #2980b9; /* Different color for bus name */
+    font-size: 1.5em; /* Larger font size */
+    margin-bottom: 10px; /* Space below the bus name */
+}
+
+.bus-details {
+    display: flex; /* Align details in a row */
+    justify-content: space-between; /* Space out details */
+    margin-bottom: 10px; /* Space below the details */
+}
+
+.detail {
+    flex: 1; /* Make each detail take equal space */
+    margin-right: 7px; /* Space between details */
+    
+}
+
+.detail:last-child {
+    margin-right: 0; /* Remove right margin for last detail */
+}
+
+.time-value {
+    color: #7f8c8d; /* Grey color for total time */
+    font-weight: normal; /* Less font weight */
+    text-align: center; 
+    margin-left: 5px;
+    margin-right: 5px;/* Centered for symmetry */
+}
+
+.price {
+    font-weight: bold; /* Bold price */
+    color: #e67e22;
+    display: flex; /* Different color for price */
+    margin-left: 10px;
+}
+.d2{
+    display: flex;
+}
+
+button {
+    background-color: #e74c3c; /* Red button color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 16px; /* Larger font size */
+    transition: background-color 0.3s; /* Transition effect on hover */
+}
+
+button:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+input[type="time"], input[type="range"] {
+    width: calc(100% - 20px); /* Full width minus padding */
+    padding: 10px; /* Padding for inputs */
+    margin-top: 5px; /* Space above inputs */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove border for a cleaner look */
+    background-color: #ecf0f1; /* Light gray background for inputs */
+}
+
+input[type="checkbox"] {
+    margin-right: 10px; /* Space between checkbox and label text */
+}
+
+span {
+    color: #34495e; 
+    font-weight: bold;
+    display: block;
+    margin-top: .5em;
+}
+.time1{
+    margin-left: 4px;
+}
