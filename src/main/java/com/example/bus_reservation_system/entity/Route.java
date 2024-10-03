@@ -3,6 +3,7 @@ package com.example.bus_reservation_system.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.sql.Time;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -20,9 +21,6 @@ public class Route {
     private String destination;
 
     @Column(nullable = false)
-    private Double distance;
-
-    @Column(nullable = false)
-    private Time estimatedTime;
+    private LocalDate date;
 
 }

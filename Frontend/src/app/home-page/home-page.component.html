@@ -17,21 +17,31 @@
 
       <section>
         <div class="container mt-5 ">
-          <form class="search-form">
-            <input type="text" class="form-control" placeholder="From" />
-
-            <input type="text" class="form-control" placeholder="To" />
+          <form [formGroup]="busForm" (ngSubmit)="getBuses()">
+             <div class="form-group">
+              <select class="form-control" formControlName="from" id="from">
+                <option value="" disabled selected>Select your departure city</option>
+                <option *ngFor="let option of fromOptions" [value]="option">{{ option }}</option>
+              </select>
+            </div>
+           
+            <div class="form-group">
+              <select class="form-control" formControlName="to" id="to">
+                <option value="" disabled selected>Select your arrival city</option>
+                <option *ngFor="let option of toOptions" [value]="option">{{ option }}</option>
+              </select>
+            </div>
 
             <p-calendar class="form-date"
-            [(ngModel)]="date1" 
-            name="calendarDate"
-            [showIcon]="true" 
-            inputId="buttondisplay" 
-            [showOnFocus]="false" /> <br><br><br>
-
+              formControlName="date"
+              [showIcon]="true" 
+              inputId="buttondisplay" 
+              [showOnFocus]="false">
             
-            <div >
-              <button (click)="getBuses()" type="submit" class="btn btn-success text-black ">
+            </p-calendar> <br><br><br>
+
+            <div>
+              <button type="submit" class=" button btn btn-success text-black">
                 SEARCH BUSES
               </button>
             </div>
@@ -41,3 +51,4 @@
     </div>
   </body>
 </html>
+

@@ -54,8 +54,8 @@ public class RouteService {
     public ResponseEntity<Route> updateRoute(@PathVariable long id, @RequestBody Route route){
         route.setSource(route.getSource());
     route.setDestination(route.getDestination());
-    route.setDistance(route.getDistance());
-    route.setEstimatedTime(route.getEstimatedTime());
+
+    route.setDate(route.getDate());
 
     Route updatedRoute = routeDao.save(route);
     return ResponseEntity.ok(updatedRoute);

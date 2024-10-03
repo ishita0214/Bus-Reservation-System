@@ -1,50 +1,59 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { BusesService } from '../Services/buses.service';
-// import { Buses } from '../Models/buses.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
-  standalone: true,
-  imports: [MatDatepickerModule,CalendarModule,FormsModule],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  styleUrls: ['./home-page.component.css'],
+  standalone: true,
+  imports: [CalendarModule, FormsModule, ReactiveFormsModule, CommonModule],
 })
 export class HomePageComponent implements OnInit {
-  date1:Date | undefined;
-  // buses: Buses[]=[];
-  
-  constructor(private busService:BusesService){}
+  busForm: FormGroup;
+  fromOptions: string[] = []; 
+  toOptions: string[] = []; 
+
+  constructor(private fb: FormBuilder, private busService: BusesService) {
+    this.busForm = this.fb.group({
+      from: [''],
+      to: [''],
+      date: [null],
+    });
+  }
+
   ngOnInit(): void {
-    this.getBuses();
+    this.loadRoutes();
   }
-  
-  getBuses(): void {
-    this.busService.getBuses().subscribe(
-      {
-        next:(buses)=>{
-          console.log(buses);
-          // this.buses = buses;
 
-        },
-        error:(error)=>{
-          console.error("Error fetching buses's routes:", error)
-        },
-        complete:()=>{
-        }
+  loadRoutes() {
+    this.busService.getRoutes().subscribe({
+      next: (routes: any[]) => {
+        this.fromOptions = routes.map(route => route.source);
+        this.toOptions = routes.map(route => route.destination); 
+      },
+      error: (error) => {
+        console.error('Error fetching routes', error);
       }
-    );
+    });
   }
 
-
-  addRoute(){
-    this.busService.addRoute().subscribe((res:any)=>{
-      if(res.result){
-        alert("Route added")
-      }
-    })
+  getBuses() {
+    if (this.busForm.valid) {
+      const formValues = this.busForm.value;
+      console.log('Selected departure city:', formValues.from); 
+      console.log('Selected destination city:', formValues.to); 
+      console.log('Selected date:', formValues.date); 
+    } else {
+      console.log('Form is invalid'); 
+    }
   }
-
 }
+
