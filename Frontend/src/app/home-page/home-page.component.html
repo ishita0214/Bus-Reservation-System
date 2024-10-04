@@ -17,7 +17,7 @@
 
       <section>
         <div class="container mt-5 ">
-          <form [formGroup]="busForm" (ngSubmit)="getBuses()">
+          <form [formGroup]="busForm" (ngSubmit)="getBuses()" >
              <div class="form-group">
               <select class="form-control" formControlName="from" id="from">
                 <option value="" disabled selected>Select your departure city</option>
