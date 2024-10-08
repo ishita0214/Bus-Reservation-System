@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SeatServiceService } from '../../app/services/seat-service.service';
+import { SeatServiceService } from '../../Services/seat-service.service';
+
 
 
 

@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { SeatServiceService } from '../../app/services/seat-service.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+
+
+import { BusesService } from '../../Services/buses.service';
+import { SeatServiceService } from '../../Services/seat-service.service';
 interface Seat {
   number: number;
   booked: boolean;
@@ -11,7 +14,7 @@ interface Seat {
 @Component({
   selector: 'app-seats',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,ReactiveFormsModule],
   templateUrl: './seats.component.html',
   styleUrl: './seats.component.css'
 })
@@ -25,6 +28,7 @@ export class SeatsComponent implements OnInit {
   departureTime = '08:00 AM';
   arrivalTime = '10:00 AM';
   pricePerSeat = 50; // Example price per seat
+  showButton:boolean=false
 
   seats: Seat[] = [
     { number: 1, booked: false, selected: false }, { number: 2, booked: true, selected: false }, { number: 3, booked: false, selected: false },
@@ -38,26 +42,64 @@ export class SeatsComponent implements OnInit {
     { number: 25, booked: false, selected: false }, { number: 26, booked: false, selected: false }, { number: 27, booked: false, selected: false },
     { number: 28, booked: false, selected: false }, { number: 29, booked: true, selected: false }, { number: 30, booked: false, selected: false },
     { number: 31, booked: false, selected: false }, { number: 32, booked: false, selected: false }, { number: 33, booked: false, selected: false },
-    { number: 34, booked: false, selected: false }, { number: 35, booked: false, selected: false },
+    { number: 34, booked: false, selected: false }, { number: 35, booked: false, selected: false },{ number: 36, booked: false, selected: false },{ number: 37, booked: false, selected: false },{ number: 38, booked: false, selected: false },{ number: 39, booked: false, selected: false },{ number: 40, booked: false, selected: false },{ number: 41, booked: false, selected: false },{ number: 42, booked: false, selected: false },{ number: 43, booked: false, selected: false },{ number: 44, booked: false, selected: false },{ number: 45, booked: false, selected: false }
   ];
 
   get totalFare() {
     return this.seats.filter(seat => seat.selected).length * this.pricePerSeat;
   }
 
-  toggleSeat(seat: Seat) {
-    if (!seat.booked) {
-      seat.selected = !seat.selected;
-    }
-  }
+  
   selectedBus: any = null;
 
-busService=inject(SeatServiceService)
+busService = inject(SeatServiceService)
 
-  ngOnInit() {
-    this.busService.currentBus.subscribe(bus => {
+  
+
+  reservationForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.busService.currentBus.subscribe((bus:any) => {
       this.selectedBus = bus;
     });
+    this.reservationForm = this.fb.group({
+      name: ['', Validators.required],
+      gender: ['', Validators.required],
+      age: ['', [Validators.required, Validators.min(1), Validators.max(120)]],
+      stateOfResidence: ['', Validators.required],
+      contactDetails: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      donation: [false],
+      insurance: [false]
+    });
+  }
+
+  onSubmit() {
+    if (this.reservationForm.valid) {
+      console.log(this.reservationForm.value);
+    }
+  }
+  selectedSeats: Seat[] = []; // Array to hold selected seats
+
+  toggleSeat(seat: Seat) {
+    this.showButton=true
+
+    if (!seat.booked) {
+      seat.selected = !seat.selected;
+
+      // Update selectedSeats array
+      if (seat.selected) {
+        this.selectedSeats.push(seat);
+      } else {
+        this.selectedSeats = this.selectedSeats.filter(s => s.number !== seat.number);
+      }
+    }
+  }
+
+  openModal() {
+    // This method will be called when opening the modal
+    this.selectedSeats = this.seats.filter(seat => seat.selected);
   }
 }
 
