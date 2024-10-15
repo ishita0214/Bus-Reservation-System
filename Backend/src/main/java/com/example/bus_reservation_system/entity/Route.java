@@ -20,7 +20,5 @@ public class Route {
     @Column(nullable = false)
     private String destination;
 
-    @Column(nullable = false)
-    private LocalDate date;
-
+   
 }

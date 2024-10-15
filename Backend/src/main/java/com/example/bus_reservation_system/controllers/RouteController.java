@@ -34,9 +34,8 @@ public class RouteController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Route> getRouteById(@PathVariable long id){
-        Route route = routeService.findById(id);
-        return new ResponseEntity<>(route, HttpStatus.OK);
+    public Optional<Route> getRouteById(@PathVariable long id){
+        return routeService.findById(id);
     }
 
     @PostMapping("/add")

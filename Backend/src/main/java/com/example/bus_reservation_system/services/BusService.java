@@ -1,7 +1,6 @@
 package com.example.bus_reservation_system.services;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,12 +37,14 @@ public class BusService {
     public ResponseEntity<Bus> updateBus(@PathVariable long id, @RequestBody Bus bus){
         bus.setBusNumber(bus.getBusNumber());
         bus.setBusType(bus.getBusType());
-        bus.setCapacity(bus.getCapacity());
+    
         bus.setOperator(bus.getOperator());
-        bus.setStatus(bus.getStatus());
+     
 
         Bus updateBus = busDao.save(bus);
         return ResponseEntity.ok(updateBus);
     }
-
+    public List<Bus> getBuses(String source, String destination, String date) {
+        return busDao.findBusesByRouteAndDay(source, destination, date);
+    }
 }

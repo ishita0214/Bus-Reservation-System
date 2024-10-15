@@ -9,14 +9,14 @@
 
 <body>
     <div class="header">
-        <div class="bus-name">{{ busName }}</div>
+        <div class="bus-name">{{ currBus.operator }}</div>
         <div class="route-info">
             <div class="route">
-                <span>{{ source }}</span> ➔ <span>{{ destination }}</span>
+                <span>{{ busroute.source }}</span> ➔ <span>{{ busroute.destination }}</span>
             </div>
             <div class="times">
-                <div>Departure: {{ departureTime }}</div>
-                <div>Arrival: {{ arrivalTime }}</div>
+                <div>Departure: {{ currBus.deptTime }}</div>
+                <div>Arrival: {{ currBus.arrTime }}</div>
             </div>
         </div>
     </div>
@@ -72,7 +72,7 @@
     </div>
     <div class="total-fare-container">
         <div class="total-fare">
-            Total Fare: Rs {{ totalFare }}
+            Total Fare: Rs {{ totalFare}}
 
         </div>
         <button type="button"  class="btn btn-primary booking" data-bs-toggle="modal" data-bs-target="#reservationModal">
@@ -160,7 +160,7 @@
                                 data-bs-dismiss='modal'>Close</button>
                         <button type='submit' 
                                 [disabled]="reservationForm.invalid"
-                                class='btn btn-primary'>Save changes</button>
+                                class='btn btn-primary'>Continue to payment</button>
                     </div>
 
                 </form> <!-- End of the main form -->

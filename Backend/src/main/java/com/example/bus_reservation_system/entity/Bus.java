@@ -1,5 +1,9 @@
 package com.example.bus_reservation_system.entity;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,14 +22,19 @@ public class Bus {
     @Column(name = "bus_type", nullable = false)
     private BusType busType;
 
-    @Column(nullable = false)
-    private Integer capacity;
+    @Column(name="arrTime",nullable=false)
+    private Time arrTime;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private BusStatus status;
+    @Column(name="deptTime",nullable=false)
+    private Time deptTime;
+
+    @Column(name="route_id",nullable=false)
+    private long route_id; 
 
     @Column(nullable = false)
     private String operator;
+
+    @Column(nullable=false)
+    private int price;
 
 }

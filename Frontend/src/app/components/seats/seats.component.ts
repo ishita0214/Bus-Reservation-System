@@ -5,6 +5,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 
 import { BusesService } from '../../Services/buses.service';
 import { SeatServiceService } from '../../Services/seat-service.service';
+import { ActivatedRoute } from '@angular/router';
+import { Bus } from '../../Models/bus';
+import { BusService } from '../../Services/bus.service';
+import { RouteService } from '../../Services/route.service';
+import { Route } from '../../Models/route.model';
 interface Seat {
   number: number;
   booked: boolean;
@@ -27,9 +32,10 @@ export class SeatsComponent implements OnInit {
   destination = 'City B';
   departureTime = '08:00 AM';
   arrivalTime = '10:00 AM';
-  pricePerSeat = 50; // Example price per seat
   showButton:boolean=false
-
+  currBusId!:number
+  currBus!:Bus
+  busroute!:Route
   seats: Seat[] = [
     { number: 1, booked: false, selected: false }, { number: 2, booked: true, selected: false }, { number: 3, booked: false, selected: false },
     { number: 4, booked: true, selected: false }, { number: 5, booked: false, selected: false }, { number: 6, booked: false, selected: false },
@@ -46,7 +52,7 @@ export class SeatsComponent implements OnInit {
   ];
 
   get totalFare() {
-    return this.seats.filter(seat => seat.selected).length * this.pricePerSeat;
+    return this.seats.filter(seat => seat.selected).length * this.currBus.price;
   }
 
   
@@ -58,7 +64,7 @@ busService = inject(SeatServiceService)
 
   reservationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private route:ActivatedRoute,private bService:BusService,private routeService:RouteService) {}
 
   ngOnInit(): void {
     this.busService.currentBus.subscribe((bus:any) => {
@@ -73,6 +79,11 @@ busService = inject(SeatServiceService)
       donation: [false],
       insurance: [false]
     });
+    this.route.params.subscribe((data)=>{
+        this.currBusId=+data['id']
+        this.getCurrentBus()
+    })
+
   }
 
   onSubmit() {
@@ -101,6 +112,29 @@ busService = inject(SeatServiceService)
     // This method will be called when opening the modal
     this.selectedSeats = this.seats.filter(seat => seat.selected);
   }
+  getCurrentBus() {
+    this.bService.getBus(this.currBusId).subscribe((data:Bus) => {
+      this.currBus = data;
+      console.log('Current Bus:', this.currBus);
+      this.getRoute();
+    }, error => {
+      console.error('Error fetching bus:', error);
+    });
+  }
+  getRoute() {
+    if (this.currBus && this.currBus.route_id) {
+      
+      this.routeService.getRouteById(this.currBus.route_id).subscribe((data: any) => {
+        this.busroute = data;
+      }, error => {
+        console.error('Error fetching route:', error);
+      });
+    } else {
+      console.error('Current bus or route ID is undefined');
+    }
+  }
+
+
 }
 
 

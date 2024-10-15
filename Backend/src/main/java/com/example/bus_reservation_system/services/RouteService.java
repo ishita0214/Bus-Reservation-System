@@ -27,19 +27,12 @@ public class RouteService {
         return routeDao.findAll();
     }
 
-    public Route findById(long theId) {
-        Optional<Route> result = routeDao.findById(theId);
+    public Optional<Route> findById(long theId) {
+        return routeDao.findById(theId);
 
-        Route route = null;
 
-        if (result.isPresent()) {
-            route = result.get();
-        } else {
 
-            throw new RuntimeException("Did not find route with id: " + theId);
-        }
 
-        return route;
     }
 
     public Route save(Route route) {
@@ -55,8 +48,7 @@ public class RouteService {
         route.setSource(route.getSource());
     route.setDestination(route.getDestination());
 
-    route.setDate(route.getDate());
-
+    
     Route updatedRoute = routeDao.save(route);
     return ResponseEntity.ok(updatedRoute);
     }

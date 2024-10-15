@@ -15,6 +15,7 @@ import com.example.bus_reservation_system.entity.Bus;
 @Slf4j
 @RestController
 @RequestMapping("/api/bus")
+@CrossOrigin(origins="http://localhost:4200")
 public class BusController {
     @Autowired
     BusService busService;
@@ -44,4 +45,13 @@ public class BusController {
     public ResponseEntity<Bus> updateBusSchedule(@PathVariable long id, @RequestBody Bus bus){
         return busService.updateBus(id,bus);
     }
+    @GetMapping("/search/{source}/{destination}/{date}")
+    public List<Bus> getBuses(
+            @PathVariable("source") String source,
+            @PathVariable("destination") String destination,
+            @PathVariable("date") String date) {
+    
+       return busService.getBuses(source, destination, date);
+    }
+    
 }

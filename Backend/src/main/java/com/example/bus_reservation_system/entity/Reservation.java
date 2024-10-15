@@ -18,10 +18,7 @@ public class Reservation {
     @ManyToOne
     private User user;
 
-    @JoinColumn(nullable = false)
-    @ManyToOne
-    private BusSchedule busSchedule;
-
+    
     @Column(nullable = false)
     private LocalDateTime reservationDate;
 

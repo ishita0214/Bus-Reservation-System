@@ -37,14 +37,15 @@
             </aside>
             <main class="bus-list">
                 <div *ngFor="let bus of buses" class="bus-card">
-                    <div class="bus-name">{{ bus.name }}</div>
+                    <div class="bus-name">{{ bus.operator }}</div>
                     <div class="bus-details">
-                        <div class="detail time2"><strong>Arrival Time:</strong> {{ bus.arrivalTime }}</div>
-                        <div class="detail time-value">{{ bus.duration }}</div>
-                        <div class="detail time1"><strong>Departure Time:</strong> {{ bus.departureTime }}</div>
+                        <div class="detail time2"><strong>Departure Time:</strong> {{ bus.deptTime }}</div>
+                        <div class="detail time-value">{{ calculateTimeDifference(bus.arrTime, bus.deptTime) }}</div>
+                        <div class="detail time1"><strong>Arrival Time:</strong> {{ bus.arrTime }}</div>
                         <div class="detail d2"><strong>Price:</strong> <div class="price">{{ bus.price }} USD</div></div>
+                        
                     </div>
-                    <button (click)="selectBus(bus)">Book Now</button> <!-- Pass bus object here -->
+                    <button (click)="selectBus(bus)" [routerLink]="['/seats',bus.id]">Book Now</button> <!-- Pass bus object here -->
                 </div>
             </main>
 

@@ -3,6 +3,7 @@ import { SearchBusComponent } from './components/search-bus/search-bus.component
 import { SeatsComponent } from './components/seats/seats.component';
 import { PassDetailsComponent } from './components/pass-details/pass-details.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 export const routes: Routes = [
     {
@@ -14,12 +15,16 @@ export const routes: Routes = [
         component:SearchBusComponent
         
     },
-    {
-        path:'seats',
-        component:SeatsComponent
-    },
+  
     {
         path:'details',
         component:PassDetailsComponent
+    },{
+        path:"payment",
+        component:PaymentComponent
+    },
+    {
+        path:'seats/:id',
+        component:SeatsComponent
     }
 ];
