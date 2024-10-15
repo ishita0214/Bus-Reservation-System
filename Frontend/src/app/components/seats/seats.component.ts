@@ -27,26 +27,26 @@ interface Seat {
 
 
 export class SeatsComponent implements OnInit {
-  busName = 'Luxury Coach A';
-  source = 'City A';
-  destination = 'City B';
-  departureTime = '08:00 AM';
-  arrivalTime = '10:00 AM';
+  // busName = 'Luxury Coach A';
+  // source = 'City A';
+  // destination = 'City B';
+  // departureTime = '08:00 AM';
+  // arrivalTime = '10:00 AM';
   showButton:boolean=false
   currBusId!:number
   currBus!:Bus
   busroute!:Route
   seats: Seat[] = [
-    { number: 1, booked: false, selected: false }, { number: 2, booked: true, selected: false }, { number: 3, booked: false, selected: false },
-    { number: 4, booked: true, selected: false }, { number: 5, booked: false, selected: false }, { number: 6, booked: false, selected: false },
-    { number: 7, booked: true, selected: false }, { number: 8, booked: false, selected: false }, { number: 9, booked: true, selected: false },
+    { number: 1, booked: false, selected: false }, { number: 2, booked: false, selected: false }, { number: 3, booked: false, selected: false },
+    { number: 4, booked: false, selected: false }, { number: 5, booked: false, selected: false }, { number: 6, booked: false, selected: false },
+    { number: 7, booked: false, selected: false }, { number: 8, booked: false, selected: false }, { number: 9, booked: false, selected: false },
     { number: 10, booked: false, selected: false }, { number: 11, booked: false, selected: false }, { number: 12, booked: false, selected: false },
-    { number: 13, booked: false, selected: false }, { number: 14, booked: false, selected: false }, { number: 15, booked: true, selected: false },
-    { number: 16, booked: false, selected: false }, { number: 17, booked: true, selected: false }, { number: 18, booked: false, selected: false },
-    { number: 19, booked: false, selected: false }, { number: 20, booked: true, selected: false }, { number: 21, booked: false, selected: false },
-    { number: 22, booked: false, selected: false }, { number: 23, booked: true, selected: false }, { number: 24, booked: false, selected: false },
+    { number: 13, booked: false, selected: false }, { number: 14, booked: false, selected: false }, { number: 15, booked: false, selected: false },
+    { number: 16, booked: false, selected: false }, { number: 17, booked: false, selected: false }, { number: 18, booked: false, selected: false },
+    { number: 19, booked: false, selected: false }, { number: 20, booked: false, selected: false }, { number: 21, booked: false, selected: false },
+    { number: 22, booked: false, selected: false }, { number: 23, booked: false, selected: false }, { number: 24, booked: false, selected: false },
     { number: 25, booked: false, selected: false }, { number: 26, booked: false, selected: false }, { number: 27, booked: false, selected: false },
-    { number: 28, booked: false, selected: false }, { number: 29, booked: true, selected: false }, { number: 30, booked: false, selected: false },
+    { number: 28, booked: false, selected: false }, { number: 29, booked: false, selected: false }, { number: 30, booked: false, selected: false },
     { number: 31, booked: false, selected: false }, { number: 32, booked: false, selected: false }, { number: 33, booked: false, selected: false },
     { number: 34, booked: false, selected: false }, { number: 35, booked: false, selected: false },{ number: 36, booked: false, selected: false },{ number: 37, booked: false, selected: false },{ number: 38, booked: false, selected: false },{ number: 39, booked: false, selected: false },{ number: 40, booked: false, selected: false },{ number: 41, booked: false, selected: false },{ number: 42, booked: false, selected: false },{ number: 43, booked: false, selected: false },{ number: 44, booked: false, selected: false },{ number: 45, booked: false, selected: false }
   ];
@@ -58,16 +58,12 @@ export class SeatsComponent implements OnInit {
   
   selectedBus: any = null;
 
-busService = inject(SeatServiceService)
-
-  
-
   reservationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private route:ActivatedRoute,private bService:BusService,private routeService:RouteService) {}
+  constructor(private fb: FormBuilder,private seatService:SeatServiceService, private route:ActivatedRoute,private busService:BusService,private routeService:RouteService) {}
 
   ngOnInit(): void {
-    this.busService.currentBus.subscribe((bus:any) => {
+    this.seatService.currentBus.subscribe((bus:any) => {
       this.selectedBus = bus;
     });
     this.reservationForm = this.fb.group({
@@ -113,7 +109,7 @@ busService = inject(SeatServiceService)
     this.selectedSeats = this.seats.filter(seat => seat.selected);
   }
   getCurrentBus() {
-    this.bService.getBus(this.currBusId).subscribe((data:Bus) => {
+    this.busService.getBus(this.currBusId).subscribe((data:Bus) => {
       this.currBus = data;
       console.log('Current Bus:', this.currBus);
       this.getRoute();

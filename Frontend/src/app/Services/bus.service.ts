@@ -9,7 +9,7 @@ import { Bus } from '../Models/bus';
 export class BusService {
 
   public buses$: BehaviorSubject<Bus[]> = new BehaviorSubject<Bus[]>([]);
-  private apiUrl = 'http://localhost:8080/api/bus'; // Base URL for your API
+  private apiUrl = 'http://localhost:8080/api/bus'; 
 
   constructor(private http: HttpClient) { }
 

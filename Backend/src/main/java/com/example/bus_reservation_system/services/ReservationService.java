@@ -7,29 +7,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.bus_reservation_system.entity.Bus;
 import com.example.bus_reservation_system.entity.Reservation;
-import com.example.bus_reservation_system.repositories.ReservationRepo;
+import com.example.bus_reservation_system.repositories.ReservationDao;
 
 @Service
 public class ReservationService {
     @Autowired
-    ReservationRepo reservationRepo;
-    
-   public Reservation createTicket(@RequestBody Reservation res){
-        return reservationRepo.save(res);
+    ReservationDao reservationDao;
 
+   public Reservation createTicket(@RequestBody Reservation res){
+        return reservationDao.save(res);
     }
 
     public void deleteTicket(long id){
-        reservationRepo.deleteById(id);
+        reservationDao.deleteById(id);
     }
 
     public Optional<Reservation> getTicket(long id){
-        return reservationRepo.findById(id);
+        return reservationDao.findById(id);
     }
 
     public List<Reservation> getAllTicket(Iterable<Long> busId){
-        return reservationRepo.findAllById(busId);
+        return reservationDao.findAllById(busId);
+    }
+
+    public List<Reservation> getReservationsByUserIdAndBusId(Long userId, Long busId) {
+        return reservationDao.findReservationByUserIdAndBusId(userId,busId);
     }
 }

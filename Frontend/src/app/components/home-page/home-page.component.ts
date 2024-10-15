@@ -6,12 +6,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
-import { BusesService } from '../Services/buses.service';
+import { BusesService } from '../../Services/buses.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { SeatServiceService } from '../Services/seat-service.service';
-import { BusService } from '../Services/bus.service';
-import { Bus } from '../Models/bus';
+import { SeatServiceService } from '../../Services/seat-service.service';
+import { BusService } from '../../Services/bus.service';
+import { Bus } from '../../Models/bus';
 
 @Component({
   selector: 'app-home-page',

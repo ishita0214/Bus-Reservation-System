@@ -5,9 +5,6 @@ import { SeatServiceService } from '../../Services/seat-service.service';
 import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
 
-
-
-
 @Component({
   selector: 'app-search-bus',
   standalone: true,
@@ -24,10 +21,6 @@ selectedRoute: any;
 
  
   ngOnInit() {
-    this.seatService.selectedRoute.subscribe(route => {
-      this.selectedRoute = route;
-      console.log('Selected route:', this.selectedRoute);
-    });
     this.getBuses()
   }
 
