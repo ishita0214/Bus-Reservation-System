@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
-
-import { BusesService } from '../../Services/buses.service';
 import { SeatServiceService } from '../../Services/seat-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { Bus } from '../../Models/bus';
@@ -85,6 +82,8 @@ export class SeatsComponent implements OnInit {
   onSubmit() {
     if (this.reservationForm.valid) {
       console.log(this.reservationForm.value);
+      console.log("Data saved");
+      
     }
   }
   selectedSeats: Seat[] = []; // Array to hold selected seats
