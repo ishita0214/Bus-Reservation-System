@@ -12,13 +12,14 @@ import { SeatServiceService } from '../../Services/seat-service.service';
 import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
 import { RouteService } from '../../Services/route.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
   standalone: true,
-  imports: [CalendarModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [CalendarModule, FormsModule, ReactiveFormsModule, CommonModule,DropdownModule],
 })
 export class HomePageComponent implements OnInit {
   busForm: FormGroup;
@@ -32,8 +33,8 @@ export class HomePageComponent implements OnInit {
     private routeService: RouteService
   ) {
     this.busForm = this.fb.group({
-      source: [''],
-      destination: [''],
+      source: [null],
+      destination: [null],
       date: [null],
     });
   }
