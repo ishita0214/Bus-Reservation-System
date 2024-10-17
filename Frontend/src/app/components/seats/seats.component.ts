@@ -119,10 +119,10 @@ export class SeatsComponent implements OnInit {
   }
   
 
-  openModal() {
-    this.selectedSeats = this.seats.filter(seat => seat.selected);
-    this.createReservationForm(); // Create the form for selected seats
-  }
+  // openModal() {
+  //   this.selectedSeats = this.seats.filter(seat => seat.selected);
+  //   this.createReservationForm(); // Create the form for selected seats
+  // }
   
   createReservationForm() {
     const seatForms = this.selectedSeats.map(seat => {
