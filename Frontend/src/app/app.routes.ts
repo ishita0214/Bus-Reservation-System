@@ -4,6 +4,7 @@ import { SeatsComponent } from './components/seats/seats.component';
 import { PassDetailsComponent } from './components/pass-details/pass-details.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { TicketComponent } from './components/ticket/ticket.component';
 
 export const routes: Routes = [
     {
@@ -27,5 +28,10 @@ export const routes: Routes = [
     {
         path:'seats/:id',
         component:SeatsComponent
+    },
+
+    {
+        path:'ticket',
+        component:TicketComponent
     }
 ];

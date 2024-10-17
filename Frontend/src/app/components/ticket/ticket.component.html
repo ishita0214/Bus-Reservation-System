@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Confirmation</title>
+    <link rel="stylesheet" href="ticket.component.css"> <!-- Link to your CSS file -->
+</head>
+
+<body>
+    <main *ngIf="reservation">
+        <section class="ticket-confirmation">
+            <h2>Ticket Confirmation Details</h2>
+            <article class="ticket-details">
+                <p><strong>Date of Journey:</strong> {{ reservation.reservationDate }}</p>
+                <p><strong>Seat Number:</strong> {{ reservation.seatNumber }}</p>
+                <!-- <p><strong>Gender:</strong> {{ reservation.gender }}</p>
+                <p><strong>Contact Details:</strong> {{ reservation.contactDetails }}</p>
+                <p><strong>Donation:</strong> {{ reservation.donation }}</p>
+                <p><strong>Insurance:</strong> {{ reservation.insurance }}</p>
+                <p><strong>Name:</strong> {{ reservation.name }}</p>
+                <p><strong>State of Residence:</strong> {{ reservation.stateOfResidence }}</p> -->
+            </article>
+        </section>
+    </main>
+</body>
+
+</html>

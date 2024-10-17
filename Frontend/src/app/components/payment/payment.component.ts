@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SeatServiceService } from '../../Services/seat-service.service';
 import { ReservationService } from '../../Services/reservation.service';
 import { Reservation } from '../../Models/reservation';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Bus } from '../../Models/bus';
 import { BusService } from '../../Services/bus.service';
 import { RouteService } from '../../Services/route.service';
@@ -44,7 +44,8 @@ export class PaymentComponent implements OnInit {
     private routeService: RouteService,
     private busService: BusService,
     private reservationService: ReservationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +87,7 @@ export class PaymentComponent implements OnInit {
     this.reservationService.createTicket(reservation).subscribe(
       (newReservation) => {
         
-        
+        this.router.navigate(['/ticket', { reservation: JSON.stringify(newReservation) }]);
       },
       (error) => {
         console.error('Error creating reservation:', error);
