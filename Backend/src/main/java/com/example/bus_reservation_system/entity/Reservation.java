@@ -3,6 +3,7 @@ package com.example.bus_reservation_system.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +22,7 @@ public class Reservation {
     private long bus_id;
 
     @Column(nullable = false)
-    private LocalDateTime reservationDate;
+    private String reservationDate;
 
     @Column(nullable = false)
     private int seatNumber;

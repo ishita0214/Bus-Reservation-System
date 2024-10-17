@@ -32,7 +32,7 @@ public class ReservationController {
     @PostMapping("/createTicket")
     public ResponseEntity<Reservation> createTicket(@RequestBody Reservation reservation){
         Reservation newTicket = reservationService.createTicket(reservation);
-        return new ResponseEntity<>(newTicket, HttpStatus.CREATED);
+        return new ResponseEntity<>(newTicket, HttpStatus.OK);
     }
 
 

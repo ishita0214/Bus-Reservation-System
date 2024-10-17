@@ -21,7 +21,7 @@ export const routes: Routes = [
         component:PassDetailsComponent
     },
     {
-        path:"payment",
+        path:"payment/:id",
         component:PaymentComponent
     },
     {
