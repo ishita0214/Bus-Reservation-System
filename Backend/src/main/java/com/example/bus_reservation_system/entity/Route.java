@@ -2,8 +2,7 @@ package com.example.bus_reservation_system.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.sql.Time;
-import java.time.LocalDate;
+
 
 @Entity
 @Data

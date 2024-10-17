@@ -5,43 +5,32 @@ import { SeatServiceService } from '../../Services/seat-service.service';
 import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
 
-
-
-
 @Component({
   selector: 'app-search-bus',
   standalone: true,
-  imports: [CommonModule,RouterLink,RouterModule],
+  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './search-bus.component.html',
-  styleUrl: './search-bus.component.css'
+  styleUrl: './search-bus.component.css',
 })
 export class SearchBusComponent {
-  route=inject(Router)
-  
+  route = inject(Router);
 
-constructor(private seatService: SeatServiceService,private busService: BusService) {}
-selectedRoute: any;
+  constructor(
+    private seatService: SeatServiceService,
+    private busService: BusService
+  ) {}
+  // selectedRoute: any;
 
- 
   ngOnInit() {
-    this.seatService.selectedRoute.subscribe(route => {
-      this.selectedRoute = route;
-      console.log('Selected route:', this.selectedRoute);
-    });
-    this.getBuses()
+    this.getBuses();
   }
 
   selectBus(bus: any) {
     this.seatService.selectBus(bus);
-    
-
   }
 
   buses: Bus[] = [];
-  selectedBus: Bus | null = null;
-
-
- 
+  // selectedBus: Bus | null = null;
 
   // loadAllBuses(): void {
   //   this.busService.getAllBuses().subscribe(
@@ -66,17 +55,20 @@ selectedRoute: any;
   }
 
   deleteBus(id: number): void {
-    this.busService.deleteBus(id).subscribe(() => {
-      this.buses = this.buses.filter(bus => bus.id !== id);
-    }, error => {
-      console.error('Error deleting bus:', error);
-    });
+    this.busService.deleteBus(id).subscribe(
+      () => {
+        this.buses = this.buses.filter((bus) => bus.id !== id);
+      },
+      (error) => {
+        console.error('Error deleting bus:', error);
+      }
+    );
   }
 
   updateBus(id: number, bus: Bus): void {
     this.busService.updateBus(id, bus).subscribe(
       (updatedBus) => {
-        const index = this.buses.findIndex(b => b.id === id);
+        const index = this.buses.findIndex((b) => b.id === id);
         if (index !== -1) {
           this.buses[index] = updatedBus;
         }
@@ -98,10 +90,10 @@ selectedRoute: any;
     );
   }
 
-  getBuses(){
-    this.busService.buses$.subscribe((data)=>{
-      this.buses=data
-    })
+  getBuses() {
+    this.busService.buses$.subscribe((data) => {
+      this.buses = data;
+    });
   }
   calculateTimeDifference(arrivalTime: string, departureTime: string): string {
     const arrTime = new Date(`1970-01-01T${arrivalTime}Z`);
@@ -110,8 +102,7 @@ selectedRoute: any;
 
     const hours = Math.floor(diff / 3600);
     const minutes = Math.floor((diff % 3600) / 60);
-    
+
     return `${hours}h ${minutes}m`;
   }
-
 }
