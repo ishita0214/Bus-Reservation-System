@@ -53,25 +53,20 @@ export class HomePageComponent implements OnInit {
   }
 
   private formatDate(date: Date | null): string {
-    if (!date) return ''; // Return empty string if date is null or undefined
+    if (!date) return ''; 
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
   
-    return `${year}-${month}-${day}`; // Format as yyyy-mm-dd
+    return `${year}-${month}-${day}`; 
   }
   
   getBuses() {
     if (this.busForm.valid) {
-      const formValues = this.busForm.value;
-      console.log('Selected departure city:', formValues.source);
-      console.log('Selected destination city:', formValues.destination);
+      const formValues = this.busForm.value;    
 
       const formattedDate = this.formatDate(formValues.date);
-      console.log(typeof(formattedDate));
-      
-      this.seatService.date.next(formattedDate); // Send formatted date to seat service
-
+      this.seatService.date.next(formattedDate);
 
       this.busService
         .getBuses(formValues.source, formValues.destination, formattedDate)
@@ -81,7 +76,7 @@ export class HomePageComponent implements OnInit {
             console.log('Fetched buses:', this.buses);
             this.router.navigateByUrl('search');
             this.busService.buses$.next(this.buses);
-            this.seatService.date.next(formattedDate); // Send formatted date to seat service
+            this.seatService.date.next(formattedDate);
           },
           error: (error) => {
             console.error('Error fetching buses', error);

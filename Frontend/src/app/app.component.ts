@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SearchBusComponent } from "./components/search-bus/search-bus.component";
-import { HomePageComponent } from "./components/home-page/home-page.component";
+import { SearchBusComponent } from "./Components/search-bus/search-bus.component";
+import { HomePageComponent } from "./Components/home-page/home-page.component";
 
 @Component({
   selector: 'app-root',

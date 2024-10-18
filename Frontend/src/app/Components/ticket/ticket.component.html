@@ -13,16 +13,21 @@
         <section class="ticket-confirmation">
             <h2>Ticket Confirmation Details</h2>
             <article class="ticket-details">
+                <p><strong>Name:</strong> {{ ticket.name }}</p>
                 <p><strong>Date of Journey:</strong> {{ reservation.reservationDate }}</p>
                 <p><strong>Seat Number:</strong> {{ reservation.seatNumber }}</p>
-                <!-- <p><strong>Gender:</strong> {{ reservation.gender }}</p>
-                <p><strong>Contact Details:</strong> {{ reservation.contactDetails }}</p>
-                <p><strong>Donation:</strong> {{ reservation.donation }}</p>
-                <p><strong>Insurance:</strong> {{ reservation.insurance }}</p>
-                <p><strong>Name:</strong> {{ reservation.name }}</p>
-                <p><strong>State of Residence:</strong> {{ reservation.stateOfResidence }}</p> -->
+                <p><strong>Gender:</strong> {{ ticket.gender }}</p>
+                <p><strong>Contact Details:</strong> {{ ticket.contactDetails }}</p>
+                <p><strong>State of Residence:</strong> {{ ticket.stateOfResidence }}</p>
+                <br><br>
+                <p *ngIf="ticket.donation === true">
+                    Thank you for donating money for children welfare!
+                   
+                  </p> <br><br>
+                <button (click)="saveTicketData()">Submit</button>
             </article>
         </section>
+       
     </main>
 </body>
 

@@ -1,9 +1,9 @@
 export class Reservation {
-    id?: number; // Optional for creating new reservations
-    user_id: number; // User ID associated with the reservation
-    bus_id: number; // Bus ID associated with the reservation
-    reservationDate: string; // Date and time of reservation
-    seatNumber: number; // Seat number reserved
+    id?: number; 
+    user_id: number; 
+    bus_id: number; 
+    reservationDate: string; 
+    seatNumber: number; 
 
     constructor(
         id?: number,

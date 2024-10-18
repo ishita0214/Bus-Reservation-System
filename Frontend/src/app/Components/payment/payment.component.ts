@@ -9,11 +9,6 @@ import { BusService } from '../../Services/bus.service';
 import { RouteService } from '../../Services/route.service';
 import { Route } from '../../Models/route.model';
 
-interface Seat {
-  number: number;
-  booked: boolean;
-  selected: boolean;
-}
 @Component({
   selector: 'app-payment',
   standalone: true,
@@ -69,13 +64,13 @@ export class PaymentComponent implements OnInit {
   
     if (selectedOption) {
       const reservation = new Reservation();
-      reservation.user_id = 1; // Get user ID from your auth service or context
+      reservation.user_id = 1; 
       reservation.bus_id = this.currBusId;
-      reservation.reservationDate = this.date; // This is already formatted as 'yyyy-mm-dd'
-      reservation.seatNumber = this.seatsData[0]; // Use selected seat numbers here
+      reservation.reservationDate = this.date; 
+      reservation.seatNumber = this.seatsData[0]; 
   
   
-      // Call the booking method
+      
       this.book(reservation);
       
       alert(`Proceeding to pay with ${selectedOption.name}`);
@@ -96,7 +91,7 @@ export class PaymentComponent implements OnInit {
   }
 
   getSeats() {
-    this.seatService.seatSelected.subscribe((data: number[]) => { // Expecting an array of numbers
+    this.seatService.seatSelected.subscribe((data: number[]) => { 
       this.seatsData = data; 
       
     });

@@ -18,7 +18,8 @@ import { Bus } from '../../Models/bus';
 import { BusService } from '../../Services/bus.service';
 import { RouteService } from '../../Services/route.service';
 import { Route } from '../../Models/route.model';
-// import { Seats } from '../../Models/seats';
+import { TicketService } from '../../Services/ticket.service';
+
 interface Seat {
   number: number;
   booked: boolean;
@@ -39,11 +40,7 @@ interface Seat {
   styleUrl: './seats.component.css',
 })
 export class SeatsComponent implements OnInit {
-  // busName = 'Luxury Coach A';
-  // source = 'City A';
-  // destination = 'City B';
-  // departureTime = '08:00 AM';
-  // arrivalTime = '10:00 AM';
+
   showButton: boolean = false;
   currBusId!: number;
   currBus!: Bus;
@@ -112,7 +109,8 @@ export class SeatsComponent implements OnInit {
     private seatService: SeatServiceService,
     private route: ActivatedRoute,
     private busService: BusService,
-    private routeService: RouteService
+    private routeService: RouteService,
+    private ticketService:TicketService
   ) {}
 
   ngOnInit(): void {
@@ -147,11 +145,13 @@ export class SeatsComponent implements OnInit {
       console.log('Data saved');
       console.log(this.selectedSeats);
 
-      // this.onclick()
+      this.ticketService.setTicketData(this.reservationForm.value);
+
+      
       this.router.navigateByUrl('payment/' + this.currBusId);
     }
   }
-  selectedSeats: Seat[] = []; // Array to hold selected seats
+  selectedSeats: Seat[] = []; 
 
   toggleSeat(seat: Seat) {
     this.showButton = true;
@@ -159,7 +159,7 @@ export class SeatsComponent implements OnInit {
     if (!seat.booked) {
       seat.selected = !seat.selected;
 
-      // Update selectedSeats array
+     
       if (seat.selected) {
         this.selectedSeats.push(seat);
       } else {
@@ -168,7 +168,7 @@ export class SeatsComponent implements OnInit {
         );
       }
 
-      // Emit only seat numbers to the BehaviorSubject
+      
       const selectedSeatNumbers: number[] = this.selectedSeats.map((s) => {
         return s.number;
       });
@@ -178,11 +178,6 @@ export class SeatsComponent implements OnInit {
       this.seatService.seatSelected.next(selectedSeatNumbers);
     }
   }
-
-  // openModal() {
-  //   this.selectedSeats = this.seats.filter(seat => seat.selected);
-  //   this.createReservationForm(); // Create the form for selected seats
-  // }
 
   createReservationForm() {
     const seatForms = this.selectedSeats.map((seat) => {
@@ -211,9 +206,7 @@ export class SeatsComponent implements OnInit {
     this.busService.getBus(this.currBusId).subscribe(
       (data: Bus) => {
         this.currBus = data;
-        // console.log('Current Bus:', this.currBus);
-        // console.log("Seat selected: ", this.selectedSeats);
-
+      
         this.getRoute();
       },
       (error) => {
@@ -243,7 +236,5 @@ export class SeatsComponent implements OnInit {
     });
   }
   router = inject(Router);
-  //   onclick(){
-  // this.router.navigateByUrl('payment/'+this.currBusId);
-  //   }
+
 }

@@ -89,10 +89,10 @@
             <div class="modal-body">
                 <h4 class="text-center mb-4 heading">Passenger Details</h4>
                 
-                <!-- Wrap everything in a single form -->
+                
                 <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="bg-light p-4 rounded shadow-sm">
                     
-                    <!-- Loop through selected seats for individual passenger details -->
+                    
                     <div *ngFor="let seat of selectedSeats" class="card mb-3">
                         <div class="card-header">
                             Seat Number: {{ seat.number }}
@@ -130,7 +130,7 @@
                         </div>
                     </div>
 
-                    <!-- Common fields outside of the loop -->
+                   
                     <div class="form-group">
                         <label for="stateOfResidence">State of Residence:</label>
                         <input id="stateOfResidence" formControlName="stateOfResidence" class="form-control"
@@ -153,7 +153,7 @@
                                class='form-check-label'>Donate Rs.5 for children welfare.</label>
                     </div>
 
-                    <!-- Modal footer -->
+                   
                     <div class='modal-footer'>
                         <button type='button' 
                                 class='btn btn-secondary' 
@@ -163,7 +163,7 @@
                                 class='btn btn-primary'  data-bs-dismiss='modal' >Continue to payment</button>
                     </div>
 
-                </form> <!-- End of the main form -->
+                </form>
             </div>
         </div>
     </div>
