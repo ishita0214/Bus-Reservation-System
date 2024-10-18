@@ -13,7 +13,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private long reservation_id;
 
     @Column(nullable = false)

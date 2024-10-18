@@ -1,5 +1,6 @@
 package com.example.bus_reservation_system.controllers;
 
+import com.example.bus_reservation_system.entity.Reservation;
 import com.example.bus_reservation_system.entity.Ticket;
 import com.example.bus_reservation_system.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class TicketController {
 
     @Autowired
-    TicketService ticketService;
+    private TicketService ticketService;
 
     @PostMapping("/saveTicket")
-    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket){
+    public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket){
         Ticket newTicket = ticketService.saveTicket(ticket);
         return new ResponseEntity<>(newTicket, HttpStatus.OK);
     }
