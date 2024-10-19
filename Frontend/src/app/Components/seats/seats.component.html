@@ -1,173 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="header">
-        <div class="bus-name">{{ currBus.operator }}</div>
-        <div class="route-info">
-            <div class="route">
-                <span>{{ busroute.source }}</span> ➔ <span>{{ busroute.destination }}</span>
-            </div>
-            <div class="times">
-                <div>Departure: {{ currBus.deptTime }}</div>
-                <div>Arrival: {{ currBus.arrTime }}</div>
-            </div>
+      <div class="bus-name">{{ currBus!.operator }}</div>
+      <div class="route-info">
+        <div class="route">
+          <span>{{ busroute!.source }}</span> ➔
+          <span>{{ busroute.destination }}</span>
         </div>
+        <div class="times">
+          <div>Departure: {{ currBus.deptTime }}</div>
+          <div>Arrival: {{ currBus.arrTime }}</div>
+        </div>
+      </div>
     </div>
     <div class="container">
-
-
-        <h1>Seats Available</h1>
-        <div class="seat-map">
-            <div class="row">
-                <div class="seat onetwo bgap" *ngFor="let seat of seats.slice(0, 9)"
-                    [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}"
-                    (click)="toggleSeat(seat)">
-                    {{ seat.number }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="seat onetwo bgap" *ngFor="let seat of seats.slice(9, 18)"
-                    [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}"
-                    (click)="toggleSeat(seat)">
-                    {{ seat.number }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="seat onetwo centre" *ngFor="let seat of seats.slice(18, 27)"
-                    [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}"
-                    (click)="toggleSeat(seat)">
-                    {{ seat.number }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="seat onetwo bgap" *ngFor="let seat of seats.slice(27, 36)"
-                    [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}"
-                    (click)="toggleSeat(seat)">
-                    {{ seat.number }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="seat onetwo bgap" *ngFor="let seat of seats.slice(36, 45)"
-                    [ngClass]="{'available': !seat.booked, 'booked': seat.booked, 'selected': seat.selected}"
-                    (click)="toggleSeat(seat)">
-                    {{ seat.number }}
-                </div>
-            </div>
+      <h1>Seats Available</h1>
+      <div class="seat-map">
+        <div class="row">
+          <div
+            class="seat onetwo bgap"
+            *ngFor="let seat of seats.slice(0, 9)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: seat.booked,
+              selected: seat.selected
+            }"
+            (click)="toggleSeat(seat)"
+          >
+            {{ seat.number }}
+          </div>
         </div>
-        <div class="seat-info">
-            <div class="legend">
-                <div class="seat available"></div><span>Available Seat</span>
-                <div class="seat booked"></div><span>Booked Seat</span>
-                <div class="seat selected"></div><span>Selected Seat</span>
-            </div>
-
+        <div class="row">
+          <div
+            class="seat onetwo bgap"
+            *ngFor="let seat of seats.slice(9, 18)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: seat.booked,
+              selected: seat.selected
+            }"
+            (click)="toggleSeat(seat)"
+          >
+            {{ seat.number }}
+          </div>
         </div>
+        <div class="row">
+          <div
+            class="seat onetwo centre"
+            *ngFor="let seat of seats.slice(18, 27)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: seat.booked,
+              selected: seat.selected
+            }"
+            (click)="toggleSeat(seat)"
+          >
+            {{ seat.number }}
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="seat onetwo bgap"
+            *ngFor="let seat of seats.slice(27, 36)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: seat.booked,
+              selected: seat.selected
+            }"
+            (click)="toggleSeat(seat)"
+          >
+            {{ seat.number }}
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="seat onetwo bgap"
+            *ngFor="let seat of seats.slice(36, 45)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: seat.booked,
+              selected: seat.selected
+            }"
+            (click)="toggleSeat(seat)"
+          >
+            {{ seat.number }}
+          </div>
+        </div>
+      </div>
+      <div class="seat-info">
+        <div class="legend">
+          <div class="seat available"></div>
+          <span>Available Seat</span>
+          <div class="seat booked"></div>
+          <span>Booked Seat</span>
+          <div class="seat selected"></div>
+          <span>Selected Seat</span>
+        </div>
+      </div>
     </div>
     <div class="total-fare-container">
-        <div class="total-fare">
-            Total Fare: Rs {{ totalFare}}
-
-        </div>
-        <button type="button"  class="btn btn-primary booking" data-bs-toggle="modal" data-bs-target="#reservationModal">
-            Continue booking
-        </button>
-
+      <div class="total-fare">Total Fare: Rs {{ totalFare }}</div>
+      <button
+        type="button"
+        class="btn btn-primary booking"
+        data-bs-toggle="modal"
+        data-bs-target="#reservationModal"
+      >
+        Continue booking
+      </button>
     </div>
-    
 
-    <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg custom-modal" role="document">
+    <div
+      class="modal fade"
+      id="reservationModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="reservationModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg custom-modal" role="document">
         <div class="modal-content">
-            <div class="modal-body">
-                <h4 class="text-center mb-4 heading">Passenger Details</h4>
-                
-                
-                <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="bg-light p-4 rounded shadow-sm">
-                    
-                    
-                    <div *ngFor="let seat of selectedSeats" class="card mb-3">
-                        <div class="card-header">
-                            Seat Number: {{ seat.number }}
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="name-{{seat.number}}">Name:</label>
-                                <input id="name-{{seat.number}}" formControlName="name" class="form-control"
-                                    placeholder="Enter name" />
-                            </div>
-                            <div class="form-group gender">
-                                <label>Gender:</label>
-                                <div class="form-check">
-                                    <input type="radio" id="male-{{seat.number}}" formControlName="gender"
-                                        value="male" class="form-check-input" />
-                                    <label for="male-{{seat.number}}" class="form-check-label">Male</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" id="female-{{seat.number}}" formControlName="gender"
-                                        value="female" class="form-check-input" />
-                                    <label for="female-{{seat.number}}" class="form-check-label">Female</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="radio" id="other-{{seat.number}}" formControlName="gender"
-                                        value="other" class="form-check-input" />
-                                    <label for="other-{{seat.number}}" class="form-check-label">Other</label>
-                                </div>
-                            </div>
+          <div class="modal-body">
+            <h4 class="text-center mb-4 heading">Passenger Details</h4>
 
-                            <div class="form-group">
-                                <label for="age-{{seat.number}}">Age:</label>
-                                <input id="age-{{seat.number}}" type="number" formControlName="age" class="form-control"
-                                    placeholder="Enter age" />
-                            </div>
-                        </div>
+            <form
+              [formGroup]="reservationForm"
+              (ngSubmit)="onSubmit()"
+              class="bg-light p-4 rounded shadow-sm"
+            >
+              <div *ngFor="let seat of selectedSeats" class="card mb-3">
+                <div class="card-header">Seat Number: {{ seat.number }}</div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Name:</label>
+
+                    <input
+                      formControlName="name"
+                      class="form-control"
+                      placeholder="Enter name"
+                    />
+
+                    <div
+                      *ngIf="
+                        reservationForm.get('name')?.touched &&
+                        reservationForm.get('name')?.invalid
+                      "
+                    >
+                      <small
+                        class="text-danger"
+                        *ngIf="reservationForm.get('name')?.errors?.['required']"
+                      >
+                        * Name is required
+                      </small>
                     </div>
+                  </div>
 
-                   
-                    <div class="form-group">
-                        <label for="stateOfResidence">State of Residence:</label>
-                        <input id="stateOfResidence" formControlName="stateOfResidence" class="form-control"
-                            placeholder="Enter your state" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="contactDetails">Contact Details:</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">+91</span>
-                            <input id="contactDetails" formControlName="contactDetails" class="form-control"
-                                placeholder="Enter your contact number" />
-                        </div>
-                    </div>
-
+                  <div class="form-group gender">
+                    <label>Gender:</label>
                     <div class="form-check">
-                        <input type='checkbox' formControlName='donation' id='donation' 
-                               class='form-check-input' />
-                        <label for='donation' 
-                               class='form-check-label'>Donate Rs.5 for children welfare.</label>
+                      <input
+                        type="radio"
+                        id="male-{{ seat.number }}"
+                        formControlName="gender"
+                        value="Male"
+                        class="form-check-input"
+                      />
+                      <label
+                        for="male-{{ seat.number }}"
+                        class="form-check-label"
+                        >Male</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        type="radio"
+                        id="female-{{ seat.number }}"
+                        formControlName="gender"
+                        value="Female"
+                        class="form-check-input"
+                      />
+                      <label
+                        for="female-{{ seat.number }}"
+                        class="form-check-label"
+                        >Female</label
+                      >
+                    </div>
+                    <div class="form-check">
+                      <input
+                        type="radio"
+                        id="other-{{ seat.number }}"
+                        formControlName="gender"
+                        value="Other"
+                        class="form-check-input"
+                      />
+                      <label
+                        for="other-{{ seat.number }}"
+                        class="form-check-label"
+                        >Other</label
+                      >
                     </div>
 
-                   
-                    <div class='modal-footer'>
-                        <button type='button' 
-                                class='btn btn-secondary' 
-                                data-bs-dismiss='modal'>Close</button>
-                        <button type='submit' 
-                                [disabled]="reservationForm.invalid"
-                                class='btn btn-primary'  data-bs-dismiss='modal' >Continue to payment</button>
-                    </div>
+                    <!-- <div *ngIf="reservationForm.get('gender')?.touched && reservationForm.get('gender')?.invalid">
+                        <small class="text-danger">Gender is required.</small>
+                      </div> -->
+                  </div>
 
-                </form>
-            </div>
+                  <div class="form-group">
+                    <label for="age-{{ seat.number }}">Age:</label>
+                    <input
+                      id="age-{{ seat.number }}"
+                      type="number"
+                      formControlName="age"
+                      class="form-control"
+                      placeholder="Enter age"
+                    />
+                  </div>
+
+                  <div
+                    *ngIf="
+                      reservationForm.get('age')?.touched &&
+                      reservationForm.get('age')?.invalid
+                    "
+                  >
+                    <small
+                      class="text-danger"
+                      *ngIf="reservationForm.get('age')?.errors?.['required']"
+                    >
+                      * Age is required
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="reservationForm.get('age')?.errors?.['min']"
+                    >
+                      * Age must be at least 1
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="reservationForm.get('age')?.errors?.['max']"
+                    >
+                      * Age cannot be more than 120
+                    </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="stateOfResidence">State of Residence:</label>
+                <input
+                  id="stateOfResidence"
+                  formControlName="stateOfResidence"
+                  class="form-control"
+                  placeholder="Enter your state"
+                />
+
+                <div
+                  *ngIf="
+                    reservationForm.get('stateOfResidence')?.touched &&
+                    reservationForm.get('stateOfResidence')?.invalid
+                  "
+                >
+                  <small
+                    class="text-danger"
+                    *ngIf="reservationForm.get('stateOfResidence')?.errors?.['required']"
+                  >
+                    * State is required
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="contactDetails">Contact Details:</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text">+91</span>
+                  <input
+                    id="contactDetails"
+                    formControlName="contactDetails"
+                    class="form-control"
+                    placeholder="Enter your contact number"
+                  />
+                </div>
+
+                <div
+                  *ngIf="
+                    reservationForm.get('contactDetails')?.touched &&
+                    reservationForm.get('contactDetails')?.invalid
+                  "
+                >
+                  <small
+                    class="text-danger"
+                    *ngIf="reservationForm.get('contactDetails')?.errors?.['required']"
+                  >
+                    Contact number is required.
+                  </small>
+                  <small
+                    class="text-danger"
+                    *ngIf="reservationForm.get('contactDetails')?.errors?.['pattern']"
+                  >
+                    Contact number must be numeric.
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  formControlName="donation"
+                  id="donation"
+                  class="form-check-input"
+                />
+                <label for="donation" class="form-check-label"
+                  >Donate Rs.5 for children welfare.</label
+                >
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
+                  [disabled]="reservationForm.invalid"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
+                  Continue to payment
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</body>
-
+  </body>
 </html>

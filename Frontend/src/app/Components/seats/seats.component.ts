@@ -206,7 +206,10 @@ export class SeatsComponent implements OnInit {
     this.busService.getBus(this.currBusId).subscribe(
       (data: Bus) => {
         this.currBus = data;
-      
+        console.log("getting current bus data: ",data);
+        
+        this.ticketService.setBusData(data);
+
         this.getRoute();
       },
       (error) => {

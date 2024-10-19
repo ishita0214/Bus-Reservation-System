@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Confirmation</title>
-    <link rel="stylesheet" href="ticket.component.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="ticket.component.css"> 
 </head>
 
 <body>
@@ -14,6 +14,14 @@
             <h2>Ticket Confirmation Details</h2>
             <article class="ticket-details">
                 <p><strong>Name:</strong> {{ ticket.name }}</p>
+                <p><strong>Departure City:</strong> {{ routeData.source}}</p>
+                <p><strong>Arrival City:</strong> {{ routeData.destination }}</p>
+                <p><strong>Bus Number:</strong> {{ busData.busNumber}}</p>
+                <p><strong>Bus Type:</strong> {{ busData.busType }}</p>
+                <p><strong>Bus Name:</strong> {{ busData.operator }}</p>
+                <p><strong>Departure Time:</strong> {{ busData.deptTime }}</p>
+                <p><strong>Arrival Time:</strong> {{ busData.arrTime }}</p>
+                <p><strong>Total Fare:</strong> {{ busData.price }}</p>
                 <p><strong>Date of Journey:</strong> {{ reservation.reservationDate }}</p>
                 <p><strong>Seat Number:</strong> {{ reservation.seatNumber }}</p>
                 <p><strong>Gender:</strong> {{ ticket.gender }}</p>
@@ -24,7 +32,7 @@
                     Thank you for donating money for children welfare!
                    
                   </p> <br><br>
-                <button (click)="saveTicketData()">Submit</button>
+                <button (click)="saveTicketData()">Confirm</button>
             </article>
         </section>
        

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
 import { RouteService } from '../../Services/route.service';
 import { DropdownModule } from 'primeng/dropdown';
+import { TicketService } from '../../Services/ticket.service';
 
 @Component({
   selector: 'app-home-page',
@@ -27,7 +28,8 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     private busService: BusService,
     private routeService: RouteService,
-    private seatService: SeatServiceService
+    private seatService: SeatServiceService,
+    private ticketService: TicketService
   ) {
     this.busForm = this.fb.group({
       source: [null],
@@ -38,6 +40,16 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRoutes();
+    this.initializeForm();
+  }
+
+
+  initializeForm() {
+    this.busForm = this.fb.group({
+      source: ['', Validators.required],         
+      destination: ['', Validators.required],  
+      date: ['', Validators.required],           
+    });
   }
 
   loadRoutes() {
@@ -64,6 +76,10 @@ export class HomePageComponent implements OnInit {
   getBuses() {
     if (this.busForm.valid) {
       const formValues = this.busForm.value;    
+      console.log("Selected source",formValues.source);
+      console.log("Selected destination", formValues.destination);
+      //Sending source and destination to ticket service
+      this.ticketService.setRouteData(this.busForm.value);
 
       const formattedDate = this.formatDate(formValues.date);
       this.seatService.date.next(formattedDate);

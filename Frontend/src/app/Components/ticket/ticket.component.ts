@@ -15,6 +15,8 @@ import { Ticket } from '../../Models/ticket';
 export class TicketComponent implements OnInit {
   reservation!: Reservation;
   ticket!: any;
+  busData!:any;
+  routeData!:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +35,30 @@ export class TicketComponent implements OnInit {
         console.log(error);
       },
     });
+
+
+
+
+    this.ticketService.currentBusData$.subscribe({
+      next:(busData)=>{
+        this.busData=busData;
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
+
+
+    this.ticketService.currentRoute$.subscribe({
+      next:(routeData)=>{
+        this.routeData= routeData;
+      },
+      error:(err)=>{
+        console.log(err);
+        
+      }
+    })
   }
 
   saveTicketData(){
