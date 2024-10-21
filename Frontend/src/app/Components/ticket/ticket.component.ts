@@ -24,6 +24,7 @@ export class TicketComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     const reservationData = this.route.snapshot.paramMap.get('reservation');
     this.reservation = reservationData ? JSON.parse(reservationData) : null;
 
@@ -59,6 +60,8 @@ export class TicketComponent implements OnInit {
         
       }
     })
+
+    this.saveTicketData();
   }
 
   saveTicketData(){
