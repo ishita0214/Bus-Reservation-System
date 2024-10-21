@@ -14,15 +14,20 @@ public class User {
 
     @Column(nullable = false)
     private String name;
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(unique = true, nullable = false)
+    @Column( nullable = false)
     private String phone;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Role role=Role.USER;
+    @Column(nullable = false)
+    private int age;
+    @Column(nullable = false)
+    private String gender;
+
 
 
 }
