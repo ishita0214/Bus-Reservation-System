@@ -38,6 +38,7 @@ export class PaymentComponent implements OnInit {
   date!: string;
   seatsData: number[] = [];
   selectedPaymentMethodId: number | null = null;
+  currUser:any=localStorage.getItem('loginUser');
 
   constructor(
     private seatService: SeatServiceService,
@@ -67,15 +68,22 @@ export class PaymentComponent implements OnInit {
     const selectedOption = this.paymentOptions.find(option => option.id === this.selectedPaymentMethodId);
   
     if (selectedOption) {
-      const reservation = new Reservation();
-      reservation.user_id = 1; // Get user ID from your auth service or context
+      this.seatsData.forEach(element => {
+        console.log(element);
+        
+        const reservation = new Reservation();
+      reservation.user_id = this.currUser; // Get user ID from your auth service or context
       reservation.bus_id = this.currBusId;
       reservation.reservationDate = this.date; // This is already formatted as 'yyyy-mm-dd'
-      reservation.seatNumber = this.seatsData[0]; // Use selected seat numbers here
+      reservation.seatNumber = element; // Use selected seat numbers here
   
   
       // Call the booking method
       this.book(reservation);
+        
+      });
+      
+     
       
       alert(`Proceeding to pay with ${selectedOption.name}`);
     }

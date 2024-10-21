@@ -4,6 +4,8 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { SeatServiceService } from '../../Services/seat-service.service';
 import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Constants } from '../../constants/constant';
 
 @Component({
   selector: 'app-search-bus',
@@ -13,20 +15,30 @@ import { Bus } from '../../Models/bus';
   styleUrl: './search-bus.component.css',
 })
 export class SearchBusComponent {
+[x: string]: any;
   route = inject(Router);
 
   constructor(
     private seatService: SeatServiceService,
-    private busService: BusService
-  ) {}
+    private busService: BusService,
+    private fb:FormBuilder
+  ) {
+  
+  }
   // selectedRoute: any;
 
   ngOnInit() {
     this.getBuses();
   }
 
-  selectBus(bus: any) {
-    this.seatService.selectBus(bus);
+  selectBus(bus: any,id:number|undefined) {
+if(localStorage.getItem('loginUser')){
+  this.route.navigateByUrl('seats/'+id)
+  this.seatService.selectBus(bus);
+}else{
+alert("Login first!")
+}
+    
   }
 
   buses: Bus[] = [];
@@ -106,3 +118,4 @@ export class SearchBusComponent {
     return `${hours}h ${minutes}m`;
   }
 }
+

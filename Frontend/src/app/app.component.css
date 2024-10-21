@@ -4,3 +4,183 @@
     color:rgb(5, 36, 65);
     
 }
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background with opacity */
+}
+
+.modal.show {
+    display: block; /* Show the modal */
+}
+.btn{
+    margin-right: 10px;
+}
+.modal-content {
+    background-color: #fff; /* White background */
+    margin: auto;
+    padding: 30px; /* Increased padding */
+    border-radius: 15px; /* Rounded corners */
+    width: 600px; /* Increased width */
+    max-width: 90%; /* Responsive max width */
+    height: 80%; /* Increased height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+}
+
+.modal-body {
+    padding: 20px; /* Padding for body */
+    display: flex;
+    flex-direction: column; /* Arrange items in a column */
+}
+
+label {
+    margin-bottom: 5px; /* Space between label and input */
+    font-weight: 600; /* Bold labels */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+select {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding inside inputs */
+    margin-bottom: 15px; /* Space below each input */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners for inputs */
+    font-size: 16px; /* Font size for inputs */
+    transition: border 0.3s; /* Smooth border transition */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+select:focus {
+    border: 1px solid #007bff; /* Change border color on focus */
+    outline: none; /* Remove outline */
+}
+
+button[type="submit"] {
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding for buttons */
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Additional spacing for toggle links */
+p {
+    margin-top: 15px; /* Space above toggle links */
+    text-align: center; /* Center align text */
+}
+
+
+.modal-content {
+    background-color: #fff; /* White background */
+    margin: auto;
+    padding: 30px; /* Increased padding */
+    border-radius: 15px; /* Rounded corners */
+    width: 600px; /* Increased width */
+    max-width: 90%; /* Responsive max width */
+    height: 80%; /* Increased height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+}
+
+.btn-close {
+    cursor: pointer;
+}
+
+.modal-header {
+    background-color: #007bff; /* Header color */
+    color: white; /* Header text color */
+    padding: 15px; /* Increased padding */
+    border-radius: 15px 15px 0 0; /* Rounded top corners */
+}
+
+.modal-title {
+    font-weight: bold; /* Bold title */
+    font-size: 1.8rem; /* Larger font size */
+}
+
+.modal-body {
+    padding: 40px; 
+    /* Padding for body */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border: none; /* Remove border */
+}
+
+.btn-link {
+    color: #007bff; /* Link color */
+    text-decoration: underline; /* Underline links */
+}
+
+.btn-link:hover {
+    text-decoration: none; /* Remove underline on hover */
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem; /* Increased spacing for form elements */
+}
+
+.form-label {
+    font-weight: 600; /* Bold labels */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* Full width on smaller screens */
+        height: auto; /* Adjust height for small screens */
+    }
+}
+.form-spacing {
+    margin-bottom: 6rem; /* Adjust the spacing */
+}
+
+/* Increased spacing between username and password fields */
+.modal-body input[type="text"],
+.modal-body input[type="password"] {
+    margin-bottom: 20px; /* Adjust space between username and password */
+}
+
+/* Increased spacing between the password field and the login button */
+.modal-body button[type="submit"] {
+    margin-top: 20px; /* Add space above the login button */
+}
+
+/* Ensure signup form is at the bottom of the modal */
+.modal-body ng-template {
+    margin-top: auto; /* Push the signup template to the bottom */
+}
+.user-info {
+    display: flex;
+    align-items: center;
+  }
+  .user-info h3 {
+    margin: 0 15px;
+    font-size: 1.25rem;
+    color: #343a40; /* Dark color for the username */
+  }
+  .user-info button {
+    margin-left: 10px;
+  }

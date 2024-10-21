@@ -11,11 +11,12 @@ import com.example.bus_reservation_system.entity.User;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins="http://localhost:4200")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/findById/{id}")
     public  Optional<User> getUser(@PathVariable("id") long id){
         return userService.getUser(id);
     }
@@ -28,7 +29,7 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<User> saveUser(@RequestBody User user){
         User newUser = userService.saveUser(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(newUser, HttpStatus.OK);
     }
 
 
@@ -41,5 +42,11 @@ public class UserController {
     public ResponseEntity<User> updateBusSchedule(@PathVariable long id, @RequestBody User user){
         return userService.updateUser(id,user);
     }
+    @GetMapping("/findByName/{name}")
+    public  User findByName(@PathVariable("name") String name){
+        return userService.findByName(name);
+    }
+
+
 
 }

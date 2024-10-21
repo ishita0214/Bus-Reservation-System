@@ -17,12 +17,15 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    public User saveUser(@RequestBody User user) {
+    public User saveUser( User user) {
         return userDao.save(user);
     }
 
     public Optional<User> getUser(Long id){
         return userDao.findById(id);
+    }
+    public User findByName(String name){
+        return userDao.findByName(name);
     }
 
     public List<User> getAllUser(){

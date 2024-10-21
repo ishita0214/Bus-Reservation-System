@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Available Buses</title>
     <link rel="stylesheet" href="search-bus.component.css"> <!-- Link to the CSS file -->
 </head>
+
 <body>
     <div class="container">
         <h1>Available Buses</h1>
@@ -42,18 +44,23 @@
                         <div class="detail time2"><strong>Departure Time:</strong> {{ bus.deptTime }}</div>
                         <div class="detail time-value">{{ calculateTimeDifference(bus.arrTime, bus.deptTime) }}</div>
                         <div class="detail time1"><strong>Arrival Time:</strong> {{ bus.arrTime }}</div>
-                        <div class="detail d2"><strong>Price:</strong> <div class="price">{{ bus.price }} Rs.</div></div>
-                        
+                        <div class="detail d2"><strong>Price:</strong>
+                            <div class="price">{{ bus.price }} Rs.</div>
+                        </div>
+
                     </div>
-                    <button (click)="selectBus(bus)" [routerLink]="['/seats',bus.id]">Book Now</button> <!-- Pass bus object here -->
+                    <button (click)="selectBus(bus,bus.id)">Book Now</button>
+                    <!-- Pass bus object here -->
                 </div>
             </main>
 
-                
 
-                <!-- Add more bus cards as needed -->
-            
+
+            <!-- Add more bus cards as needed -->
+
         </div>
     </div>
+
 </body>
+
 </html>
