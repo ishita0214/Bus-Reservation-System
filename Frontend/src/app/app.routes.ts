@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { SearchBusComponent } from './components/search-bus/search-bus.component';
-import { SeatsComponent } from './components/seats/seats.component';
-import { PassDetailsComponent } from './components/pass-details/pass-details.component';
-import { HomePageComponent } from './home-page/home-page.component';
-import { PaymentComponent } from './components/payment/payment.component';
+import { SearchBusComponent } from './Components/search-bus/search-bus.component';
+import { SeatsComponent } from './Components/seats/seats.component';
+import { HomePageComponent } from './Components/home-page/home-page.component';
+import { PaymentComponent } from './Components/payment/payment.component';
+import { TicketComponent } from './Components/ticket/ticket.component';
 
 export const routes: Routes = [
     {
@@ -15,16 +15,17 @@ export const routes: Routes = [
         component:SearchBusComponent
         
     },
-  
     {
-        path:'details',
-        component:PassDetailsComponent
-    },{
-        path:"payment",
+        path:"payment/:id",
         component:PaymentComponent
     },
     {
         path:'seats/:id',
         component:SeatsComponent
+    },
+
+    {
+        path:'ticket',
+        component:TicketComponent
     }
 ];

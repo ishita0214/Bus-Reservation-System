@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket</title>
+    <link rel="stylesheet" href="ticket.component.css">
+</head>
+
+<body>
+    <main *ngIf="reservation">
+        <section class="ticket-container">
+            <div class="ticket-header">
+                <h2> Ticket Confirmation Details</h2>
+            </div>
+
+            <div class="ticket-details">
+                <div class="ticket-column">
+                    <p><strong>Name:</strong> {{ ticket.name }}</p>
+                    <p><strong>Gender:</strong> {{ ticket.gender }}</p>
+                    <p><strong>Contact:</strong> {{ ticket.contactDetails }}</p>
+                    <p><strong>State:</strong> {{ ticket.stateOfResidence }}</p>
+                </div>
+
+                <div class="ticket-column">
+                    <p><strong>From:</strong> {{ routeData.source }}</p>
+                    <p><strong>To:</strong> {{ routeData.destination }}</p>
+                    <p><strong>Bus No:</strong> {{ busData.busNumber }}</p>
+                    <p><strong>Operator:</strong> {{ busData.operator }}</p>
+                </div>
+            </div>
+
+            <div class="schedule-details">
+                <p><strong>Date:</strong> {{  reservation.reservationDate }}</p>
+                <p><strong>Departure:</strong> {{ busData.deptTime }}</p>
+    
+                <p><strong>Arrival:</strong> {{ busData.arrTime }}</p>
+                <p><strong>Seat No:</strong> {{ reservation.seatNumber }}</p>
+                <p><strong>Total Fare:</strong> {{ busData.price }} Rs.</p>
+            </div>
+
+            <div class="ticket-footer"> 
+               <p>  </p>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Reservation System</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div>
+      <header class="my-4">
+        <h3 class="text-center">Bus Reservation System</h3>
+      </header>
+      <section>
+        <div class="container mt-5">
+          <form [formGroup]="busForm" (ngSubmit)="getBuses()">
+            <div class="form-group">
+              <p-dropdown
+                formControlName="source"
+                [options]="source"
+                [placeholder]="'Select your departure city'"
+                [editable]="true"
+              />
+
+              <div
+                class="text-white font-weight-bold"
+                *ngIf="
+                  busForm.get('source')?.touched &&
+                  busForm.get('source')?.invalid
+                "
+                style="font-size: 1.2rem"
+              >
+                * Departure city is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <p-dropdown
+                formControlName="destination"
+                [options]="destination"
+                [placeholder]="'Select your arrival city'"
+                [editable]="true"
+              />
+
+              <div
+                class="text-white font-weight-bold"
+                *ngIf="
+                  busForm.get('destination')?.touched &&
+                  busForm.get('destination')?.invalid
+                "
+                style="font-size: 1.2rem"
+              >
+                * Arrival city is required
+              </div>
+            </div>
+            <div>
+              <p-calendar
+                class="form-date"
+                formControlName="date"
+                [showIcon]="true"
+                inputId="buttondisplay"
+                [placeholder]="'Select your travel date'"
+                [showOnFocus]="false"
+              >
+              </p-calendar>
+
+              <div
+                class="text-white font-weight-bold"
+                *ngIf="
+                  busForm.get('date')?.touched && busForm.get('date')?.invalid
+                "
+                style="font-size: 1.2rem; margin-left: 60%"
+              >
+                * Date is required
+              </div>
+            </div>
+
+            <br /><br /><br />
+
+            <div>
+              <button
+                type="submit"
+                class="button btn btn-success text-black"
+                [disabled]="busForm.invalid"
+              >
+                SEARCH BUSES
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
