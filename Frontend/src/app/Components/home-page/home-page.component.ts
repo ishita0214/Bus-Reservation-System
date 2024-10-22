@@ -46,8 +46,8 @@ export class HomePageComponent implements OnInit {
 
   initializeForm() {
     this.busForm = this.fb.group({
-      source: ['', Validators.required],         
-      destination: ['', Validators.required],  
+      source: ['Select your departure city', Validators.required],         
+      destination: ['Select your arrival city', Validators.required],  
       date: ['', Validators.required],           
     });
   }

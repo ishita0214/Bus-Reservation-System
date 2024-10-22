@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { SearchBusComponent } from "./components/search-bus/search-bus.component";
-import { HomePageComponent } from "./components/home-page/home-page.component";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from './Services/user.service';
@@ -10,7 +8,7 @@ import { User } from './Models/user';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SearchBusComponent,CommonModule,FormsModule,ReactiveFormsModule,RouterLink,RouterModule],
+  imports: [RouterOutlet,CommonModule,FormsModule,ReactiveFormsModule,RouterLink,RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

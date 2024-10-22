@@ -14,7 +14,7 @@ export class BusService {
   constructor(private http: HttpClient) { }
 
   getBus(id: number): Observable<Bus> {
-    return this.http.get<Bus>(`${this.apiUrl}/findById/${id}`);
+    return this.http.get<Bus>(`${this.apiUrl}/find/${id}`);
   }
 
   getAllBuses(): Observable<Bus[]> {
