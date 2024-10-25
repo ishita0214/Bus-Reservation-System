@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="bus-name">{{ currBus!.operator }}</div>
+      <div class="route-info">
+        <div class="route">
+          <span>{{ busroute!.source }}</span> ➔
+          <span>{{ busroute.destination }}</span>
+        </div>
+        <div class="times">
+          <div>Departure: {{ currBus.deptTime }}</div>
+          <div>Arrival: {{ currBus.arrTime }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Seats Available</h1>
+      <div class="seat-map">
+        <div class="row">
+          <div
+          class="seat onetwo bgap"
+          *ngFor="let seat of seats.slice(0, 9)"
+          [ngClass]="{
+            available: !seat.booked,
+            booked: isSeatBooked(seat),  
+            selected: seat.selected
+          }"
+          (click)="!isSeatBooked(seat) ? toggleSeat(seat) : null" 
+          
+      
+        >
+          {{ seat.number }}
+        </div>
+        
+        </div>
+        <div class="row">
+          <div
+            class="seat onetwo bgap"
+            *ngFor="let seat of seats.slice(9, 18)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: isSeatBooked(seat),
+              selected: seat.selected
+              
+            }"
+            (click)="!isSeatBooked(seat) ? toggleSeat(seat) : null" 
+            
+           
+          >
+            {{ seat.number }}
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="seat onetwo centre"
+            *ngFor="let seat of seats.slice(18, 27)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: isSeatBooked(seat),
+              selected: seat.selected
+            }"
+            (click)="!isSeatBooked(seat) ? toggleSeat(seat) : null" 
+            
+            
+          >
+            {{ seat.number }}
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="seat onetwo bgap"
+            *ngFor="let seat of seats.slice(27, 36)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: isSeatBooked(seat),
+              selected: seat.selected
+            }"
+            (click)="!isSeatBooked(seat) ? toggleSeat(seat) : null" 
+            
+          >
+            {{ seat.number }}
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="seat onetwo bgap"
+            *ngFor="let seat of seats.slice(36, 45)"
+            [ngClass]="{
+              available: !seat.booked,
+              booked: isSeatBooked(seat),
+              selected: seat.selected
+            }"
+            (click)="!isSeatBooked(seat) ? toggleSeat(seat) : null" 
+            
+          >
+            {{ seat.number }}
+          </div>
+        </div>
+      </div>
+      <div class="seat-info">
+        <div class="legend">
+          <div class="seat available"></div>
+          <span>Available Seat</span>
+          <div class="seat booked"></div>
+          <span>Booked Seat</span>
+          <div class="seat selected"></div>
+          <span>Selected Seat</span>
+        </div>
+      </div>
+    </div>
+    <div class="total-fare-container">
+      <div class="total-fare">Total Fare: Rs {{ totalFare }}</div>
+      <button
+      type="button"
+      class="btn btn-primary booking"
+      data-bs-toggle="modal"
+      data-bs-target="#reservationModal"
+      [disabled]="!showButton || selectedSeats.length === 0"
+      >
+        Continue booking
+      </button>
+    </div>
+
+    <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg custom-modal" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h4 class="text-center mb-4 heading">Passenger Details</h4>
+    
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="bg-light p-4 rounded shadow-sm">
+              <div formArrayName="details">
+                <div *ngFor="let seat of selectedSeats; let i = index" [formGroupName]="i" class="card mb-3">
+                  <div class="card-header">Seat Number: {{ seat.number }}</div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label>Name:</label>
+                      <input class="form-control" placeholder="Enter name" formControlName="name" />
+                    </div>
+    
+                    <div class="form-group gender">
+                      <label>Gender:</label>
+                      <div class="form-check">
+                        <input type="radio" id="male-{{ seat.number }}" value="Male" class="form-check-input" formControlName="gender" />
+                        <label for="male-{{ seat.number }}" class="form-check-label">Male</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" id="female-{{ seat.number }}" value="Female" class="form-check-input" formControlName="gender" />
+                        <label for="female-{{ seat.number }}" class="form-check-label">Female</label>
+                      </div>
+                      <div class="form-check">
+                        <input type="radio" id="other-{{ seat.number }}" value="Other" formControlName="gender" class="form-check-input" />
+                        <label for="other-{{ seat.number }}" class="form-check-label">Other</label>
+                      </div>
+                    </div>
+    
+                    <div class="form-group">
+                      <label for="age-{{ seat.number }}">Age:</label>
+                      <input id="age-{{ seat.number }}" type="number" class="form-control" placeholder="Enter age" formControlName="age" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- Other fields -->
+              <!-- State of Residence -->
+              <div class='form-group'>
+                <label for='stateOfResidence'>State of Residence:</label>
+                <input id='stateOfResidence'  class='form-control' formControlName="state" placeholder='Enter your state' />
+              </div>
+    
+              <!-- Contact Details -->
+              <div class='form-group'>
+                <label for='contactDetails'>Contact Details:</label>
+                <div class='input-group mb-3'>
+                  <span class='input-group-text'>+91</span>
+                  <input id='contactDetails' class='form-control' formControlName="phone" placeholder='Enter your contact number' />
+                </div>
+              </div>
+    
+            
+    
+              <!-- Modal footer -->
+              <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+                <button type='submit' class='btn btn-primary'data-bs-dismiss='modal'>Continue to payment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

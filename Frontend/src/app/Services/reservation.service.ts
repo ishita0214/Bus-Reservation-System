@@ -32,4 +32,7 @@ export class ReservationService {
   getReservations(userId: number, busId: number): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.baseUrl}/search/userId/${userId}/busId/${busId}`);
   }
+  getBookedSeats(busId:number,date:string):Observable<number[]>{
+    return this.http.get<number[]>(`${this.baseUrl}/bookedSeats/${busId}/${date}`);
+  }
 }

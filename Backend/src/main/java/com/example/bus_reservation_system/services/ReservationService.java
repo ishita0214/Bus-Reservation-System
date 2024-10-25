@@ -33,5 +33,9 @@ public class ReservationService {
 
     public List<Reservation> getReservationsByUserIdAndBusId(Long userId, Long busId) {
         return reservationDao.findReservationByUserIdAndBusId(userId,busId);
+
+    }
+    public List<Integer> getBookedSeats(long bus_id, String date){
+       return reservationDao.getBookedSeats(bus_id,date);
     }
 }

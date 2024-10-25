@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { SearchBusComponent } from "./components/search-bus/search-bus.component";
-import { HomePageComponent } from "./components/home-page/home-page.component";
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from './Services/user.service';
@@ -10,16 +8,16 @@ import { User } from './Models/user';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SearchBusComponent,CommonModule,FormsModule,ReactiveFormsModule,RouterLink,RouterModule],
+  imports: [RouterOutlet,CommonModule,FormsModule,ReactiveFormsModule,RouterLink,RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
   title = 'Frontend';
-  isModalOpen: boolean = false; // Modal visibility state
-  isLogin: boolean = true; // Toggle between login and signup
+  isModalOpen: boolean = false; 
+  isLogin: boolean = true; 
   userID:any=localStorage.getItem('loginUser')
-  currUser: User | null = null; // Initialize as null
+  currUser: User | null = null; 
     constructor(private userService:UserService,private route:Router){}
   ngOnInit(): void {  
     this.getCurrUser();
@@ -43,14 +41,19 @@ export class AppComponent implements OnInit{
 
   closeModal() {
     this.isModalOpen = false; // Close the modal
+    this.toggleToLogin()
+    this.signUpForm.reset()
   }
 
   toggleToSignup() {
     this.isLogin = false; // Switch to signup form
+    
   }
 
   toggleToLogin() {
     this.isLogin = true; // Switch back to login form
+    this.signUpForm.reset
+
   }
 
   onLogin() {
@@ -88,10 +91,11 @@ export class AppComponent implements OnInit{
       
     });
     
-    
+    this.toggleToLogin()
     this.closeModal(); // Close modal after signup
   }
   logout() {
+    console.log(this.currUser);
     localStorage.removeItem('loginUser');
     this.currUser = null; // Clear current user immediately
     this.userID = null; // Clear userID to reflect logged-out state

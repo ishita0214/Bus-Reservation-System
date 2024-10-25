@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
 import { RouteService } from '../../Services/route.service';
 import { DropdownModule } from 'primeng/dropdown';
+import { TicketService } from '../../Services/ticket.service';
 
 @Component({
   selector: 'app-home-page',
@@ -27,7 +28,8 @@ export class HomePageComponent implements OnInit {
     private router: Router,
     private busService: BusService,
     private routeService: RouteService,
-    private seatService: SeatServiceService
+    private seatService: SeatServiceService,
+    private ticketService: TicketService
   ) {
     this.busForm = this.fb.group({
       source: [null],
@@ -38,6 +40,16 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRoutes();
+    this.initializeForm();
+  }
+
+
+  initializeForm() {
+    this.busForm = this.fb.group({
+      source: ['Select your departure city', Validators.required],         
+      destination: ['Select your arrival city', Validators.required],  
+      date: ['', Validators.required],           
+    });
   }
 
   loadRoutes() {
@@ -53,25 +65,24 @@ export class HomePageComponent implements OnInit {
   }
 
   private formatDate(date: Date | null): string {
-    if (!date) return ''; // Return empty string if date is null or undefined
+    if (!date) return ''; 
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const day = String(date.getDate()).padStart(2, '0');
   
-    return `${year}-${month}-${day}`; // Format as yyyy-mm-dd
+    return `${year}-${month}-${day}`; 
   }
   
   getBuses() {
     if (this.busForm.valid) {
-      const formValues = this.busForm.value;
-      console.log('Selected departure city:', formValues.source);
-      console.log('Selected destination city:', formValues.destination);
+      const formValues = this.busForm.value;    
+      console.log("Selected source",formValues.source);
+      console.log("Selected destination", formValues.destination);
+      //Sending source and destination to ticket service
+      this.ticketService.setRouteData(this.busForm.value);
 
       const formattedDate = this.formatDate(formValues.date);
-      console.log(typeof(formattedDate));
-      
-      this.seatService.date.next(formattedDate); // Send formatted date to seat service
-
+      this.seatService.date.next(formattedDate);
 
       this.busService
         .getBuses(formValues.source, formValues.destination, formattedDate)
@@ -81,7 +92,7 @@ export class HomePageComponent implements OnInit {
             console.log('Fetched buses:', this.buses);
             this.router.navigateByUrl('search');
             this.busService.buses$.next(this.buses);
-            this.seatService.date.next(formattedDate); // Send formatted date to seat service
+            this.seatService.date.next(formattedDate);
           },
           error: (error) => {
             console.error('Error fetching buses', error);

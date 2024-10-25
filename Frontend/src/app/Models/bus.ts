@@ -1,4 +1,3 @@
-// src/app/models/bus.model.ts
 export class Bus {
     id?: number;
     busNumber: string;
@@ -8,7 +7,7 @@ export class Bus {
     operator: string;
     price:number;
     route_id:number;
-    // Constructor to initialize the Bus properties
+   
     constructor(
       busNumber: string,
       busType: string,

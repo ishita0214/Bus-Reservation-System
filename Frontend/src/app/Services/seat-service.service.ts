@@ -8,7 +8,7 @@ import { Bus } from '../Models/bus';
 })
 export class SeatServiceService {
 
-  private baseUrl = 'http://localhost:8080/api/seats'; // Adjust this to your backend URL
+  private baseUrl = 'http://localhost:8080/api/seats'; 
 
   constructor(private http: HttpClient) {}
 
@@ -23,7 +23,7 @@ export class SeatServiceService {
    private selectedBusSource = new BehaviorSubject<Bus | null>(null);
    currentBus = this.selectedBusSource.asObservable();
 
-   date: BehaviorSubject<string> = new BehaviorSubject<string>(''); // Initialize as an empty string
+   date: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
    seatSelected: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 

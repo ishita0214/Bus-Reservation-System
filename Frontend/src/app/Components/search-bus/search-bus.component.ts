@@ -42,18 +42,6 @@ alert("Login first!")
   }
 
   buses: Bus[] = [];
-  // selectedBus: Bus | null = null;
-
-  // loadAllBuses(): void {
-  //   this.busService.getAllBuses().subscribe(
-  //     (data: Bus[]) => {
-  //       this.buses = data;
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching buses:', error);
-  //     }
-  //   );
-  // }
 
   addBus(bus: Bus): void {
     this.busService.createBus(bus).subscribe(
@@ -110,7 +98,7 @@ alert("Login first!")
   calculateTimeDifference(arrivalTime: string, departureTime: string): string {
     const arrTime = new Date(`1970-01-01T${arrivalTime}Z`);
     const deptTime = new Date(`1970-01-01T${departureTime}Z`);
-    const diff = (arrTime.getTime() - deptTime.getTime()) / 1000; // difference in seconds
+    const diff = (arrTime.getTime() - deptTime.getTime()) / 1000; 
 
     const hours = Math.floor(diff / 3600);
     const minutes = Math.floor((diff % 3600) / 60);
