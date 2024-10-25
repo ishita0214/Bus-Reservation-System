@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -19,11 +20,20 @@ import { BusService } from '../../Services/bus.service';
 import { RouteService } from '../../Services/route.service';
 import { Route } from '../../Models/route.model';
 import { TicketService } from '../../Services/ticket.service';
+import { ReservationService } from '../../Services/reservation.service';
+import { Ticket } from '../../Models/ticket';
 
 interface Seat {
   number: number;
   booked: boolean;
   selected: boolean;
+  color?: string;
+}
+interface Passenger {
+  name: string;
+  age: number;
+  gender: string;
+  seatNumber: number;
 }
 
 @Component({
@@ -35,6 +45,7 @@ interface Seat {
     ReactiveFormsModule,
     RouterLink,
     RouterModule,
+
   ],
   templateUrl: './seats.component.html',
   styleUrl: './seats.component.css',
@@ -45,7 +56,9 @@ export class SeatsComponent implements OnInit {
   currBusId!: number;
   currBus!: Bus;
   busroute!: Route;
+  passengers: Passenger[] = []
   date!: string;
+  bookedSeats!: number[];
   seats: Seat[] = [
     { number: 1, booked: false, selected: false },
     { number: 2, booked: false, selected: false },
@@ -99,10 +112,10 @@ export class SeatsComponent implements OnInit {
       this.seats.filter((seat) => seat.selected).length * this.currBus.price
     );
   }
-
+  myForm!: FormGroup;
   selectedBus: any = null;
 
-  reservationForm!: FormGroup;
+
 
   constructor(
     private fb: FormBuilder,
@@ -110,104 +123,85 @@ export class SeatsComponent implements OnInit {
     private route: ActivatedRoute,
     private busService: BusService,
     private routeService: RouteService,
-    private ticketService:TicketService
-  ) {}
-
-  ngOnInit(): void {
-    this.seatService.currentBus.subscribe((bus: any) => {
-      this.selectedBus = bus;
-    });
-
-    this.reservationForm = this.fb.group({
-      name: ['', Validators.required],
-      gender: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(1), Validators.max(120)]],
-      stateOfResidence: ['', Validators.required],
-      contactDetails: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]*$')],
-      ],
-      donation: [false],
-      insurance: [false],
-    });
-
+    private ticketService: TicketService,
+    private reservationService: ReservationService
+  ) {
     this.route.params.subscribe((data) => {
       this.currBusId = +data['id'];
       this.getCurrentBus();
+      this.getDate();
+      this.reservationService.getBookedSeats(this.currBusId, this.date).subscribe((data) => {
+        this.bookedSeats = data;
+        console.log(this.bookedSeats);
+        ;
+
+      })
     });
-    
-    this.getDate();
+    this.myForm = this.fb.group({
+      details: this.fb.array([]), // Initialize an empty FormArray
+      state:[''],
+      phone:['']
+    });
+
+  }
+  get details(): FormArray {
+    return this.myForm.get('details') as FormArray;
+  }
+  ngOnInit(): void {
+
   }
 
   onSubmit() {
-    if (this.reservationForm.valid) {
-      console.log(this.reservationForm.value);
-      console.log('Data saved');
-      console.log(this.selectedSeats);
+    // Navigate to payment after processing all tickets
+console.log(this.details.value);
 
-      this.ticketService.setTicketData(this.reservationForm.value);
+    this.ticketService.passengers.next(this.details.value);
+    this.ticketService.state.next(this.myForm.value.state)
 
-      
-      this.router.navigateByUrl('payment/' + this.currBusId);
-    }
+    this.ticketService.contact.next(this.myForm.value.phone)
+
+    this.router.navigateByUrl('payment/'+this.currBusId)
+
+   
+
   }
-  selectedSeats: Seat[] = []; 
+
+  selectedSeats: Seat[] = [];
 
   toggleSeat(seat: Seat) {
     this.showButton = true;
-
+  
     if (!seat.booked) {
       seat.selected = !seat.selected;
-
-     
+  
       if (seat.selected) {
         this.selectedSeats.push(seat);
+        this.addPassenger(true); // Add passenger when selecting a seat
       } else {
         this.selectedSeats = this.selectedSeats.filter(
           (s) => s.number !== seat.number
         );
+        this.addPassenger(false); // Remove passenger when deselecting a seat
       }
-
-      
+  
       const selectedSeatNumbers: number[] = this.selectedSeats.map((s) => {
         return s.number;
       });
-
+  
       console.log(selectedSeatNumbers);
-
       this.seatService.seatSelected.next(selectedSeatNumbers);
     }
   }
 
-  createReservationForm() {
-    const seatForms = this.selectedSeats.map((seat) => {
-      return this.fb.group({
-        name: ['', Validators.required],
-        gender: ['', Validators.required],
-        age: [
-          '',
-          [Validators.required, Validators.min(1), Validators.max(120)],
-        ],
-      });
-    });
 
-    this.reservationForm = this.fb.group({
-      seats: this.fb.array(seatForms),
-      stateOfResidence: ['', Validators.required],
-      contactDetails: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]*$')],
-      ],
-      donation: [false],
-    });
-  }
+
 
   getCurrentBus() {
     this.busService.getBus(this.currBusId).subscribe(
       (data: Bus) => {
         this.currBus = data;
-        console.log("getting current bus data: ",data);
-        
+        console.log("getting current bus data: ", data);
+
         this.ticketService.setBusData(data);
 
         this.getRoute();
@@ -239,5 +233,27 @@ export class SeatsComponent implements OnInit {
     });
   }
   router = inject(Router);
+  isSeatBooked(seat: Seat): boolean {
+    return this.bookedSeats.includes(seat.number);
+  }
+
+ 
+addPassenger(isAdding: boolean) {
+  if (isAdding) {
+    // Add a new passenger form for each selected seat
+    const passengerForm = this.fb.group({
+      name: ['', Validators.required],
+      age: ['', [Validators.required, Validators.min(1)]],
+      gender: ['', Validators.required]
+    });
+
+    this.details.push(passengerForm); // Add new passenger form to the FormArray
+  } else {
+    // Remove the last passenger form when deselecting
+    if (this.details.length > 0) {
+      this.details.removeAt(this.details.length - 1);
+    }
+  }
+}
 
 }

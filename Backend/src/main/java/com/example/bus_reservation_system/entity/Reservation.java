@@ -29,5 +29,10 @@ public class Reservation {
 
 
 
+    @Column(nullable = false)
+    private long bookingId;
+
+
+
 
 }

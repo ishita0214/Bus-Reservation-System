@@ -23,6 +23,10 @@ export class TicketService {
   private busData = new BehaviorSubject<Bus | null>(null);
   currentBusData$ = this.busData.asObservable();
 
+  public passengers = new BehaviorSubject<any[]>([]);
+  public state = new BehaviorSubject<string>('');
+  public contact =new BehaviorSubject<string>('');
+
   private routeData = new BehaviorSubject<Route | null> (null);
   currentRoute$ = this.routeData.asObservable();
 
@@ -40,8 +44,6 @@ export class TicketService {
   
 
   saveTicket(ticketData: Ticket): Observable<Ticket> {
-    console.log("Ticket saved successfully! ",ticketData);
-    
     return this.http.post<Ticket>(`${this.baseUrl}/saveTicket`, ticketData)
   }
 }

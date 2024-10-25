@@ -47,4 +47,12 @@ public class ReservationController {
             @PathVariable("busId") long busId) {
         return reservationService.getReservationsByUserIdAndBusId(userId,busId);
     }
+
+
+
+    @GetMapping("/bookedSeats/{bus_id}/{date}")
+    public List<Integer> getBookedSeats(@PathVariable("bus_id") long bus_id,
+                                        @PathVariable("date") String date){
+         return reservationService.getBookedSeats(bus_id,date);
+    }
 }

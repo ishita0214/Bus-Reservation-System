@@ -14,10 +14,10 @@ import { User } from './Models/user';
 })
 export class AppComponent implements OnInit{
   title = 'Frontend';
-  isModalOpen: boolean = false; // Modal visibility state
-  isLogin: boolean = true; // Toggle between login and signup
+  isModalOpen: boolean = false; 
+  isLogin: boolean = true; 
   userID:any=localStorage.getItem('loginUser')
-  currUser: User | null = null; // Initialize as null
+  currUser: User | null = null; 
     constructor(private userService:UserService,private route:Router){}
   ngOnInit(): void {  
     this.getCurrUser();
@@ -41,14 +41,19 @@ export class AppComponent implements OnInit{
 
   closeModal() {
     this.isModalOpen = false; // Close the modal
+    this.toggleToLogin()
+    this.signUpForm.reset()
   }
 
   toggleToSignup() {
     this.isLogin = false; // Switch to signup form
+    
   }
 
   toggleToLogin() {
     this.isLogin = true; // Switch back to login form
+    this.signUpForm.reset
+
   }
 
   onLogin() {
@@ -86,10 +91,11 @@ export class AppComponent implements OnInit{
       
     });
     
-    
+    this.toggleToLogin()
     this.closeModal(); // Close modal after signup
   }
   logout() {
+    console.log(this.currUser);
     localStorage.removeItem('loginUser');
     this.currUser = null; // Clear current user immediately
     this.userID = null; // Clear userID to reflect logged-out state

@@ -13,7 +13,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private long reservation_id;
 
     @Column(nullable = false)
@@ -31,6 +31,9 @@ public class Ticket {
     @Column(nullable = false)
     private String contactDetails;
 
-    @Column(nullable = false)
-    private boolean donation;
+
+
+
+
+
 }

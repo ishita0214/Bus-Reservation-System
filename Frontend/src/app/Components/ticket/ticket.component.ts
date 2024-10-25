@@ -61,15 +61,8 @@ export class TicketComponent implements OnInit {
       }
     })
 
-    this.saveTicketData();
   }
 
-  saveTicketData(){
-    this.ticketService.saveTicket(this.ticket).subscribe({
-      next:(data)=>{
-        alert("Ticket saved successfully!!!")
-      }
-    })
-  }
+ 
 
 }
