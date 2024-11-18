@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>My Bookings</h1>
+        <div class="content">
+            <main class="flight-list">
+                <div *ngFor="let booking of bookings" class="flight-card">
+                    <div class="flight-card-header">
+                        <div class="route">
+                            <span class="source">{{ booking.source }}</span>
+                            <span class="arrow">→</span>
+                            <span class="destination">{{ booking.destination }}</span>
+                        </div>
+                        <div class="booking-info">
+                            <div class="booking-id"><strong>Booking ID:</strong> {{ booking.bookingId }}</div>
+                            <div class="reservation-date"><strong>{{ booking.reservationDate }}</strong></div>
+                        </div>
+                    </div>
+                    <div class="flight-card-content">
+                      
+                        <div class="details">
+                            <div class="airline">{{ booking.operator }} • {{ booking.busNumber }}</div>
+                        </div>
+                    </div>
+                    <a (click)="onClick(booking.bookingId,booking)" class="view-details-link">View Details →</a>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

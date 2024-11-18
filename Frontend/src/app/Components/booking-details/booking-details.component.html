@@ -1,0 +1,65 @@
+<div *ngIf="bookingDetails" class="booking-container">
+    <div class="header">
+      <h3>Booking ID: <span>{{ bookingDetails.bookingId }}</span></h3>
+      
+      <div class="actions">
+        <button class="btn" (click)="downloadETicket()">Download E-Ticket</button>
+        <button class="btn secondary" (click)="toggleCheckboxes()">Cancel Ticket</button>
+      </div>
+    </div>
+  
+    <div class="booking-summary">
+      <h4>{{ bookingDetails.source }} → {{ bookingDetails.destination }}</h4>
+      <p class="date">{{ bookingDetails.reservationDate }}</p>
+      <div class="flight-info">
+        <div class="time-block">
+          <p class="time">{{ bookingDetails.deptTime }}</p>
+          <p class="location">{{ bookingDetails.source }} Terminal</p>
+        </div>
+        <div class="time-arrow">
+          <p>→</p>
+        </div>
+        <div class="time-block">
+          <p class="time">{{ bookingDetails.arrTime }}</p>
+          <p class="location">{{ bookingDetails.destination }} Terminal</p>
+        </div>
+      </div>
+      <div class="details">
+        <p><strong>Operator:</strong> {{ bookingDetails.operator }}</p>
+        <p><strong>Bus Number:</strong> {{ bookingDetails.busNumber }}</p>
+      </div>
+    </div>
+  
+    <div class="passenger-list">
+      <h5>Passenger Details</h5>
+      <table>
+        <thead>
+          <tr>
+            <th *ngIf="showCheckboxes"></th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Seat Number</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ticket of details">
+            <td *ngIf="showCheckboxes">
+              <input type="checkbox" [(ngModel)]="ticket.selected" />
+            </td>
+            <td>{{ ticket.name }}</td>
+            <td>{{ ticket.age }}</td>
+            <td>{{ ticket.gender }}</td>
+            <td>{{ ticket.seatNumber }}</td>
+            <td>{{ ticket.contactDetails }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   <!-- Confirm Cancellation Section -->
+ <div *ngIf="showCheckboxes" class="confirm-cancel-container">
+  <button class="btn confirm-cancel-btn" (click)="cancelTicket()">Confirm Cancellation</button>
+</div>
+  </div>
+  

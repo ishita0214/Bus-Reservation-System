@@ -16,4 +16,8 @@ public class TicketService {
     public Ticket saveAll(Ticket  ticket){
         return ticketDao.save(ticket);
     }
+
+    public void deleteTicket(long id){
+        ticketDao.deleteById(id);
+    }
 }

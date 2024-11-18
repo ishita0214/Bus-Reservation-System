@@ -46,4 +46,8 @@ export class TicketService {
   saveTicket(ticketData: Ticket): Observable<Ticket> {
     return this.http.post<Ticket>(`${this.baseUrl}/saveTicket`, ticketData)
   }
+
+  deleteTicket(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/deleteTicket/${id}`);
+  }
 }

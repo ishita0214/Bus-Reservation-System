@@ -37,14 +37,14 @@ export class PaymentComponent implements OnInit {
   date!: string;
   seatsData: number[] = [];
   selectedPaymentMethodId: number | null = null;
-  currUser: any = localStorage.getItem('loginUser');
+  currUser = Number(localStorage.getItem('loginUser'));
   bookingId!: number;
   passengers: any[] = [];
   state!: string;
   contact!: string
   reservationId: number[] = []
   ticketSaved: boolean = false
-  tosave:boolean=false
+  tosave: boolean = false
   constructor(
     private seatService: SeatServiceService,
     private routeService: RouteService,
@@ -79,6 +79,8 @@ export class PaymentComponent implements OnInit {
     this.ticketService.state.subscribe((data) => {
       this.state = data
     });
+    console.log(this.currUser);
+
   }
 
   selectPaymentMethod(id: number) {
@@ -90,18 +92,17 @@ export class PaymentComponent implements OnInit {
 
     if (selectedOption) {
       this.bookingId = Math.floor(Math.random() * 90000) + 10000;
-      console.log(this.bookingId);
 
       // Create an array to hold reservations
       const reservations: Reservation[] = [];
 
       this.seatsData.forEach(element => {
-        const reservation = new Reservation();
-        reservation.user_id = this.currUser;
+        const reservation = new Reservation(1);
         reservation.bus_id = this.currBusId;
         reservation.reservationDate = this.date;
         reservation.seatNumber = element;
         reservation.bookingId = this.bookingId;
+console.log(reservation);
 
         reservations.push(reservation); // Store each reservation
       });
@@ -169,7 +170,7 @@ export class PaymentComponent implements OnInit {
       console.error('Current bus or route ID is undefined');
     }
   }
-  index:number=0
+  index: number = 0
 
   addPassengers() {
     this.passengers.forEach((data) => {
@@ -179,25 +180,24 @@ export class PaymentComponent implements OnInit {
       ticket.gender = data.gender;
       ticket.stateOfResidence = this.state; // Assuming state is set elsewhere
       ticket.contactDetails = this.contact; // Assuming contact is set elsewhere
-     
-          ticket.reservation_id = this.reservationId[this.index]
-          this.index++
-          console.log(ticket);
 
-          this.ticketService.saveTicket(ticket).subscribe(()=>{
-         
-            console.log(this.index);
-            
-          });
+      ticket.reservation_id = this.reservationId[this.index]
+      this.index++
+   
 
-       
+      this.ticketService.saveTicket(ticket).subscribe(() => {
 
-     
-     
+
+      });
+
+
+
+
+
       // Here you would typically save or process the ticket
       // Example: this.ticketService.saveTicket(ticket).subscribe(...);
     });
-  
+
   }
 
 }

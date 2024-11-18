@@ -24,4 +24,10 @@ public class TicketController {
         Ticket savedPassengers = ticketService.saveAll(passengers);
         return ResponseEntity.ok(savedPassengers);
     }
+
+    @DeleteMapping("/deleteTicket/{id}")
+    public ResponseEntity<?> deletePassengers(@PathVariable("id") long id) {
+        ticketService.deleteTicket(id);
+        return ResponseEntity.ok().body("{\"message\": \"deleted\"}");
+    }
 }

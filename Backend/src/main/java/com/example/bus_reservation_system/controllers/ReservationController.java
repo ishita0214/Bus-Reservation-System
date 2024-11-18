@@ -3,6 +3,9 @@ package com.example.bus_reservation_system.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.bus_reservation_system.entity.Booking;
+import com.example.bus_reservation_system.entity.Details;
+import com.example.bus_reservation_system.entity.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +30,10 @@ public class ReservationController {
     @GetMapping("/getAllTicket/{busId}")
     public List<Reservation> getAllTicket(@PathVariable("busId") Iterable<Long> busId){
         return reservationService.getAllTicket(busId);
+    }
+    @GetMapping("/getTicketBySeatNumber/{seat}")
+    public List<Reservation> getAllTicket(@PathVariable("seat") int seat){
+        return reservationService.findAllBySeatNumber(seat);
     }
 
     @PostMapping("/createTicket")
@@ -54,5 +61,22 @@ public class ReservationController {
     public List<Integer> getBookedSeats(@PathVariable("bus_id") long bus_id,
                                         @PathVariable("date") String date){
          return reservationService.getBookedSeats(bus_id,date);
+    }
+
+    @GetMapping("/getTicketsByBookingId/{bookingId}")
+    public List<Reservation> getTicketsBYBookingId(@PathVariable("bookingId") long bookingId){
+         return reservationService.findAllByBookingId(bookingId);
+    }
+    @GetMapping("/getTicketsByUserId/{UserId}")
+    public List<Reservation> getTicketsByUserId(@PathVariable("UserId") long UserId){
+        return reservationService.findAllByUserId(UserId);
+    }
+    @GetMapping("/getUserBookings/{userId}")
+    public List<Booking> getUserBookings(@PathVariable("userId") long userId){
+         return reservationService.getUserBookings(userId);
+    }
+    @GetMapping("/getPassengerDetails/{bookingId}")
+    public List<Details> getPassengerDetails(@PathVariable("bookingId") long bookingId){
+        return reservationService.getPassengerDetails(bookingId);
     }
 }

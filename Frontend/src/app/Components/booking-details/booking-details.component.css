@@ -1,0 +1,197 @@
+.booking-container {
+    width: 1000px;
+    height:580px;/* Increased size for the card */
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Increased padding */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative; /* For positioning the dropdown */
+  }
+  
+  .header h3 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 20px;
+  }
+  
+  .header span {
+    color: #333;
+  }
+  
+  .actions .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .actions .btn.secondary {
+    background-color: #6c757d;
+  }
+  
+  .actions .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .actions .btn.secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .booking-summary h4 {
+    margin: 0;
+    font-size: 24px; /* Bigger font size */
+    color: #333;
+    font-weight: 700; /* Bold */
+  }
+  
+  .booking-summary h4 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .date {
+    color: #555;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+  
+  .flight-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .time-block {
+    text-align: center;
+  }
+  
+  .time {
+    font-size: 20px;
+    font-weight: 700;
+    color: #007bff;
+  }
+  
+  .location {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .time-arrow {
+    font-size: 24px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .details p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .passenger-list {
+    margin-top: 20px;
+  }
+  
+  .passenger-list h5 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+  }
+  
+  thead {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:hover {
+    background-color: #eaf4ff;
+  }
+  
+  tbody td {
+    color: #555;
+  }
+  .options {
+    position: relative;
+  }
+  
+  .options-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    background: #ffffff;
+    border: none;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f2f2f2;
+  }
+  .confirm-cancel-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .confirm-cancel-btn {
+    background-color: #d9534f; /* or any color you prefer */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  

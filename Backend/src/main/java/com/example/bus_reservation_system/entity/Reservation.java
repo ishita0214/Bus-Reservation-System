@@ -16,7 +16,7 @@ public class Reservation {
     private long id;
 
     @Column(name="user_id",nullable=false)
-    private long user_id;
+    private long userId;
 
     @Column(name="bus_id",nullable=false)
     private long bus_id;

@@ -3,6 +3,9 @@ package com.example.bus_reservation_system.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.bus_reservation_system.entity.Booking;
+import com.example.bus_reservation_system.entity.Details;
+import com.example.bus_reservation_system.entity.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,5 +40,21 @@ public class ReservationService {
     }
     public List<Integer> getBookedSeats(long bus_id, String date){
        return reservationDao.getBookedSeats(bus_id,date);
+    }
+    public List<Reservation> findAllByBookingId(long bookingId){
+       return reservationDao.findAllByBookingId(bookingId);
+    }
+
+    public List<Reservation> findAllByUserId(long UserId){
+        return reservationDao.findAllByUserId(UserId);
+    }
+    public List<Booking> getUserBookings(long userId){
+       return reservationDao.getUserBookings(userId);
+    }
+    public List<Details> getPassengerDetails(long bookingId){
+        return reservationDao.getPassengerDetails(bookingId);
+    }
+    public List<Reservation> findAllBySeatNumber(int seat){
+        return reservationDao.findBySeatNumber(seat);
     }
 }
