@@ -138,9 +138,9 @@ export class SeatsComponent implements OnInit {
       })
     });
     this.myForm = this.fb.group({
-      details: this.fb.array([]), // Initialize an empty FormArray
-      state:[''],
-      phone:['']
+      details: this.fb.array([]), // Initialize an empty FormArray for passengers
+      state: ['', Validators.required], // State of residence with required validator
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]] // Phone number validation
     });
 
   }
@@ -149,6 +149,23 @@ export class SeatsComponent implements OnInit {
   }
   ngOnInit(): void {
 
+  }
+  states: string[] = [
+    'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+    'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand',
+    'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+    'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
+    'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+    'Uttar Pradesh', 'Uttarakhand', 'West Bengal','Delhi'
+  ];
+  
+  filteredStates: string[] = [];
+  
+  onStateInputChange(event: any) {
+    const inputValue = event.target.value.toLowerCase();
+    this.filteredStates = this.states.filter(state => 
+      state.toLowerCase().startsWith(inputValue)
+    );
   }
 
   onSubmit() {

@@ -22,6 +22,7 @@ export class HomePageComponent implements OnInit {
   source: string[] = [];
   destination: string[] = [];
   buses: Bus[] = [];
+  minDate: Date;
 
   constructor(
     private fb: FormBuilder,
@@ -31,10 +32,11 @@ export class HomePageComponent implements OnInit {
     private seatService: SeatServiceService,
     private ticketService: TicketService
   ) {
+    this.minDate = new Date();
     this.busForm = this.fb.group({
-      source: [null],
-      destination: [null],
-      date: [null],
+      source: ['', Validators.required],
+      destination: ['', Validators.required],
+      date: ['', Validators.required],
     });
   }
 

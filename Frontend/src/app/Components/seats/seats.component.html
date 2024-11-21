@@ -139,11 +139,14 @@
                 <div *ngFor="let seat of selectedSeats; let i = index" [formGroupName]="i" class="card mb-3">
                   <div class="card-header">Seat Number: {{ seat.number }}</div>
                   <div class="card-body">
+    
+                    <!-- Name Field -->
                     <div class="form-group">
                       <label>Name:</label>
                       <input class="form-control" placeholder="Enter name" formControlName="name" />
                     </div>
     
+                    <!-- Gender Field -->
                     <div class="form-group gender">
                       <label>Gender:</label>
                       <div class="form-check">
@@ -160,19 +163,33 @@
                       </div>
                     </div>
     
+                    <!-- Age Field with Validation -->
                     <div class="form-group">
                       <label for="age-{{ seat.number }}">Age:</label>
-                      <input id="age-{{ seat.number }}" type="number" class="form-control" placeholder="Enter age" formControlName="age" />
+                      <input id="age-{{ seat.number }}" type="number" min="1" class="form-control" placeholder="Enter age"
+                             formControlName="age"/>
+                      <div *ngIf="details.at(i).get('age')?.invalid && details.at(i).get('age')?.touched">
+                        <small class='text-danger'>Age must be a positive non-zero number.</small>
+                      </div>
                     </div>
+    
                   </div>
                 </div>
               </div>
     
-              <!-- Other fields -->
-              <!-- State of Residence -->
+              <!-- State of Residence with Dropdown -->
               <div class='form-group'>
                 <label for='stateOfResidence'>State of Residence:</label>
-                <input id='stateOfResidence'  class='form-control' formControlName="state" placeholder='Enter your state' />
+                <input id='stateOfResidence' 
+                       class='form-control' 
+                       formControlName='state' 
+                       placeholder='Enter your state' 
+                       (input)="onStateInputChange($event)" 
+                       list='states'/>
+                <!-- Datalist for state suggestions -->
+                <datalist id='states'>
+                  <option *ngFor='let state of filteredStates' [value]='state'></option>
+                </datalist>
               </div>
     
               <!-- Contact Details -->
@@ -180,16 +197,24 @@
                 <label for='contactDetails'>Contact Details:</label>
                 <div class='input-group mb-3'>
                   <span class='input-group-text'>+91</span>
-                  <input id='contactDetails' class='form-control' formControlName="phone" placeholder='Enter your contact number' />
+                  <input id='contactDetails' 
+                         type='text' 
+                         pattern='[0-9]{10}' 
+                         class='form-control' 
+                         formControlName='phone' 
+                         placeholder='Enter your contact number'/>
+                  <!-- Validation message -->
+                  <small *ngIf='myForm.get("phone")?.invalid && myForm.get("phone")?.touched' 
+                         class='text-danger'>Contact number must be a 10-digit number.</small>
                 </div>
               </div>
-    
-            
     
               <!-- Modal footer -->
               <div class='modal-footer'>
                 <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                <button type='submit' class='btn btn-primary'data-bs-dismiss='modal'>Continue to payment</button>
+                <!-- Disable the button until the form is valid -->
+                <button type='submit' [disabled]="myForm.invalid || details.invalid" data-bs-dismiss='modal'
+                        class='btn btn-primary'>Continue to payment</button> 
               </div>
             </form>
           </div>

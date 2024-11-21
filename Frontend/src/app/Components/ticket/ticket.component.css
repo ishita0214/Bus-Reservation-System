@@ -1,65 +1,285 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #e9ecef;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+/* General Layout */
+.booking-container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-radius: 15px;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
 }
 
-.ticket-container {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    padding: 40px;
-    width: 600px; /* Increased width */
-    transition: transform 0.3s;
+/* Title */
+.title {
+  text-align: center;
+  font-size: 36px;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 40px;
 }
 
-.ticket-container:hover {
-    transform: scale(1.03);
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
-.ticket-header {
-    text-align: center;
-    background: linear-gradient(90deg, #007bff, #0056b3);
-    color: white;
-    padding: 25px;
-    border-radius: 20px 20px 0 0;
-    font-size: 2em; /* Increased header font size */
+.header h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
 }
 
-.ticket-details {
-    display: flex;
-    justify-content: space-between;
-    margin: 30px 0;
+.header span {
+  color: #007bff;
 }
 
-.ticket-column {
-    width: 45%;
+/* Booking Summary */
+.booking-summary h4 {
+  font-size: 28px;
+  color: #007bff;
+  font-weight: 700;
 }
 
-.ticket-column p {
-    margin: 15px 0;
-    font-size: 1.3em; /* Increased detail font size */
+.booking-summary p.date {
+  font-size: 16px;
+  color: #777;
+  margin-top: 5px;
 }
 
-.schedule-details {
-    margin-top: 30px;
-    border-top: 2px solid #007bff;
-    padding-top: 25px;
+/* Flight Info */
+.flight-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.schedule-details p {
-    margin: 15px 0;
-    font-size: 1.3em; /* Increased schedule font size */
+.time-block {
+  text-align: center;
+  font-weight: 600;
 }
 
-.ticket-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-style: italic;
-    color: #555;
-    font-size: 1.5em; /* Increased footer font size */
+.time {
+  font-size: 22px;
+  color: #007bff;
+}
+
+.location {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Time Arrow */
+.time-arrow {
+  font-size: 30px;
+  color: #007bff;
+  font-weight: bold;
+  align-self: center;
+}
+
+/* Details Section */
+.details p {
+  font-size: 16px;
+  margin: 8px 0;
+  color: #555;
+}
+
+/* Passenger List */
+.passenger-list {
+  margin-top: 40px;
+}
+
+.passenger-list h5 {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+thead {
+  background-color: #007bff;
+  color: white;
+}
+
+th, td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 16px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+  background-color: #eaf4ff;
+}
+
+tbody td {
+  color: #555;
+}
+
+/* Confirm Cancel Button */
+.confirm-cancel-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.confirm-cancel-btn {
+  background-color: #d9534f;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.confirm-cancel-btn:hover {
+  background-color: #c9302c;
+}
+
+.confirm-cancel-btn:focus {
+  outline: none;
+}
+
+/* Important Information Section */
+.important-info-container {
+  margin-top: 40px;
+  padding: 15px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.important-info-container h5 {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.important-info-container ul {
+  margin-top: 15px;
+  color: #555;
+}
+
+.important-info-container li {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.important-info-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Terms and Conditions Section */
+.terms-container {
+  margin-top: 40px;
+  padding: 15px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.terms-container h5 {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.terms-container ul {
+  margin-top: 15px;
+  color: #555;
+}
+
+.terms-container li {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Cancellation Policy Section */
+.cancellation-policy-container {
+  margin-top: 40px;
+  padding: 15px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.cancellation-policy-container h5 {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+.cancellation-policy-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.cancellation-policy-container th,
+.cancellation-policy-container td {
+  padding: 10px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.cancellation-policy-container tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.cancellation-policy-container tbody tr:hover {
+  background-color: #eaf4ff;
+}
+
+/* Footer Section */
+.footer-container {
+  margin-top: 40px;
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.footer-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.footer-tagline {
+  font-size: 14px;
+  color: #007bff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .booking-container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flight-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .time-arrow {
+    margin: 10px 0;
+  }
 }

@@ -27,7 +27,7 @@ export const routes: Routes = [
     },
 
     {
-        path:'ticket',
+        path:'ticket/:bookingId',
         component:TicketComponent
     },
     {

@@ -1,51 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+<h1 class="title">Ticket Confirmation Details</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bus Ticket</title>
-    <link rel="stylesheet" href="ticket.component.css">
-</head>
+<div *ngIf="booking" class="booking-container">
+  <div class="header">
+    <h3>Booking ID: <span>{{ booking.bookingId }}</span></h3>
+    <div class="actions">
+      <!-- You can add buttons here later -->
+    </div>
+  </div>
 
-<body>
-    <main *ngIf="reservation">
-        <section class="ticket-container">
-            <div class="ticket-header">
-                <h2> Ticket Confirmation Details</h2>
-            </div>
+  <div class="booking-summary">
+    <h4>{{ booking.source }} → {{ booking.destination }}</h4>
+    <p class="date">{{ booking.reservationDate }}</p>
+    <div class="flight-info">
+      <div class="time-block">
+        <p class="time">{{ booking.deptTime }}</p>
+        <p class="location">{{ booking.source }} Terminal</p>
+      </div>
+      <div class="time-arrow">
+        <p>→</p>
+      </div>
+      <div class="time-block">
+        <p class="time">{{ booking.arrTime }}</p>
+        <p class="location">{{ booking.destination }} Terminal</p>
+      </div>
+    </div>
+    <div class="details">
+      <p><strong>Operator:</strong> {{ booking.operator }}</p>
+      <p><strong>Bus Number:</strong> {{ booking.busNumber }}</p>
+    </div>
+  </div>
 
-            <div class="ticket-details">
-                <div class="ticket-column">
-                    <p><strong>Name:</strong> {{ ticket.name }}</p>
-                    <p><strong>Gender:</strong> {{ ticket.gender }}</p>
-                    <p><strong>Contact:</strong> {{ ticket.contactDetails }}</p>
-                    <p><strong>State:</strong> {{ ticket.stateOfResidence }}</p>
-                </div>
+  <div class="passenger-list">
+    <h5>Passenger Details</h5>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Seat Number</th>
+          <th>Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets; let i = index">
+          <td>{{ ticket.name }}</td>
+          <td>{{ ticket.age }}</td>
+          <td>{{ ticket.gender }}</td>
+          <td>{{ seatNumber[i] }}</td>
+          <td>{{ ticket.contactDetails }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-                <div class="ticket-column">
-                    <p><strong>From:</strong> {{ routeData.source }}</p>
-                    <p><strong>To:</strong> {{ routeData.destination }}</p>
-                    <p><strong>Bus No:</strong> {{ busData.busNumber }}</p>
-                    <p><strong>Operator:</strong> {{ busData.operator }}</p>
-                </div>
-            </div>
+  <div class="confirm-cancel-container">
+    <button class="confirm-cancel-btn">Cancel Booking</button>
+  </div>
+</div>
 
-            <div class="schedule-details">
-                <p><strong>Date:</strong> {{  reservation.reservationDate }}</p>
-                <p><strong>Departure:</strong> {{ busData.deptTime }}</p>
-    
-                <p><strong>Arrival:</strong> {{ busData.arrTime }}</p>
-                <p><strong>Seat No:</strong> {{ reservation.seatNumber }}</p>
-                <p><strong>Total Fare:</strong> {{ busData.price }} Rs.</p>
-            </div>
+<!-- Important Information Section -->
+<div class="important-info-container">
+  <h5>Important Information</h5>
+  <ul>
+    <li>• Please reach the boarding point by the reporting time.</li>
+    <li>• Chat with us: <a href="https://m368j.app.goo.gl/chat" target="_blank">Click here to chat</a></li>
+    <li>• In case Operator is not reachable please reach out to AbhiBus Customer Support at 040-61656789.</li>
+  </ul>
+</div>
 
-            <div class="ticket-footer"> 
-               <p>  </p>
-            </div>
-        </section>
-    </main>
-</body>
+<!-- Terms and Conditions Section -->
+<div class="terms-container">
+  <h5>Terms and Conditions</h5>
+  <ul>
+    <li>• The arrival and departure times mentioned on the ticket are only tentative timings.</li>
+    <li>• Passengers are requested to arrive at the boarding point at least 15 min. before the scheduled time.</li>
+    <li>• AbhiBus is not responsible for any accidents or loss of passenger belongings.</li>
+    <li>• If a bus service is canceled, the refund money is transferred back to the passenger’s Credit/Debit card or Bank Account used for booking.</li>
+    <li>• Cancellation charges are applicable on Original fare but not on the Discounted Fare.</li>
+  </ul>
+</div>
 
-</html>
 
+
+<!-- Footer Section -->
+<div class="footer-container">
+  <p class="footer-text">Proud to be driving India</p>
+  <p class="footer-tagline">LIVE TRACKING | FREE CANCELLATIONS | INSTANT REFUND</p>
+</div>

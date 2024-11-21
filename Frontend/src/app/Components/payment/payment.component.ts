@@ -13,6 +13,10 @@ import { Ticket } from '../../Models/ticket';
 import { forkJoin } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Booking } from '../../Models/bookings';
+import { HttpClient } from '@angular/common/http';
+import { User } from '../../Models/user';
+import { UserService } from '../../Services/user.service';
 @Component({
   selector: 'app-payment',
   standalone: true,
@@ -22,13 +26,15 @@ import { of } from 'rxjs';
 })
 export class PaymentComponent implements OnInit {
   paymentOptions = [
-    { id: 1, name: 'Credit Card', details: ['Card Number', 'CVV'] },
-    { id: 2, name: 'Debit Card', details: ['Card Number', 'CVV'] },
-    { id: 3, name: 'PayPal', details: ['UPI ID'] },
-    { id: 4, name: 'Google Pay', details: ['UPI ID'] },
-    { id: 5, name: 'Apple Pay', details: ['Apple ID'] },
-    { id: 6, name: 'Bank Transfer', details: ['Account Number', 'IFSC Code'] },
-    { id: 7, name: 'Cryptocurrency', details: ['Wallet Address'] }
+    { id: 1, name: 'UPI', details: ['Enter UPI ID'], icon: 'assets/icons/upi.png' },
+    { id: 2, name: 'PhonePe', details: ['Enter UPI ID'], icon: 'assets/icons/phonepe.png' },
+    { id: 3, name: 'Google Pay', details: ['Enter UPI ID'], icon: 'assets/icons/googlepay.jpeg' },
+    { id: 4, name: 'Simpl', details: ['Enter Details'], icon: 'assets/icons/simpl.png' },
+    { id: 5, name: 'Debit / Credit Card', details: ['Card Number', 'CVV'], icon: 'assets/icons/card.png' },
+    { id: 6, name: 'Net Banking', details: ['Account Number', 'IFSC Code'], icon: 'assets/icons/netbanking.png' },
+    
+    { id: 7, name: 'Wallets', details: ['Enter Wallet Details'], icon: 'assets/icons/wallet.png' },
+    { id: 8, name: 'Amazon Pay', details: ['Amazon Pay ID'], icon: 'assets/icons/amazonpay.png' }
   ];
 
   currBusId!: number;
@@ -45,6 +51,9 @@ export class PaymentComponent implements OnInit {
   reservationId: number[] = []
   ticketSaved: boolean = false
   tosave: boolean = false
+  tickets: Ticket[] = [];
+  bookings!:Booking;
+  currentUser!:User
   constructor(
     private seatService: SeatServiceService,
     private routeService: RouteService,
@@ -52,7 +61,9 @@ export class PaymentComponent implements OnInit {
     private ticketService: TicketService,
     private reservationService: ReservationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private http:HttpClient,
+    private userService:UserService
   ) { }
 
   ngOnInit(): void {
@@ -80,8 +91,11 @@ export class PaymentComponent implements OnInit {
       this.state = data
     });
     console.log(this.currUser);
-
+this.userService.getUserById(this.currUser).subscribe((data)=>{
+  this.currentUser=data;
+})
   }
+  
 
   selectPaymentMethod(id: number) {
     this.selectedPaymentMethodId = this.selectedPaymentMethodId === id ? null : id;
@@ -97,7 +111,7 @@ export class PaymentComponent implements OnInit {
       const reservations: Reservation[] = [];
 
       this.seatsData.forEach(element => {
-        const reservation = new Reservation(1);
+        const reservation = new Reservation(this.currUser);
         reservation.bus_id = this.currBusId;
         reservation.reservationDate = this.date;
         reservation.seatNumber = element;
@@ -115,14 +129,43 @@ console.log(reservation);
         next: () => {
           // All reservations are successful, now add passengers
           this.addPassengers();
-          alert(`Proceeding to pay with ${selectedOption.name}`);
         },
         error: (err) => {
           console.error('Error during booking:', err);
+        },
+        complete: () => {
+          console.log('Navigating to ticket page...');
+          this.router.navigateByUrl('ticket/' + this.bookingId);
+          this.sendEmail();
         }
       });
     }
+    this.router.navigateByUrl('ticket');
   }
+  sendEmail() {
+    const emailPayload = {
+        to: this.currentUser.email,
+
+        bookingId: this.bookingId,
+        source: this.busroute.source,
+        destination: this.busroute.destination,
+        deptTime: this.currBus.deptTime,
+        arrTime: this.currBus.arrTime,
+        date: this.date,
+        operator: this.currBus.operator,
+        passengers: this.passengers.map(p => p.name),
+        seatNumbers: this.seatsData
+    };
+
+    this.http.post('http://localhost:8080/api/email/send-ticket', emailPayload).subscribe({
+        next: () => {
+            console.log('Email sent successfully!');
+        },
+        error: (err) => {
+            console.error('Failed to send email:', err);
+        }
+    });
+}
 
   book(reservation: Reservation) {
     return this.reservationService.createTicket(reservation).pipe(
@@ -146,58 +189,80 @@ console.log(reservation);
       this.seatsData = data;
 
     });
+  } 
+  getSelectedPaymentMethod() {
+    return this.paymentOptions.find(option => option.id === this.selectedPaymentMethodId);
   }
+  
 
 
 
   getCurrentBus() {
-    this.busService.getBus(this.currBusId).subscribe((data: Bus) => {
-      this.currBus = data;
-      this.getRoute();
-    }, error => {
-      console.error('Error fetching bus:', error);
+    this.busService.getBus(this.currBusId).subscribe({
+      next: (data: Bus) => {
+        this.currBus = data;
+        this.getRoute();
+      },
+      error: (error) => {
+        console.error('Error fetching bus:', error);
+      }
     });
   }
 
   getRoute() {
     if (this.currBus && this.currBus.route_id) {
-      this.routeService.getRouteById(this.currBus.route_id).subscribe((data: any) => {
-        this.busroute = data;
-      }, error => {
-        console.error('Error fetching route:', error);
+      this.routeService.getRouteById(this.currBus.route_id).subscribe({
+        next: (data: any) => {
+          this.busroute = data;
+        },
+        error: (error) => {
+          console.error('Error fetching route:', error);
+        }
       });
     } else {
       console.error('Current bus or route ID is undefined');
     }
   }
   index: number = 0
-
   addPassengers() {
     this.passengers.forEach((data) => {
       const ticket = new Ticket();
       ticket.name = data.name;
       ticket.age = data.age;
       ticket.gender = data.gender;
-      ticket.stateOfResidence = this.state; // Assuming state is set elsewhere
-      ticket.contactDetails = this.contact; // Assuming contact is set elsewhere
-
-      ticket.reservation_id = this.reservationId[this.index]
-      this.index++
-   
-
-      this.ticketService.saveTicket(ticket).subscribe(() => {
-
-
+      ticket.stateOfResidence = this.state; 
+      ticket.contactDetails = this.contact; 
+      ticket.reservation_id = this.reservationId[this.index];
+      
+      this.index++;
+      const booking=new Booking(this.bookingId,this.busroute.source,this.busroute.destination,this.currBus.arrTime,this.currBus.deptTime,this.date,this.currBus.operator,this.currBus.busNumber,[]);
+this.ticketService.booking.next(booking);
+this.ticketService.seatNumber.next(this.seatsData);
+      
+      // Push the ticket to the array
+      this.tickets.push(ticket);
+  
+      this.ticketService.saveTicket(ticket).subscribe({
+        next: () => {
+          // Handle successful ticket save if needed
+        },
+        error: (error) => {
+          console.error('Error saving ticket:', error);
+        }
       });
-
-
-
-
-
-      // Here you would typically save or process the ticket
-      // Example: this.ticketService.saveTicket(ticket).subscribe(...);
     });
+  
+    console.log('Tickets before setting data:', this.tickets);
+    
+  
+    this.ticketService.setTicketsData(this.tickets);
+    
 
+    console.log('Tickets after setting data:', this.tickets);
+  
+   
+   
   }
+ 
 
 }

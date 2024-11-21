@@ -4,65 +4,118 @@ import { Reservation } from '../../Models/reservation';
 import { CommonModule } from '@angular/common';
 import { TicketService } from '../../Services/ticket.service';
 import { Ticket } from '../../Models/ticket';
+import { ReservationService } from '../../Services/reservation.service';
+import { Booking } from '../../Models/bookings';
+import { Details } from '../../Models/details';
+interface TicketDetail {
+  seatNumber: number;
+  name: string;
+  age: number;
+  gender: string;
+  stateOfResidence: string;
+  contactDetails: string;
+}
 
 @Component({
   selector: 'app-ticket',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './ticket.component.html',
-  styleUrl: './ticket.component.css',
+  styleUrls: ['./ticket.component.css'], 
 })
+
 export class TicketComponent implements OnInit {
-  reservation!: Reservation;
-  ticket!: any;
-  busData!:any;
-  routeData!:any;
+ 
+  busData!: any;
+  routeData!: any;
+  tickets: Ticket[] = [];
+  reservations: Reservation[] = [];
+  ticketDetails: TicketDetail[] = [];
+  totalFare!: number;
+  booking!:Booking;
+  seatNumber!:number[]
 
   constructor(
     private route: ActivatedRoute,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private reservationService:ReservationService
   ) {}
 
   ngOnInit(): void {
-    
-    const reservationData = this.route.snapshot.paramMap.get('reservation');
-    this.reservation = reservationData ? JSON.parse(reservationData) : null;
+    this.reservationService.currentReservation$.subscribe({
+      next: (reservations) => {        
+        this.reservations = reservations;
+        this.buildTicketDetails();
+      },
+      error: (error) => {
+        console.error('Error fetching reservations: ' + error);
+      }
+    });
 
     this.ticketService.currentTicket$.subscribe({
-      next: (data) => {
-        this.ticket = data;
+      next: (tickets) => {
+        this.tickets = tickets;
+        this.buildTicketDetails();
       },
       error: (error) => {
         console.log(error);
+      }
+    });
+    this.ticketService.booking.subscribe({
+      next: (booking) => {
+        this.booking = booking;
+        console.log(this.booking);
+        
       },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+    this.ticketService.seatNumber.subscribe({
+      next: (seatNumber) => {
+        this.seatNumber = seatNumber;
+        console.log(this.seatNumber);
+        
+      },
+      error: (error) => {
+        console.log(error);
+      }
     });
 
 
-
-
-    this.ticketService.currentBusData$.subscribe({
-      next:(busData)=>{
-        this.busData=busData;
+    this.ticketService.currentBusData$.subscribe({    
+      next: (busData) => {
+        this.busData = busData;
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err);
-        
       }
-    })
-
+    });
 
     this.ticketService.currentRoute$.subscribe({
-      next:(routeData)=>{
-        this.routeData= routeData;
+      next: (routeData) => {
+        this.routeData = routeData;    
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err);
-        
       }
-    })
+    });
 
+    this.ticketService.totalFare$.subscribe((fare) => {
+      this.totalFare = fare;
+    });
   }
 
- 
-
+  buildTicketDetails() {
+    if (this.tickets.length && this.reservations.length) {
+      this.ticketDetails = this.tickets.map((ticket, index) => ({
+        seatNumber: this.reservations[index]?.seatNumber,
+        name: ticket.name,
+        age: ticket.age,
+        gender: ticket.gender,
+        stateOfResidence: ticket.stateOfResidence,
+        contactDetails: ticket.contactDetails
+      }));
+    }
+  }
 }

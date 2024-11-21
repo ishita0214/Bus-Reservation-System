@@ -1,95 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bus Reservation System</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-  </head>
-  <body>
-    <div>
-      <header class="my-4">
-        <h3 class="text-center">Bus Reservation System</h3>
-      </header>
-      <section>
-        <div class="container mt-5">
-          <form [formGroup]="busForm" (ngSubmit)="getBuses()">
-            <div class="form-group">
+<body>
+  <div>
+    <header class="my-4">
+      <h3 class="text-center">Book Bus Tickets</h3>
+    </header>
+    <section>
+      <div class="container mt-5 p-4 bg-light rounded shadow-sm">
+        <form [formGroup]="busForm" (ngSubmit)="getBuses()">
+          <div class="row mb-3">
+            <div class="col-md-4">
               <p-dropdown
                 formControlName="source"
                 [options]="source"
-                [editable]="true"
-              />
-
-              <div
-                class="text-white font-weight-bold"
-                *ngIf="
-                  busForm.get('source')?.touched &&
-                  busForm.get('source')?.invalid
-                "
-                style="font-size: 1.2rem"
-              >
+                placeholder="From Station"
+                class="form-control"
+              ></p-dropdown>
+              <div *ngIf="busForm.get('source')?.touched && busForm.get('source')?.invalid" class="text-danger">
                 * Departure city is required
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="col-md-4">
               <p-dropdown
                 formControlName="destination"
                 [options]="destination"
-                [editable]="true"
-              />
-
-              <div
-                class="text-white font-weight-bold"
-                *ngIf="
-                  busForm.get('destination')?.touched &&
-                  busForm.get('destination')?.invalid
-                "
-                style="font-size: 1.2rem"
-              >
+                placeholder="To Station"
+                class="form-control"
+              ></p-dropdown>
+              <div *ngIf="busForm.get('destination')?.touched && busForm.get('destination')?.invalid" class="text-danger">
                 * Arrival city is required
               </div>
             </div>
-            <div>
+
+            <div class="col-md-4">
               <p-calendar
                 class="form-date"
                 formControlName="date"
                 [showIcon]="true"
-                inputId="buttondisplay"
-                [placeholder]="'Select your travel date'"
-                [showOnFocus]="false"
-              >
-              </p-calendar>
-
-              <div
-                class="text-white font-weight-bold"
-                *ngIf="
-                  busForm.get('date')?.touched && busForm.get('date')?.invalid
-                "
-                style="font-size: 1.2rem; margin-left: 60%"
-              >
+                [minDate]="minDate"
+                placeholder="Date"
+                class="form-control"
+              ></p-calendar>
+              <div *ngIf="busForm.get('date')?.touched && busForm.get('date')?.invalid" class="text-danger">
                 * Date is required
               </div>
             </div>
+            
+          </div>
 
-            <br /><br /><br />
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary px-5" [disabled]="busForm.invalid">
+              Search Buses
+            </button>
+            
+          </div>
+        </form>
+      </div>
 
-            <div>
-              <button
-                type="submit"
-                class="button btn btn-success text-black"
-                [disabled]="busForm.invalid"
-              >
-                SEARCH BUSES
-              </button>
-            </div>
-          </form>
+      <!-- Discount Offers Section -->
+      <div class="mt-5">
+       
+        <div class="d-flex justify-content-around">
+          <div class="offer-card p-3 border rounded shadow-sm">
+            <img src="assets/offer1.png" alt="Offer 1" class="img-fluid">
+            <p>Upto ₹500 off on bus bookings. Code: WEDDINGS</p>
+          </div>
+          <div class="offer-card p-3 border rounded shadow-sm">
+            <img src="assets/offer2.png" alt="Offer 2" class="img-fluid">
+            <p>Get ₹400 off on your first bus booking. Code: ABHIFIRST</p>
+          </div>
+          <div class="offer-card p-3 border rounded shadow-sm">
+            <img src="assets/offer3.png" alt="Offer 3" class="img-fluid">
+            <p>Flat 10% off on Orange Travels. Code: ORANGE10</p>
+          </div>
+          <div class="offer-card p-3 border rounded shadow-sm">
+            <img src="assets/offer4.png" alt="Offer 4" class="img-fluid">
+            <p>Flat ₹200 off with ICICI Bank Cards. Code: ICICI200</p>
+          </div>
         </div>
-      </section>
-    </div>
-  </body>
-</html>
+      </div>
+    </section>
+  </div>
+</body>

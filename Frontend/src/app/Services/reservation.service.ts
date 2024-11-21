@@ -17,6 +17,11 @@ export class ReservationService {
   constructor(private http: HttpClient) {}
   
   tickets: BehaviorSubject<Booking> = new BehaviorSubject<Booking>(new Booking(0,'','','','','','',''));
+  private reservationData = new BehaviorSubject<Reservation[]>([]);
+  currentReservation$ = this.reservationData.asObservable();
+
+  
+
 
   getTicket(id: number): Observable<Reservation> {
     return this.http.get<Reservation>(`${this.baseUrl}/getTicket/${id}`);

@@ -4,6 +4,32 @@
   margin-left: 58%;
   /* width: 120%; */
 }
+header {
+  background: linear-gradient(135deg, #6bb4ff, #4a90e2);
+  color: white;
+  padding: 1rem;
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.offer-card {
+  width: 20%;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.offer-card img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.text-danger {
+  font-size: 0.9rem;
+}
+
 
 .button {
   border-radius: 20px;

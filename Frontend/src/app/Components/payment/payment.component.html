@@ -1,37 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Payment Method</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="payment.component.css"> 
-</head>
-<body>
-    <div class="payment-container">
-        <h1>Select Payment Method</h1>
-        
-        <ul class="payment-options">
-            <li *ngFor="let option of paymentOptions" class="payment-option">
-                <label class="payment-checkbox">
-                    <input type="radio" 
-                           [checked]="selectedPaymentMethodId === option.id" 
-                           (change)="selectPaymentMethod(option.id)" />
-                    <span class="checkmark"></span>
-                    {{ option.name }}
-                </label>
-                <div *ngIf="selectedPaymentMethodId === option.id" class="input-fields">
-                    <div *ngFor="let detail of option.details">
-                        <label>{{ detail }}</label>
-                        <input type="text" placeholder="{{ detail }}" />
-                    </div>
-                </div>
-            </li>
-        </ul>
-    
-        <div *ngIf="selectedPaymentMethodId" class="selected-method">
-            <button (click)="payNow()" class="pay-now-button">Pay Now</button>
+<div class="payment-container">
+  <div class="payment-header">
+    <h2>{{ busroute.source }} → {{ busroute.destination }}</h2>
+    <p>{{ date }} at {{ currBus.deptTime }}</p>
+  </div>
+
+  <div class="payment-content">
+    <!-- Payment Options Sidebar -->
+    <aside class="payment-sidebar">
+      <h3>Payment Options</h3>
+      <ul class="payment-options">
+        <li *ngFor="let option of paymentOptions"
+            class="payment-option"
+            [class.selected]="selectedPaymentMethodId === option.id">
+          <label>
+            <input type="radio"
+                   [checked]="selectedPaymentMethodId === option.id"
+                   (change)="selectPaymentMethod(option.id)" />
+            <img [src]="option.icon" alt="{{ option.name }} Icon" class="option-icon" />
+            <span class="option-name">{{ option.name }}</span>
+          </label>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Payment Details Form -->
+    <div class="payment-details">
+      <h3>Payment Details</h3>
+      <div *ngIf="selectedPaymentMethodId" class="input-fields">
+        <h4>How to pay using {{ getSelectedPaymentMethod()?.name }}</h4>
+        <div *ngFor="let detail of getSelectedPaymentMethod()?.details" class="input-group">
+          <label>{{ detail }}</label>
+          <input type="text" placeholder="{{ detail }}" />
         </div>
+        <button (click)="payNow()" class="pay-now-button">Proceed to Pay</button>
+      </div>
     </div>
-</body>
-</html>
+
+    <!-- Fare Summary -->
+    <div class="fare-summary">
+      <h3>Fare Details</h3>
+      <div class="fare-item">
+        <span>Total Fare (inclusive)</span>
+        <span>₹{{ currBus.price }}</span>
+      </div>
+      <div class="fare-item">
+        <span>Discounts</span>
+        <span class="discount">-₹200</span>
+      </div>
+      <div class="fare-total">
+        <span>Total Amount To Be Paid</span>
+        <span>₹{{ currBus.price - 200 }}</span>
+      </div>
+      <div class="offer-section">
+        <h4>Offers</h4>
+        <div class="offer">
+          <p>Win an iPhone 16!</p>
+        </div>
+        <div class="offer">
+          <p>Win free tickets to the Diljit Dosanjh concert!</p>
+        </div>
+      </div>
+      <div class="coupon-section">
+        <label for="coupon">Got a coupon code?</label>
+        <input type="text" id="coupon" placeholder="Enter coupon code" />
+        <button>Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
