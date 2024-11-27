@@ -35,5 +35,7 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/findByName/${name}`);
   }
 
-
+  findUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/findByEmail/${email}`);
+  }
 }

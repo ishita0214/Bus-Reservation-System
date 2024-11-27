@@ -6,36 +6,37 @@ import { PaymentComponent } from './Components/payment/payment.component';
 import { TicketComponent } from './Components/ticket/ticket.component';
 import { BookingsComponent } from './Components/bookings/bookings.component';
 import { BookingDetailsComponent } from './Components/booking-details/booking-details.component';
+import { AuthGuard } from './Guards/auth.guard';
 
 export const routes: Routes = [
     {
-        path:"",
+        path:'home',
         component:HomePageComponent
     },
     {
-        path:'search',
+        path:'search', canActivate:[AuthGuard] ,
         component:SearchBusComponent
         
     },
     {
-        path:"payment/:id",
+        path:"payment/:id",canActivate:[AuthGuard] ,
         component:PaymentComponent
     },
     {
-        path:'seats/:id',
+        path:'seats/:id',canActivate:[AuthGuard] ,
         component:SeatsComponent
     },
 
     {
-        path:'ticket/:bookingId',
+        path:'ticket/:bookingId',canActivate:[AuthGuard] ,
         component:TicketComponent
     },
     {
-        path:'bookings',
+        path:'bookings',canActivate:[AuthGuard] ,
         component:BookingsComponent
     },
     {
-        path:'details/:bookingId',
+        path:'details/:bookingId',canActivate:[AuthGuard] ,
         component:BookingDetailsComponent
     },
 

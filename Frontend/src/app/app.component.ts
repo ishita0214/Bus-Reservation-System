@@ -4,30 +4,52 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { CommonModule } from '@angular/common';
 import { UserService } from './Services/user.service';
 import { User } from './Models/user';
+import { AuthService } from './Services/auth.service';
+import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet,CommonModule,FormsModule,ReactiveFormsModule,RouterLink,RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+
 })
 export class AppComponent implements OnInit{
   title = 'Frontend';
   isModalOpen: boolean = false; 
   isLogin: boolean = true; 
-  userID:any=localStorage.getItem('loginUser')
+  isLoggingIn: boolean = true; 
+  userIDString:any=localStorage.getItem('loginUser');
+  
+
   currUser: User | null = null; 
-    constructor(private userService:UserService,private route:Router){}
-  ngOnInit(): void {  
-    this.getCurrUser();
-  }
+  userID = Number(this.userIDString)
+    constructor(private userService:UserService,private route:Router,public authService:AuthService){}
+    ngOnInit(): void {
+      this.authService.isLoggedIn$.subscribe((loggedIn) => {
+        this.isLoggingIn=loggedIn
+        if (loggedIn) {
+          const userId = localStorage.getItem('loginUser');
+          if (userId) {
+            this.getCurrUser();
+          }
+        } else {
+          this.currUser = null;
+        }
+      });
+   
+    }
+    
+
+  
   User:any={
     name:'',
     password:''
   }
   signUpForm:FormGroup=new FormGroup({
-    name:new FormControl(''),
+    fullName:new FormControl(''),
     password:new FormControl(''),
     email:new FormControl(''),
     gender:new FormControl(''),
@@ -55,52 +77,28 @@ export class AppComponent implements OnInit{
     this.signUpForm.reset
 
   }
-
-  onLogin() {
-    console.log(this.User.name);
-    
-    // Handle login logic here
-    console.log('Logging in...');
-    this.userService.findUserByName(this.User.name).subscribe({
-      next: (data) => {
-        if (data) {
-          if (data.password === this.User.password) {
-            localStorage.setItem('loginUser', data.id.toString());
-            this.currUser = data; // Update current user immediately
-            this.userID = data.id; // Update userID to reflect logged-in state
-            this.closeModal(); // Close modal after login
-          } else {
-            alert("Invalid password");
-          }
-        } else {
-          alert("User doesn't exist. Please signup.");
-        }
-      },
-      error: (err) => {
-        alert("Error fetching user data");
-      }
-    });
-}
-
-  onSignUp() {
-    // Handle signup logic here
-    console.log('Signing up...');
-    console.log(this.signUpForm.value);
-    this.userService.addUser(this.signUpForm.value).subscribe((data)=>{
-      console.log(data);
-      
-    });
-    
-    this.toggleToLogin()
-    this.closeModal(); // Close modal after signup
+  login() {
+    this.authService.login({ email: this.User.name, password: this.User.password });
+  
+    this.isModalOpen = false;
+    this.getCurrUser() 
   }
-  logout() {
-    console.log(this.currUser);
-    localStorage.removeItem('loginUser');
-    this.currUser = null; // Clear current user immediately
-    this.userID = null; // Clear userID to reflect logged-out state
-    this.route.navigateByUrl(''); // Navigate to home or desired route
-}
+  logout(){
+    this.authService.logout();
+    this.route.navigateByUrl('/home');
+
+  }
+  
+  signup() {
+    this.authService.signup(this.signUpForm.value).subscribe(() => {
+      alert('Signup successful! Please log in.');
+      this.toggleToLogin();
+    });
+    this.isModalOpen = false; 
+  }
+  
+
+ 
   getCurrUser(){
     console.log(this.userID);
     

@@ -23,14 +23,19 @@ public class UserController {
 
     @GetMapping("/list")
     public List<User> getAllUser(){
-        return userService.getAllUser();
+        return userService.getAllUsers();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> saveUser(@RequestBody User user){
-        User newUser = userService.saveUser(user);
-        return new ResponseEntity<>(newUser, HttpStatus.OK);
+    public ResponseEntity<?> saveUser(@RequestBody User user) {
+        try {
+            User newUser = userService.saveUser(user);
+            return new ResponseEntity<>(newUser, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid token.");
+        }
     }
+    
 
 
     @DeleteMapping("/delete/{id}")
@@ -43,10 +48,13 @@ public class UserController {
         return userService.updateUser(id,user);
     }
     @GetMapping("/findByName/{name}")
-    public  User findByName(@PathVariable("name") String name){
+    public    Optional<User> findByName(@PathVariable("name") String name){
         return userService.findByName(name);
     }
-
+    @GetMapping("/findByEmail/{email}")
+    public    Optional<User> findByEmail(@PathVariable("email") String email){
+        return userService.findByEmail(email);
+    }
 
 
 }

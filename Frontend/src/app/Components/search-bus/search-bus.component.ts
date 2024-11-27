@@ -5,7 +5,6 @@ import { SeatServiceService } from '../../Services/seat-service.service';
 import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Constants } from '../../constants/constant';
 
 @Component({
   selector: 'app-search-bus',
