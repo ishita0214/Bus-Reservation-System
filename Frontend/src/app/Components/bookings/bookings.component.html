@@ -6,32 +6,99 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <h1>My Bookings</h1>
-        <div class="content">
+    <div class="card">
+        <p-tabView styleClass="tabview-custom">
+          <!-- Upcoming Journey -->
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2">
+                <p-avatar image="assets/busLogo.png" shape="circle" />
+                <span class="font-bold white-space-nowrap m-0">Upcoming Journey</span>
+              </div>
+            </ng-template>
             <main class="flight-list">
-                <div *ngFor="let booking of bookings" class="flight-card">
-                    <div class="flight-card-header">
-                        <div class="route">
-                            <span class="source">{{ booking.source }}</span>
-                            <span class="arrow">→</span>
-                            <span class="destination">{{ booking.destination }}</span>
-                        </div>
-                        <div class="booking-info">
-                            <div class="booking-id"><strong>Booking ID:</strong> {{ booking.bookingId }}</div>
-                            <div class="reservation-date"><strong>{{ booking.reservationDate }}</strong></div>
-                        </div>
-                    </div>
-                    <div class="flight-card-content">
-                      
-                        <div class="details">
-                            <div class="airline">{{ booking.operator }} • {{ booking.busNumber }}</div>
-                        </div>
-                    </div>
-                    <a (click)="onClick(booking.bookingId,booking)" class="view-details-link">View Details →</a>
+              <div *ngFor="let booking of upcomingBookings" class="flight-card">
+                <div class="flight-card-header">
+                  <div class="route">
+                    <span class="source">{{ booking.source }}</span>
+                    <span class="arrow">→</span>
+                    <span class="destination">{{ booking.destination }}</span>
+                  </div>
+                  <div class="booking-info">
+                    <div class="booking-id"><strong>Booking ID:</strong> {{ booking.bookingId }}</div>
+                    <div class="reservation-date"><strong>{{ booking.reservationDate }}</strong></div>
+                  </div>
                 </div>
+                <div class="flight-card-content">
+                  <div class="details"><div class="airline">{{ booking.operator }} • {{ booking.busNumber }}</div></div>
+                </div>
+                <a (click)="onClick(booking.bookingId, booking,'Upcoming')" class="view-details-link">View Details →</a>
+              </div>
             </main>
-        </div>
-    </div>
+          </p-tabPanel>
+      
+          <!-- Past Journey -->
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2">
+                <p-avatar image="assets/clock.png" shape="circle" />
+                <span class="font-bold white-space-nowrap m-0">Past Journey</span>
+              </div>
+            </ng-template>
+            <main class="flight-list">
+              <div *ngFor="let booking of pastBookings" class="flight-card">
+                <div class="flight-card-header">
+                  <div class="route">
+                    <span class="source">{{ booking.source }}</span>
+                    <span class="arrow">→</span>
+                    <span class="destination">{{ booking.destination }}</span>
+                  </div>
+                  <div class="booking-info">
+                    <div class="booking-id"><strong>Booking ID:</strong> {{ booking.bookingId }}</div>
+                    <div class="reservation-date"><strong>{{ booking.reservationDate }}</strong></div>
+                  </div>
+                </div>
+                <div class="flight-card-content">
+                  <div class="details"><div class="airline">{{ booking.operator }} • {{ booking.busNumber }}</div></div>
+                </div>
+                <a (click)="onClick(booking.bookingId, booking,'Past')" class="view-details-link">View Details →</a>
+              </div>
+            </main>
+          </p-tabPanel>
+      
+          <!-- Cancelled Tickets -->
+          <p-tabPanel>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2">
+                <p-avatar image="assets/cancelLogo.png" shape="circle" />
+                <span class="font-bold white-space-nowrap m-0">Cancelled Tickets</span>
+                <p-badge [value]="cancelledBookings.length"></p-badge>
+              </div>
+            </ng-template>
+            <main class="flight-list">
+              <div *ngFor="let booking of cancelledBookings" class="flight-card">
+                <div class="flight-card-header">
+                  <div class="route">
+                    <span class="source">{{ booking.source }}</span>
+                    <span class="arrow">→</span>
+                    <span class="destination">{{ booking.destination }}</span>
+                  </div>
+                  <div class="booking-info">
+                    <div class="booking-id"><strong>Booking ID:</strong> {{ booking.bookingId }}</div>
+                    <div class="reservation-date"><strong>{{ booking.reservationDate }}</strong></div>
+                  </div>
+                </div>
+                <div class="flight-card-content">
+                  <div class="details"><div class="airline">{{ booking.operator }} • {{ booking.busNumber }}</div></div>
+                </div>
+                <a (click)="onClick(booking.bookingId, booking,'Cancel')" class="view-details-link">View Details →</a>
+              </div>
+            </main>
+          </p-tabPanel>
+      
+        </p-tabView>
+      </div>
+      
+      
 </body>
 </html>

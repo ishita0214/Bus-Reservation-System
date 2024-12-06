@@ -24,6 +24,7 @@ export class HomePageComponent implements OnInit {
   buses: Bus[] = [];
   minDate: Date;
 
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -43,7 +44,9 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.loadRoutes();
     this.initializeForm();
+   
   }
+ 
 
 
   initializeForm() {

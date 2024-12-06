@@ -5,11 +5,13 @@ import { SeatServiceService } from '../../Services/seat-service.service';
 import { BusService } from '../../Services/bus.service';
 import { Bus } from '../../Models/bus';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { Button, ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-search-bus',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterModule],
+  imports: [CommonModule, RouterLink, RouterModule,DialogModule,ButtonModule],
   templateUrl: './search-bus.component.html',
   styleUrl: './search-bus.component.css',
 })
@@ -29,13 +31,14 @@ export class SearchBusComponent {
   ngOnInit() {
     this.getBuses();
   }
+  isAlert:boolean=false;
 
-  selectBus(bus: any,id:number|undefined) {
+selectBus(bus: any,id:number|undefined) {
 if(localStorage.getItem('loginUser')){
   this.route.navigateByUrl('seats/'+id)
   this.seatService.selectBus(bus);
 }else{
-alert("Login first!")
+this.isAlert=true;
 }
     
   }
@@ -52,6 +55,10 @@ alert("Login first!")
       }
     );
   }
+  closeAlert() {
+    this.isAlert = false;
+  }
+  
 
   deleteBus(id: number): void {
     this.busService.deleteBus(id).subscribe(

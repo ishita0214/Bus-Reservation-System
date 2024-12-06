@@ -57,4 +57,24 @@ public class ReservationService {
     public List<Reservation> findAllBySeatNumber(int seat){
         return reservationDao.findBySeatNumber(seat);
     }
+    public Reservation updateReservation(long id, Reservation updatedReservation) {
+        Optional<Reservation> existingReservationOptional = reservationDao.findById(id);
+        if (existingReservationOptional.isPresent()) {
+            Reservation existingReservation = existingReservationOptional.get();
+
+
+            existingReservation.setUserId(updatedReservation.getUserId());
+            existingReservation.setBus_id(updatedReservation.getBus_id());
+            existingReservation.setReservationDate(updatedReservation.getReservationDate());
+            existingReservation.setSeatNumber(updatedReservation.getSeatNumber());
+            existingReservation.setBookingId(updatedReservation.getBookingId());
+            existingReservation.setStatus(updatedReservation.getStatus());
+
+
+            return reservationDao.save(existingReservation);
+        } else {
+
+            throw new RuntimeException("Reservation not found with ID: " + id);
+        }
+    }
 }

@@ -58,3 +58,121 @@ button:hover {
   background-color: #0056b3;
   color: white;
 }
+.discount-section  {
+  margin-top: 200px; /* Increase this value to push the section further down */
+}
+.offer-card {
+  width: 20%;
+  background-color: #f8f9fa;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer-card:hover {
+  transform: scale(1.05);  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.offer-card img {
+  max-width: 100%;
+  height: 100%;  /* Make sure the image takes the full height of the card */
+  object-fit: cover;  /* Ensure the image covers the container area */
+  border-radius: 5px;
+}
+
+.offer-card img:hover {
+  /*transform: scale(1.1); Slight zoom-in effect on hover */
+  transition: transform 0.3s ease; /* Smooth transition for the zoom */
+}
+.justify-content-around{
+  margin-top:150px
+}
+.transaction-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.spinner {
+  border: 6px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #4caf50;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.success-checkmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #4caf50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tick {
+  width: 80px;
+  height: 80px;
+}
+
+.tick-circle {
+  stroke: #fff;
+  stroke-width: 2;
+  animation: draw-circle 1s ease-in-out forwards;
+}
+
+.tick-path {
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: draw-tick 0.5s ease-in-out 1s forwards;
+}
+
+@keyframes draw-circle {
+  from {
+    stroke-dasharray: 0, 157;
+  }
+  to {
+    stroke-dasharray: 157, 0;
+  }
+}
+
+@keyframes draw-tick {
+  from {
+    stroke-dasharray: 0, 50;
+  }
+  to {
+    stroke-dasharray: 50, 0;
+  }
+}
+
+.success-message {
+  font-size: 24px;
+  color: #4caf50;
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+

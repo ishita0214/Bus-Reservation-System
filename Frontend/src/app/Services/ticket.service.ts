@@ -20,7 +20,7 @@ export class TicketService {
   constructor(private http:HttpClient){}
   private ticketData = new BehaviorSubject<Ticket[]>([]);
   currentTicket$ = this.ticketData.asObservable();
-  public booking:BehaviorSubject<Booking>=new BehaviorSubject<Booking>(new Booking(0,'','','','','','','',[]))
+  public booking:BehaviorSubject<Booking>=new BehaviorSubject<Booking>(new Booking(0,'','','','','','','',0,'',[]))
   public seatNumber:BehaviorSubject<number[]>=new BehaviorSubject<number[]>([]) 
   private totalFareSubject = new BehaviorSubject<number>(0);
   totalFare$ = this.totalFareSubject.asObservable();

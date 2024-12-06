@@ -16,8 +16,27 @@ public class Booking {
     private LocalTime arrTime;
     private LocalTime deptTime;
     private String busNumber;
+    private Long busId;
 
-    public Booking(String operator, LocalTime  deptTime,LocalTime  arrTime, String reservationDate, String destination, String source, Long bookingId,String busNumber) {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    private String status;
+
+    public Long getBusId() {
+        return busId;
+    }
+
+    public void setBusId(Long busId) {
+        this.busId = busId;
+    }
+
+    public Booking(String operator, LocalTime  deptTime, LocalTime  arrTime, String reservationDate, String destination, String source, Long bookingId, String busNumber, Long busId,String status) {
         this.operator = operator;
         this.deptTime = deptTime;
         this.arrTime = arrTime;
@@ -26,6 +45,9 @@ public class Booking {
         this.source = source;
         this.bookingId = bookingId;
         this.busNumber=busNumber;
+        this.busId=busId;
+        this.status=status;
+
     }
 
     public String getOperator() {

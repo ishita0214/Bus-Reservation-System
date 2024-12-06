@@ -20,18 +20,21 @@ export class AuthService {
   login(credentials: { email: string; password: string }) {
     return this.http.post(`${this.baseUrl}/login`, credentials).subscribe((response: any) => {
       localStorage.setItem(this.tokenKey, response.token); // Save token
-      this.userService.findUserByEmail(credentials.email).subscribe((data)=>{
-        localStorage.setItem('loginUser',JSON.stringify(data.id))
-       
-      })
-      this.isLoggedInSubject.next(true);
-      this.router.navigateByUrl('home');
+      this.userService.findUserByEmail(credentials.email).subscribe((data) => {
+        localStorage.setItem('loginUser', JSON.stringify(data.id));
+        this.userService.setCurrentUser(data); // Update the current user in UserService
+        this.isLoggedInSubject.next(true);
+      
+      });
     });
   }
+  
+  
 
   signup(user: any) {
     return this.http.post(`${this.baseUrl}/signup`, user);
   }
+  
 
   logout() {
     localStorage.removeItem(this.tokenKey);

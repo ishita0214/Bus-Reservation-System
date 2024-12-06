@@ -21,8 +21,8 @@ public class EmailController {
     private EmailService emailService;
 
     @PostMapping("/send-ticket")
-    public ResponseEntity<?> sendTicket(@RequestBody EmailPayload payload) {
-        try {
+    public ResponseEntity<?> sendTicket(@RequestBody EmailPayload payload) throws MessagingException {
+   
             // Generate PDF
             byte[] pdfData = PdfGenerator.generateTicketPdf(
                 payload.getBookingId(),
@@ -45,8 +45,7 @@ public class EmailController {
             );
 
             return ResponseEntity.ok("Email sent successfully.");
-        } catch (MessagingException e) {
-            return ResponseEntity.status(500).body("Failed to send email: " + e.getMessage());
-        }
+    
     }
+
 }

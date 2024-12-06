@@ -53,7 +53,9 @@ export class PaymentComponent implements OnInit {
   tosave: boolean = false
   tickets: Ticket[] = [];
   bookings!:Booking;
-  currentUser!:User
+  currentUser!:User;
+  isLoading = false;
+  isTransactionSuccessful = false;
   constructor(
     private seatService: SeatServiceService,
     private routeService: RouteService,
@@ -105,6 +107,7 @@ this.userService.getUserById(this.currUser).subscribe((data)=>{
     const selectedOption = this.paymentOptions.find(option => option.id === this.selectedPaymentMethodId);
 
     if (selectedOption) {
+      this.isLoading = true;
       this.bookingId = Math.floor(Math.random() * 90000) + 10000;
 
       // Create an array to hold reservations
@@ -116,6 +119,9 @@ this.userService.getUserById(this.currUser).subscribe((data)=>{
         reservation.reservationDate = this.date;
         reservation.seatNumber = element;
         reservation.bookingId = this.bookingId;
+        reservation.bus_id=this.currBusId;
+        reservation.status = 'CONFIRMED';
+        
 console.log(reservation);
 
         reservations.push(reservation); // Store each reservation
@@ -132,15 +138,20 @@ console.log(reservation);
         },
         error: (err) => {
           console.error('Error during booking:', err);
+          this.isLoading = false;
         },
         complete: () => {
-          console.log('Navigating to ticket page...');
-          this.router.navigateByUrl('ticket/' + this.bookingId);
-          this.sendEmail();
+          setTimeout(() => {
+            this.isTransactionSuccessful = true; // Show success animation
+            setTimeout(() => {
+              this.router.navigateByUrl('ticket/' + this.bookingId);
+            }, 2000); // Redirect after 2 seconds
+          }, 1000); // Simulate processing delay
         }
       });
+    
     }
-    this.router.navigateByUrl('ticket');
+   
   }
   sendEmail() {
     const emailPayload = {
@@ -235,7 +246,7 @@ console.log(reservation);
       ticket.reservation_id = this.reservationId[this.index];
       
       this.index++;
-      const booking=new Booking(this.bookingId,this.busroute.source,this.busroute.destination,this.currBus.arrTime,this.currBus.deptTime,this.date,this.currBus.operator,this.currBus.busNumber,[]);
+      const booking=new Booking(this.bookingId,this.busroute.source,this.busroute.destination,this.currBus.arrTime,this.currBus.deptTime,this.date,this.currBus.operator,this.currBus.busNumber,this.currBus.id,'CONFIRMED');
 this.ticketService.booking.next(booking);
 this.ticketService.seatNumber.next(this.seatsData);
       

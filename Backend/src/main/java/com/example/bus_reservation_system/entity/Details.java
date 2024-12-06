@@ -13,4 +13,5 @@ public class Details {
     private String stateOfResidence;
     private String contactDetails;
     private int seatNumber;
+    private String status;
 }

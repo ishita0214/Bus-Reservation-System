@@ -50,6 +50,7 @@
 
                     </div>
                     <button (click)="selectBus(bus,bus.id)">Book Now</button>
+                    
                     <!-- Pass bus object here -->
                 </div>
             </main>
@@ -60,7 +61,15 @@
 
         </div>
     </div>
-
+    <div *ngIf="isAlert" class="alert">
+        <div id="alertPopup" class="alert-popup">
+            <div class="alert-content">
+                <p>Login first!</p>
+                <button id="okButton" (click)="closeAlert()">OK</button>
+            </div>
+        </div>
+    </div>
+  
 </body>
 
 </html>

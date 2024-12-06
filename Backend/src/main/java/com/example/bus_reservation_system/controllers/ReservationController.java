@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.bus_reservation_system.entity.Reservation;
+import com.example.bus_reservation_system.entity.Status;
 import com.example.bus_reservation_system.services.ReservationService;
 
 @RestController
@@ -38,6 +39,9 @@ public class ReservationController {
 
     @PostMapping("/createTicket")
     public ResponseEntity<Reservation> createTicket(@RequestBody Reservation reservation){
+        if (reservation.getStatus() == null) {
+            reservation.setStatus(Status.CONFIRMED);
+        }
         Reservation newTicket = reservationService.createTicket(reservation);
         return new ResponseEntity<>(newTicket, HttpStatus.OK);
     }
@@ -78,5 +82,9 @@ public class ReservationController {
     @GetMapping("/getPassengerDetails/{bookingId}")
     public List<Details> getPassengerDetails(@PathVariable("bookingId") long bookingId){
         return reservationService.getPassengerDetails(bookingId);
+    }
+    @PutMapping("/updateReservation/{id}")
+    public Reservation updateReservation(@PathVariable("id") long id,@RequestBody Reservation reservation){
+         return reservationService.updateReservation(id,reservation);
     }
 }

@@ -6,6 +6,7 @@ export class Reservation {
     reservationDate: string; 
     seatNumber: number; 
     bookingId:number;
+    status:string;
     
     constructor(
        
@@ -14,6 +15,7 @@ export class Reservation {
         reservationDate: string='' ,
         seatNumber: number = 0,
         bookingId:number=0,
+        status:string='',
         id?: number
         
     ) {
@@ -23,6 +25,7 @@ export class Reservation {
         this.reservationDate = reservationDate;
         this.seatNumber = seatNumber;
         this.bookingId=bookingId;
+        this.status=status;
        
   
     }

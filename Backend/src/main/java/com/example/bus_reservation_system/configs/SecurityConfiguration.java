@@ -33,7 +33,7 @@ public class SecurityConfiguration {
             .and()
             .csrf().disable()
             .authorizeHttpRequests()
-            .requestMatchers("/auth/**").permitAll()
+            .requestMatchers("/auth/**","/api/route/list","/api/bus/search/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -249,4 +249,92 @@
   .coupon-section button:hover {
     background-color: #218838;
   }
+  .transaction-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .spinner {
+    border: 6px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #4caf50;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .success-checkmark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .tick {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .tick-circle {
+    stroke: #fff;
+    stroke-width: 2;
+    animation: draw-circle 1s ease-in-out forwards;
+  }
+  
+  .tick-path {
+    stroke: #fff;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: draw-tick 0.5s ease-in-out 1s forwards;
+  }
+  
+  @keyframes draw-circle {
+    from {
+      stroke-dasharray: 0, 157;
+    }
+    to {
+      stroke-dasharray: 157, 0;
+    }
+  }
+  
+  @keyframes draw-tick {
+    from {
+      stroke-dasharray: 0, 50;
+    }
+    to {
+      stroke-dasharray: 50, 0;
+    }
+  }
+  
+  .success-message {
+    font-size: 24px;
+    color: #4caf50;
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  
   

@@ -4,7 +4,8 @@ export class Passenger {
     public age: number,
     public gender: string,
     public stateOfResidence: string,
-    public contactDetails: string
+    public contactDetails: string,
+    public status: string = 'CONFIRMED'
   ) {}
 }
 export class Booking {
@@ -16,6 +17,8 @@ export class Booking {
     reservationDate: string;
     operator:string;
     busNumber:string;
+    busId:number;
+    status:string;
     passengers: Passenger[];
     
    
@@ -28,6 +31,8 @@ export class Booking {
         reservationDate: string,
         operator:string,
         busNumber:string='',
+        busId:number=0,
+        status:string,
         passengers: Passenger[] = []
     ) {
       
@@ -41,6 +46,8 @@ export class Booking {
       this.operator=operator;
       this.busNumber=busNumber;
       this.passengers = passengers; 
+      this.status=status;
+      this.busId=busId
     }
   }
   

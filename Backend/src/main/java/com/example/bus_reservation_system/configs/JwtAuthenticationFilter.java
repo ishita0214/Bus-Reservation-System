@@ -40,15 +40,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        // Allow access to /auth/login without checking for JWT
-        if (request.getRequestURI().equals("/auth/login")) {
-            filterChain.doFilter(request, response); // Proceed without authentication
-            return; // Exit early
-        }
-        if (request.getRequestURI().equals("/auth/signup")) {
-            filterChain.doFilter(request, response); // Proceed without authentication
-            return; // Exit early
-        }
+      
+        String requestURI = request.getRequestURI();
+
+  
+    if (requestURI.startsWith("/auth/login") ||
+        requestURI.startsWith("/auth/signup") ||
+        requestURI.startsWith("/api/route/list") ||
+        requestURI.startsWith("/api/bus/search")) {
+        filterChain.doFilter(request, response); // Skip authentication for these endpoints
+        return; // Exit early
+    }
 
         final String authHeader = request.getHeader("Authorization");
 

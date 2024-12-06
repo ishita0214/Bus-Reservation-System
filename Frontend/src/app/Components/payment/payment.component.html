@@ -1,71 +1,93 @@
 <div class="payment-container">
-  <div class="payment-header">
-    <h2>{{ busroute.source }} → {{ busroute.destination }}</h2>
-    <p>{{ date }} at {{ currBus.deptTime }}</p>
-  </div>
-
-  <div class="payment-content">
-    <!-- Payment Options Sidebar -->
-    <aside class="payment-sidebar">
-      <h3>Payment Options</h3>
-      <ul class="payment-options">
-        <li *ngFor="let option of paymentOptions"
-            class="payment-option"
-            [class.selected]="selectedPaymentMethodId === option.id">
-          <label>
-            <input type="radio"
-                   [checked]="selectedPaymentMethodId === option.id"
-                   (change)="selectPaymentMethod(option.id)" />
-            <img [src]="option.icon" alt="{{ option.name }} Icon" class="option-icon" />
-            <span class="option-name">{{ option.name }}</span>
-          </label>
-        </li>
-      </ul>
-    </aside>
-
-    <!-- Payment Details Form -->
-    <div class="payment-details">
-      <h3>Payment Details</h3>
-      <div *ngIf="selectedPaymentMethodId" class="input-fields">
-        <h4>How to pay using {{ getSelectedPaymentMethod()?.name }}</h4>
-        <div *ngFor="let detail of getSelectedPaymentMethod()?.details" class="input-group">
-          <label>{{ detail }}</label>
-          <input type="text" placeholder="{{ detail }}" />
+  <div *ngIf="isLoading" class="loader-overlay">
+    <div class="transaction-container">
+      <div class="spinner" *ngIf="!isTransactionSuccessful"></div>
+      <div class="success-checkmark" *ngIf="isTransactionSuccessful">
+        <div class="circle">
+          <svg class="tick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="tick-circle" cx="26" cy="26" r="25" fill="none" />
+            <path
+              class="tick-path"
+              fill="none"
+              d="M14 27l8 8 16-16"
+            />
+          </svg>
         </div>
-        <button (click)="payNow()" class="pay-now-button">Proceed to Pay</button>
+        <p class="success-message">Transaction Successful!</p>
       </div>
     </div>
+    
+    </div>
+  </div>
 
-    <!-- Fare Summary -->
-    <div class="fare-summary">
-      <h3>Fare Details</h3>
-      <div class="fare-item">
-        <span>Total Fare (inclusive)</span>
-        <span>₹{{ currBus.price }}</span>
-      </div>
-      <div class="fare-item">
-        <span>Discounts</span>
-        <span class="discount">-₹200</span>
-      </div>
-      <div class="fare-total">
-        <span>Total Amount To Be Paid</span>
-        <span>₹{{ currBus.price - 200 }}</span>
-      </div>
-      <div class="offer-section">
-        <h4>Offers</h4>
-        <div class="offer">
-          <p>Win an iPhone 16!</p>
+  <div *ngIf="!isLoading">
+    <div class="payment-header">
+      <h2>{{ busroute.source }} → {{ busroute.destination }}</h2>
+      <p>{{ date }} at {{ currBus.deptTime }}</p>
+    </div>
+
+    <div class="payment-content">
+      <!-- Payment Options Sidebar -->
+      <aside class="payment-sidebar">
+        <h3>Payment Options</h3>
+        <ul class="payment-options">
+          <li *ngFor="let option of paymentOptions"
+              class="payment-option"
+              [class.selected]="selectedPaymentMethodId === option.id">
+            <label>
+              <input type="radio"
+                     [checked]="selectedPaymentMethodId === option.id"
+                     (change)="selectPaymentMethod(option.id)" />
+              <img [src]="option.icon" alt="{{ option.name }} Icon" class="option-icon" />
+              <span class="option-name">{{ option.name }}</span>
+            </label>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Payment Details Form -->
+      <div class="payment-details">
+        <h3>Payment Details</h3>
+        <div *ngIf="selectedPaymentMethodId" class="input-fields">
+          <h4>How to pay using {{ getSelectedPaymentMethod()?.name }}</h4>
+          <div *ngFor="let detail of getSelectedPaymentMethod()?.details" class="input-group">
+            <label>{{ detail }}</label>
+            <input type="text" placeholder="{{ detail }}" />
+          </div>
+          <button (click)="payNow()" class="pay-now-button">Proceed to Pay</button>
         </div>
-        <div class="offer">
-          <p>Win free tickets to the Diljit Dosanjh concert!</p>
-        </div>
       </div>
-      <div class="coupon-section">
-        <label for="coupon">Got a coupon code?</label>
-        <input type="text" id="coupon" placeholder="Enter coupon code" />
-        <button>Apply</button>
+
+      <!-- Fare Summary -->
+      <div class="fare-summary">
+        <h3>Fare Details</h3>
+        <div class="fare-item">
+          <span>Total Fare (inclusive)</span>
+          <span>₹{{ currBus.price }}</span>
+        </div>
+        <div class="fare-item">
+          <span>Discounts</span>
+          <span class="discount">-₹200</span>
+        </div>
+        <div class="fare-total">
+          <span>Total Amount To Be Paid</span>
+          <span>₹{{ currBus.price - 200 }}</span>
+        </div>
+        <div class="offer-section">
+          <h4>Offers</h4>
+          <div class="offer">
+            <p>Win an iPhone 16!</p>
+          </div>
+          <div class="offer">
+            <p>Win free tickets to the Diljit Dosanjh concert!</p>
+          </div>
+        </div>
+        <div class="coupon-section">
+          <label for="coupon">Got a coupon code?</label>
+          <input type="text" id="coupon" placeholder="Enter coupon code" />
+          <button>Apply</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
- 
+

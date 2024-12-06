@@ -21,19 +21,19 @@ public List<Reservation> findBySeatNumber(int seatNumber);
     List<Integer> getBookedSeats(@Param("bus_id") long bus_id,@Param("date") String date);
     List<Reservation> findAllByBookingId(long bookingId);
     List<Reservation> findAllByUserId(long userId);
-    @Query(value = "SELECT DISTINCT b.operator, r.booking_id, route.source, route.destination, r.reservation_date, b.arr_time, b.dept_time, b.bus_number\n" +
-            "FROM reservation r \n" +
-            "JOIN bus_table b ON r.bus_id = b.id \n" +
-            "JOIN route route ON b.route_id = route.id \n" +
-            "WHERE r.user_id = :userId\n" +
-            "AND r.booking_id IN (\n" +
-            "    SELECT MIN(booking_id) \n" +
-            "    FROM reservation \n" +
-            "    WHERE user_id = :userId \n" +
-            "    GROUP BY booking_id\n" +
+    @Query(value = "SELECT DISTINCT b.operator, r.booking_id, route.source, route.destination, r.reservation_date, b.arr_time, b.dept_time, b.bus_number, b.id, r.status " +
+            "FROM reservation r " +
+            "JOIN bus_table b ON r.bus_id = b.id " +
+            "JOIN route route ON b.route_id = route.id " +
+            "WHERE r.user_id = :userId " +
+            "AND r.booking_id IN ( " +
+            "    SELECT MIN(booking_id) " +
+            "    FROM reservation " +
+            "    WHERE user_id = :userId " +
+            "    GROUP BY booking_id " +
             ");", nativeQuery = true)
-
     List<Object[]> getRawUserBookings(@Param("userId") long userId);
+
 
     default List<Booking> getUserBookings(long userId) {
         List<Object[]> rawResults = getRawUserBookings(userId);
@@ -42,15 +42,29 @@ public List<Reservation> findBySeatNumber(int seatNumber);
         for (Object[] row : rawResults) {
             LocalTime arrTime = ((java.sql.Time) row[5]).toLocalTime();
             LocalTime deptTime = ((java.sql.Time) row[6]).toLocalTime();
-            String busNumber = (String) row[7]; // Retrieve busNumber from the result set
+            String busNumber = (String) row[7];
+            Long busId = (Long) row[8]; // Retrieve busId from the result set
+            String status = (String) row[9]; // Retrieve status from the result set
 
-            bookings.add(new Booking((String) row[0], deptTime, arrTime, (String) row[4],
-                    (String) row[3], (String) row[2], (Long) row[1], busNumber));
+            bookings.add(new Booking(
+                    (String) row[0],        // operator
+                    deptTime,               // deptTime
+                    arrTime,                // arrTime
+                    (String) row[4],        // reservationDate
+                    (String) row[3],        // destination
+                    (String) row[2],        // source
+                    (Long) row[1],          // bookingId
+                    busNumber,              // busNumber
+                    busId,                  // busId
+                    status                  // status
+            ));
         }
 
         return bookings;
     }
-    @Query(value = "SELECT t.id, t.contact_details, t.state_of_residence, t.reservation_id, t.name, t.age, t.gender ,r.seat_number" +
+
+
+    @Query(value = "SELECT t.id, t.contact_details, t.state_of_residence, t.reservation_id, t.name, t.age, t.gender ,r.seat_number,r.status" +
             " FROM ticket t " +
             "JOIN reservation r ON r.id = t.reservation_id " +
             "WHERE r.booking_id = :bookingId", nativeQuery = true)
@@ -70,6 +84,7 @@ public List<Reservation> findBySeatNumber(int seatNumber);
             ticket.setAge((Integer) row[5]);
             ticket.setGender((String) row[6]);
             ticket.setSeatNumber((Integer) row[7]);
+            ticket.setStatus((String)row[8]);
 
 
             tickets.add(ticket);

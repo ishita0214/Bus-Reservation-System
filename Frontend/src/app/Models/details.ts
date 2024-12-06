@@ -7,7 +7,9 @@ export class Details{
     stateOfResidence: string;
     contactDetails: string;
     seatNumber:number;
+    status:string;
     selected?: boolean;
+    
     
     constructor(
       name: string='',
@@ -18,6 +20,7 @@ export class Details{
       seatNumber:number=0,
       id: number,
       reservation_id: number,
+      status:string,
       selected?: boolean
     ) {
       this.name = name;
@@ -28,6 +31,7 @@ export class Details{
       this.id = id; // Optional
       this.reservation_id = reservation_id;
       this.seatNumber=seatNumber; 
+      this.status=status;
       this.selected=selected;
     }
 }

@@ -16,10 +16,10 @@ export class ReservationService {
 
   constructor(private http: HttpClient) {}
   
-  tickets: BehaviorSubject<Booking> = new BehaviorSubject<Booking>(new Booking(0,'','','','','','',''));
+  tickets: BehaviorSubject<Booking> = new BehaviorSubject<Booking>(new Booking(0,'','','','','','','',0,'',[]));
   private reservationData = new BehaviorSubject<Reservation[]>([]);
   currentReservation$ = this.reservationData.asObservable();
-
+  public currPage:BehaviorSubject<string>=new BehaviorSubject<string>('')
   
 
 
@@ -61,4 +61,8 @@ export class ReservationService {
   getTicketsBySeatNumber(seat:number):Observable<Reservation[]>{
     return this.http.get<Reservation[]>(`${this.baseUrl}/getTicketBySeatNumber/${seat}`);
   }
+  updateReservation(id: number, reservation: Reservation): Observable<Reservation> {
+    return this.http.put<Reservation>(`${this.baseUrl}/updateReservation/${id}`, reservation);
+  }
+  
 }

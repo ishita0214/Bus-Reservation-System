@@ -185,3 +185,37 @@ p {
   .user-info button {
     margin-left: 10px;
   }
+  /* Style for the user logo */
+.user-info img {
+    width: 25px; /* Adjust the width to match font size */
+    height: 25px; /* Maintain a square ratio */
+    margin-right: 8px; /* Add some spacing between the image and the text */
+    vertical-align: middle; /* Align the image vertically with the text */
+  }
+  
+  /* Style for the user info container */
+  .user-info h3 {
+    display: inline; /* Keep the name on the same line as the image */
+    font-size: 1.25rem; /* Adjust font size if needed */
+    margin: 0;
+    margin-right: 10px; /* Remove extra margin */
+  }.user-logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between image and username */
+    padding: 6px 12px;
+  }
+  
+  .dropdown-menu {
+    min-width: 150px; /* Adjust menu width */
+  }
+  
+  
+ 
